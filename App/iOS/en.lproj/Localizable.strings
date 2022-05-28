@@ -1,0 +1,81 @@
+/* 
+  Localization.strings
+  VEXA
+
+  Created by Leonid Lyadveykin on 16.02.2022.
+  
+*/
+
+//MARK: - Main
+"do_not_disturb_mode" = "Do not disturb mode";
+"do_not_disturb_message" = "You need to focus your attention while you are in session. Do not distruct on calls, messages and notifications. Please, turn on “Do not disturb“ in settings.";
+"go" = "Go";
+"start" = "Start";
+"start_later" = "Start later";
+"session_beginnig" = "Beginning of the session";
+"ready_to_start_session" = "Are you ready to start session?";
+"add_to_heal" = "Add to first aid kit";
+
+//MARK: - Profile
+"profile" = "profile";
+"first_aid_kit" = "First aid kit";
+"stage" = "Stage";
+"data" = "Data";
+
+"responbibility" = "Responbibility";
+"reality_assessment" = "Reality\nAssessment";
+"confident" = "Confident";
+"friendliness" = "Friendliness";
+"communication" = "Communication";
+"composure" = "Composure";
+"stability" = "Stability";
+"happiness" = "Happiness";
+"energy" = "Energy";
+"activity" = "Activity";
+
+//MARK: - Authentication
+"enterTitle" = "Enter";
+"noProfileTitle" = "No profile?";
+"numberPhoneTitle" = "Phone Number";
+"welcomeTitle" = "Welcome!";
+"loginContinueTitle" = "Register or login to continue";
+"registerTitle" = "Register";
+"aboutYouTitle" = "About you";
+"wrongPhoneTitle" = "Wrong phone number?";
+"clickHereTitle" = "Click here";
+"numberConfirmationTitle" = "Number confirmation";
+"resendTitle" = "Resend";
+"resendCodeTitle" = "Send code again";
+"inTimeTitle" = "in";
+"sentSMSTitle" = "We sent an SMS with a code to the number";
+"enterCodeTitle" = "Enter the code in the field below.";
+"wrong_code" = "Wrong code";
+
+//MARK: - Sign in with 
+"signInApple" = "Sign in with Apple";
+"signInGoogle" = "Sign in with Google";
+"signInFacebook" = "Login with Facebook";
+
+//MARK: - Sign Up personal data
+"manTitle" = "Man";
+"womanTitle" = "Woman";
+"otherTitle" = "Other";
+"searchTitle" = "Search";
+"continue_Title" = "Continue";
+"i_accept_title" = "I accept";
+"entry_navigation_title" = "Entry password";
+"privacy_policy" = "privacy policy";
+"genderTitle" = "Gender";
+"birthDateTitle" = "Birthday";
+"nameTitle" = "Name";
+"doneButtonTitle" = "Done";
+"skip_create_entry" = "Are you sure you want to skip this step? The password will help protect your data in the application";
+"skip" = "Skip";
+"set_entry_password" = "Set password";
+"use_faceid" = "Use Face ID/Touch ID when signing in";
+"set_password_navigation_title" = "Set a password to enter the application.";
+
+//MARK: - Entry
+"enter_entry_code" = "Enter code";
+"cant_get_in" = "Can't get in?";
+"faceid_description" = "We need to unlock your data";

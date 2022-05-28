@@ -1,0 +1,81 @@
+/* 
+  Localization.strings
+  VEXA
+
+  Created by Leonid Lyadveykin on 16.02.2022.
+  
+*/
+
+//MARK: - Main
+"do_not_disturb_mode" = "Режим Не беспокоить";
+"do_not_disturb_message" = "Во время сессии трубется состредоточиться и сфокусировать внимание на происходящем. Не следует отвлекаться на звонки, сообщения и уведомления. Пожалуйста, включите “Не беспокоить” в настройках";
+"go" = "Перейти";
+"start" = "Начать";
+"start_later" = "Начать позже";
+"session_beginnig" = "Начало сессии";
+"ready_to_start_session" = "Ты готов начать сессию?";
+"add_to_heal" = "Добавить в аптечку";
+
+//Mark: - Profile
+"profile" = "Профиль";
+"first_aid_kit" = "Аптечка";
+"stage" = "Ступень";
+"data" = "Данные";
+
+"responbibility" = "Отвественность";
+"reality_assessment" = "Оценка\nреальности";
+"confident" = "Уверенность";
+"friendliness" = "Дружелюбие";
+"communication" = "Общение";
+"composure" = "Самообладание";
+"stability" = "Стабильность";
+"happiness" = "Счастье";
+"energy" = "Энергичность";
+"activity" = "Активность";
+
+//MARK: - Authentication
+"enterTitle" = "Войти";
+"noProfileTitle" = "Нет профиля?";
+"numberPhoneTitle" = "Номер телефона";
+"welcomeTitle" = "Добро пожаловать!";
+"loginContinueTitle" = "Зарегистрируйся или войди, чтобы продолжить";
+"registerTitle" = "Зарегистрируйся";
+"aboutYouTitle" = "О тебе";
+"wrongPhoneTitle" = "Ошибка в номере телефона?";
+"clickHereTitle" = "Нажми сюда";
+"numberConfirmationTitle" = "Подтверждение номера";
+"resendTitle" = "Выслать повторно";
+"resendCodeTitle" = "Выслать код повторно";
+"inTimeTitle" = "Через";
+"sentSMSTitle" = "Мы выслали SMS с кодом на номер";
+"enterCodeTitle" = "Введи код в поле ниже.";
+"wrong_code" = "Неверный код";
+
+//MARK: - Sign in with 
+"signInApple" = "Войти с Apple";
+"signInGoogle" = "Войти с Google";
+"signInFacebook" = "Вход через Facebook";
+
+//MARK: - Sign Up personal data
+"manTitle" = "Мужской";
+"womanTitle" = "Женский";
+"otherTitle" = "Другое";
+"searchTitle" = "Поиск";
+"continue_Title" = "Продолжить";
+"i_accept_title" = "Я принимаю";
+"privacy_policy" = "политику конфиденциальности";
+"entry_navigation_title" = "Пароль для входа";
+"genderTitle" = "Пол";
+"birthDateTitle" = "День рождения";
+"nameTitle" = "Имя";
+"doneButtonTitle" = "Готово";
+"skip_create_entry" = "Ты уверен, что хочешь пропустить этот шаг? Пароль поможет защитить твои данные в приложении";
+"skip" = "Пропусить";
+"set_entry_password" = "Задать пароль";
+"use_faceid" = "Использовать Face ID/Touch ID при входе";
+"set_password_navigation_title" = "Задай пароль для входа в приложение.";
+
+//MARK: - Entry
+"enter_entry_code" = "Введи пароль";
+"cant_get_in" = "Не можешь войти?";
+"faceid_description" = "We need to unlock your data";
