@@ -4,11 +4,13 @@ import SwiftUI
 import MainFeature
 import Profile
 import Services
+import Log
 
 public struct AppState: Equatable {
     public enum Screen: String {
         case main
         case profile
+        case debug
     }
     var mainState: MainState
     var profileState: ProfileState
@@ -106,6 +108,13 @@ public struct AppView: View {
                         }
   //                  }
                 }
+            #if DEBUG
+            DebugView()
+                .tag(AppState.Screen.debug)
+                .tabItem {
+                    Text("Debug")
+                }
+            #endif
         }
     }
 }

@@ -24,22 +24,23 @@ class VEXAAuthenticator: Authenticator {
     }
 
     func refresh(_ credential: Credential, for session: Session, completion: @escaping (Result<Credential, Swift.Error>) -> Void) {
-        Task(priority: .high) {
-            let request: URLRequest
-            if let token = credential.authorizationToken {
-                VEXALogger.shared.info("Trying refresh token = \(token)")
-                request = try refreshRequest(for: token)
-            } else {
-                request = try loginRequest(email: "", password: "")
-                VEXALogger.shared.info("Trying login")
-            }
-
-            let response = await Session.default.request(request)
-                .validate()
-                .serializingString()
-                .response
-
-            let result = response.result
+        completion(.success(credential))
+//        Task(priority: .high) {
+//            let request: URLRequest
+//            if let token = credential.authorizationToken {
+//                VEXALogger.shared.info("Trying refresh token = \(token)")
+//                request = try refreshRequest(for: token)
+//            } else {
+//                request = try loginRequest(email: "", password: "")
+//                VEXALogger.shared.info("Trying login")
+//            }
+//
+//            let response = await Session.default.request(request)
+//                .validate()
+//                .serializingString()
+//                .response
+//
+//            let result = response.result
 
 //            switch result {
 //                case .success(let authResponseString):
@@ -90,7 +91,7 @@ class VEXAAuthenticator: Authenticator {
 //                    await delegate?.userDidLogout()
 //                    completion(.failure(error as Error))
 //            }
-        }
+ //       }
     }
 
     func didRequest(_ urlRequest: URLRequest, with response: HTTPURLResponse, failDueToAuthenticationError error: Swift.Error) -> Bool {
@@ -98,7 +99,7 @@ class VEXAAuthenticator: Authenticator {
     }
 
     func isRequest(_ urlRequest: URLRequest, authenticatedWith credential: Credential) -> Bool {
-        return urlRequest.headers["Authorization"] == credential.authorizationToken?.accessToken
+        return true //urlRequest.headers["Authorization"] == credential.authorizationToken?.accessToken
     }
 
     private func refreshRequest(for token: AuthorizationToken) throws -> URLRequest {

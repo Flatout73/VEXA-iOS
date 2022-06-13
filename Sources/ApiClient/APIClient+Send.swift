@@ -24,18 +24,20 @@ extension APIClient {
                                                        metrics: response.metrics,
                                                        session: session.session)
         }
-        if let val = response.value {
-            let generalResponse = try GeneralResponse(jsonString: val)
-            switch generalResponse.response {
-            case .content(let content):
-                return try T(unpackingAny: content)
-            case .error(let error):
-                throw ServerError.server(error.reason)
-            default:
-                throw ServerError.array
+        switch response.result {
+        case .success(let val):
+            if let errorResponse = try? ErrorResponse(jsonString: val) {
+                throw ServerError.server(errorResponse.reason)
+            } else {
+                let generalResponse = try GeneralResponse(jsonString: val)
+                return try T(unpackingAny: generalResponse.content)
             }
-        } else {
-            throw response.error?.underlyingError ?? ApiError(error: ServerError.parsing)
+        case .failure(let error):
+            if let errorResponse = try? ErrorResponse(jsonUTF8Data: response.data!) {
+                throw ServerError.server(errorResponse.reason)
+            } else {
+                throw error.underlyingError ?? error
+            }
         }
     }
 
@@ -49,18 +51,21 @@ extension APIClient {
                                                        metrics: response.metrics,
                                                        session: session.session)
         }
-        if let val = response.value {
-            let generalResponse = try GeneralResponse(jsonString: val)
-            switch generalResponse.response {
-            case .arrayContent(let array):
-                return array.content.compactMap({try? T(unpackingAny: $0)})
-            case .error(let error):
-                throw ServerError.server(error.reason)
-            default:
-                throw ServerError.array
+
+        switch response.result {
+        case .success(let val):
+            if let errorResponse = try? ErrorResponse(jsonString: val) {
+                throw ServerError.server(errorResponse.reason)
+            } else {
+                let generalResponse = try ArrayResponse(jsonString: val)
+                return generalResponse.content.compactMap({ try? T(unpackingAny: $0) })
             }
-        } else {
-            throw response.error?.underlyingError ?? ApiError(error: ServerError.parsing)
+        case .failure(let error):
+            if let errorResponse = try? ErrorResponse(jsonUTF8Data: response.data!) {
+                throw ServerError.server(errorResponse.reason)
+            } else {
+                throw error.underlyingError ?? error
+            }
         }
     }
 
@@ -152,7 +157,7 @@ extension APIClient {
         var headers = request.headers ?? [:]
         headers.add(.accept("application/json"))
         headers.add(.contentType("application/json"))
-        return session.request(request.path,
+        return session.request(APIConstants.baseURL.appendingPathComponent(request.path),
                                method: request.method,
                                parameters: request.paramaters,
                                encoding: request.encoding,

@@ -20,6 +20,7 @@ public class TokenManager: AuthenticationCredential {
     let analyticsPrefix = "tokenManager"
 
     public var requiresRefresh: Bool {
+        return false
         guard let accessToken = authorizationToken?.accessToken else {
             Analytics.shared.event("\(self.analyticsPrefix)_token_missing_incorrect")
             return true

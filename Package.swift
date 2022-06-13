@@ -103,7 +103,8 @@ var package = Package(
         ]),
         .target(name: "Log", dependencies: [
             "Core",
-            .product(name: "Pulse", package: "Pulse")
+            .product(name: "Pulse", package: "Pulse"),
+            .product(name: "PulseUI", package: "Pulse")
         ]),
         .target(name: "Services"),
         .target(name: "Protobuf", dependencies: [

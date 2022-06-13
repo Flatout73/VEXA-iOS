@@ -24,7 +24,7 @@ public struct MainView: View {
 	@ViewBuilder
 	public var mainContent: some View {
 		WithViewStore(self.store) { viewStore in
-            Text("kek")
+            Text("\(viewStore.content.count)")
                 .task {
                     await viewStore.send(.fetchContent, while: \.isLoading)
                 }

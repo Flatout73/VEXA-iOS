@@ -61,10 +61,14 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         state.isLoading = true
         let request = APIConstants.Content.discovery
         return Effect.task(operation: {
-            let content: [Protobuf.Content] = try await environment.apiClient.send(request)
-            return MainAction.show(content)
+            do {
+                let content: [Protobuf.Content] = try await environment.apiClient.send(request)
+                return MainAction.show(content)
+            } catch {
+                return MainAction.showError(error.localizedDescription)
+            }
         })
-        .replaceError(with: { MainAction.showError("Error") }())
+        .receive(on: DispatchQueue.main)
         .eraseToEffect()
 	case .alert(.dismiss):
 		state.alert = nil
