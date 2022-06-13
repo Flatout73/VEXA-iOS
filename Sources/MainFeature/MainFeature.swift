@@ -18,7 +18,9 @@ import Protobuf
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
-    public var content: Protobuf.Content?
+    public var content: [Protobuf.Content] = []
+
+    public var isLoading = false
 
 	public init() {
 
@@ -28,7 +30,7 @@ public struct MainState: Equatable {
 public enum MainAction: Equatable {
 	case alert(AlertAction)
     case fetchContent
-    case show(Protobuf.Content)
+    case show([Protobuf.Content])
     case showError(String)
 
 	public enum AlertAction: Equatable {
@@ -52,11 +54,14 @@ public let mainReducer = Reducer<MainState, MainAction, MainEnvironment>.combine
 )
 
 let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, action, environment in
+    enum CancelId {}
+
 	switch action {
     case .fetchContent:
+        state.isLoading = true
         let request = APIConstants.Content.discovery
         return Effect.task(operation: {
-            let content: Content = try await environment.apiClient.send(request)
+            let content: [Protobuf.Content] = try await environment.apiClient.send(request)
             return MainAction.show(content)
         })
         .replaceError(with: { MainAction.showError("Error") }())
@@ -66,8 +71,10 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
 	case .alert(.go(let session)):
 		state.alert = nil
     case .showError(let error):
+        state.isLoading = false
         printLog(error)
     case .show(let content):
+        state.isLoading = false
         state.content = content
     }
 

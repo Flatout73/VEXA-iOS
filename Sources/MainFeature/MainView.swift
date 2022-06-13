@@ -25,6 +25,9 @@ public struct MainView: View {
 	public var mainContent: some View {
 		WithViewStore(self.store) { viewStore in
             Text("kek")
+                .task {
+                    await viewStore.send(.fetchContent, while: \.isLoading)
+                }
 		}
 	}
 

@@ -9,4 +9,6 @@ import Foundation
 
 enum ServerError: LocalizedError {
     case parsing
+    case server(String)
+    case array
 }

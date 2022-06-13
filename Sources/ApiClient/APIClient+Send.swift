@@ -26,8 +26,39 @@ extension APIClient {
         }
         if let val = response.value {
             let generalResponse = try GeneralResponse(jsonString: val)
-            let content = generalResponse.content
-            return try T(unpackingAny: content)
+            switch generalResponse.response {
+            case .content(let content):
+                return try T(unpackingAny: content)
+            case .error(let error):
+                throw ServerError.server(error.reason)
+            default:
+                throw ServerError.array
+            }
+        } else {
+            throw response.error?.underlyingError ?? ApiError(error: ServerError.parsing)
+        }
+    }
+
+    public func send<R: Request, T: SwiftProtobuf.Message>(_ request: R) async throws -> [T] {
+        let response = await send(request, session: session).serializingString().response
+        if let request = response.request {
+            VEXALogger.shared.loggerStore.storeRequest(request,
+                                                       response: response.response,
+                                                       error: response.error?.underlyingError,
+                                                       data: response.data,
+                                                       metrics: response.metrics,
+                                                       session: session.session)
+        }
+        if let val = response.value {
+            let generalResponse = try GeneralResponse(jsonString: val)
+            switch generalResponse.response {
+            case .arrayContent(let array):
+                return array.content.compactMap({try? T(unpackingAny: $0)})
+            case .error(let error):
+                throw ServerError.server(error.reason)
+            default:
+                throw ServerError.array
+            }
         } else {
             throw response.error?.underlyingError ?? ApiError(error: ServerError.parsing)
         }

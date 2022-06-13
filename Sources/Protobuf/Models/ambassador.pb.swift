@@ -25,7 +25,14 @@ public struct Ambassador {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var id: String = String()
+  public var id: String {
+    get {return _id ?? String()}
+    set {_id = newValue}
+  }
+  /// Returns true if `id` has been explicitly set.
+  public var hasID: Bool {return self._id != nil}
+  /// Clears the value of `id`. Subsequent reads from it will return its default value.
+  public mutating func clearID() {self._id = nil}
 
   public var firstName: String = String()
 
@@ -46,6 +53,7 @@ public struct Ambassador {
 
   public init() {}
 
+  fileprivate var _id: String? = nil
   fileprivate var _university: University? = nil
 }
 
@@ -71,7 +79,7 @@ extension Ambassador: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self._id) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.firstName) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.lastName) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.email) }()
@@ -86,9 +94,9 @@ extension Ambassador: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
-    }
+    try { if let v = self._id {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
     if !self.firstName.isEmpty {
       try visitor.visitSingularStringField(value: self.firstName, fieldNumber: 2)
     }
@@ -105,7 +113,7 @@ extension Ambassador: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   }
 
   public static func ==(lhs: Ambassador, rhs: Ambassador) -> Bool {
-    if lhs.id != rhs.id {return false}
+    if lhs._id != rhs._id {return false}
     if lhs.firstName != rhs.firstName {return false}
     if lhs.lastName != rhs.lastName {return false}
     if lhs.email != rhs.email {return false}
