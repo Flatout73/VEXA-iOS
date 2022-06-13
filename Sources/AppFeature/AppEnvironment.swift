@@ -6,7 +6,7 @@ import UIApplicationClient
 import UIKit
 
 public struct AppEnvironment {
-  public var apiClient: ApiClient
+  public var apiClient: APIClient
   public var applicationClient: UIApplicationClient
   public var backgroundQueue: AnySchedulerOf<DispatchQueue>
   public var build: Build
@@ -16,7 +16,7 @@ public struct AppEnvironment {
   public var timeZone: () -> TimeZone
 
   public init(
-    apiClient: ApiClient,
+    apiClient: APIClient,
     applicationClient: UIApplicationClient,
     backgroundQueue: AnySchedulerOf<DispatchQueue>,
     build: Build,

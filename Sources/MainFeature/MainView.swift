@@ -36,7 +36,7 @@ public struct MainView: View {
 			.onAppear {
 				// just sample
 				//VEXAAnalytics.shared.log(event: "main_screen_appeared")
-				Log.logger.debug("main screen")
+				VEXALogger.shared.debug("main screen")
 			}
 			.alert(self.store.scope(state: \.alert, action: MainAction.alert), dismiss: .dismiss)
 	}

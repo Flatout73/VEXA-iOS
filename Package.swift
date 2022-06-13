@@ -21,7 +21,8 @@ var package = Package(
         .library(name: "CoreUI", targets: ["CoreUI"]),
         .library(name: "Analytics", targets: ["Analytics"]),
         .library(name: "Log", targets: ["Log"]),
-        .library(name: "Services", targets: ["Services"])
+        .library(name: "Services", targets: ["Services"]),
+        .library(name: "Protobuf", targets: ["Protobuf"])
     ],
     dependencies: [
         .package(name: "iPhoneNumberField",
@@ -29,7 +30,11 @@ var package = Package(
                  from: "0.6.1"),
         .package(name: "KeychainAccess",
                  url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
-                 from: "3.0.0")
+                 from: "3.0.0"),
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
+        .package(url: "https://github.com/kean/Pulse", .upToNextMajor(from: "1.1.0")),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
+        .package(url: "https://github.com/auth0/JWTDecode.swift.git", from: "2.6.0")
     ],
     targets: [
         .target(
@@ -87,7 +92,7 @@ var package = Package(
                     //.process("Fonts")
                 ]
                ),
-        .target(name: "Core"),
+        .target(name: "Core", dependencies: ["KeychainAccess"]),
         .target(name: "CoreUI",
                 dependencies: [
                     "Resources",
@@ -96,8 +101,14 @@ var package = Package(
         .target(name: "Analytics", dependencies: [
             
         ]),
-        .target(name: "Log"),
-        .target(name: "Services")
+        .target(name: "Log", dependencies: [
+            "Core",
+            .product(name: "Pulse", package: "Pulse")
+        ]),
+        .target(name: "Services"),
+        .target(name: "Protobuf", dependencies: [
+            .product(name: "SwiftProtobuf", package: "swift-protobuf")
+        ]),
     ]
 )
 
@@ -112,8 +123,13 @@ package.targets.append(contentsOf: [
     .target(
         name: "ApiClient",
         dependencies: [
+            "Analytics",
             "SharedModels",
-            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            "Log",
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            .product(name: "Alamofire", package: "alamofire"),
+            "Protobuf",
+            .product(name: "JWTDecode", package: "JWTDecode.swift")
         ]
     ),
     .target(

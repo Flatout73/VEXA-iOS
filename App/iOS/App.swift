@@ -79,23 +79,23 @@ struct VEXAApp: App {
 }
 
 extension AppEnvironment {
-  static var live: Self {
-	let apiClient = ApiClient()
-	let build = Build()
+    static var live: Self {
+        let apiClient = APIClient(tokenManager: TokenManager())
+        let build = Build()
 
-	return Self(
-	  apiClient: apiClient,
-	  applicationClient: .live,
-	  backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
-	  build: build,
-	  mainQueue: .main,
-	  mainRunLoop: .main,
-	  setUserInterfaceStyle: { userInterfaceStyle in
-		.fireAndForget {
-		  UIApplication.shared.windows.first?.overrideUserInterfaceStyle = userInterfaceStyle
-		}
-	  },
-	  timeZone: { .autoupdatingCurrent }
-	)
-  }
+        return Self(
+            apiClient: apiClient,
+            applicationClient: .live,
+            backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
+            build: build,
+            mainQueue: .main,
+            mainRunLoop: .main,
+            setUserInterfaceStyle: { userInterfaceStyle in
+                    .fireAndForget {
+                        UIApplication.shared.windows.first?.overrideUserInterfaceStyle = userInterfaceStyle
+                    }
+            },
+            timeZone: { .autoupdatingCurrent }
+        )
+    }
 }

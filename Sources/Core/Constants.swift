@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension String {
-	
+public enum Constants {
+    public static let group = "group.vexa.com"
 }
