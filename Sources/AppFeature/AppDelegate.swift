@@ -11,7 +11,7 @@ public enum AppDelegateAction: Equatable {
 }
 
 struct AppDelegateEnvironment {
-  var apiClient: ApiClient
+  var apiClient: APIClient
   var backgroundQueue: AnySchedulerOf<DispatchQueue>
   var build: Build
   var mainQueue: AnySchedulerOf<DispatchQueue>

@@ -30,6 +30,9 @@ public enum AppAction: Equatable {
 }
 
 extension AppEnvironment {
+    var main: MainEnvironment {
+        MainEnvironment(apiClient: apiClient)
+    }
     var profile: ProfileEnvironment {
         ProfileEnvironment()
     }
@@ -39,7 +42,7 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     mainReducer.pullback(
         state: \AppState.mainState,
         action: /AppAction.main,
-        environment: { _ in MainEnvironment() }),
+        environment: \.main),
     
     profileReducer.pullback(
         state: \.profileState,

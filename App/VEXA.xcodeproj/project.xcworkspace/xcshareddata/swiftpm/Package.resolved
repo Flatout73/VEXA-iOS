@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "354dda32d89fc8cd4f5c46487f64957d355f53d8",
+          "version": "5.6.1"
+        }
+      },
+      {
         "package": "BoringSSL-GRPC",
         "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
         "state": {
@@ -92,6 +101,15 @@
         }
       },
       {
+        "package": "JWTDecode",
+        "repositoryURL": "https://github.com/auth0/JWTDecode.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "3cd207fb9e943b6168a117baa3936c823204c2dc",
+          "version": "2.6.3"
+        }
+      },
+      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
         "state": {
@@ -137,6 +155,15 @@
         }
       },
       {
+        "package": "Pulse",
+        "repositoryURL": "https://github.com/kean/Pulse",
+        "state": {
+          "branch": null,
+          "revision": "403699c645e0872fa8986366a7015da334f0f48b",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "swift-case-paths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {
@@ -179,6 +206,15 @@
           "branch": null,
           "revision": "680bf440178a78a627b1c2c64c0855f6523ad5b9",
           "version": "0.3.2"
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
         }
       },
       {

@@ -7,9 +7,13 @@
 
 import Foundation
 
-public class VEXAAnalytics {
+public class Analytics {
 
-	public static let shared = VEXAAnalytics()
+	public static let shared = Analytics()
 
 	private init() { }
+
+    public func event(_ event: String) {
+        
+    }
 }
