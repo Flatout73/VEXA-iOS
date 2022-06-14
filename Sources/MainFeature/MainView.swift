@@ -20,18 +20,22 @@ public struct MainView: View {
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
             GeometryReader { proxy in
-                ScrollView {
-                    LazyVStack(spacing: 60) {
+                List {
+                    //LazyVStack(spacing: 60) {
                         ForEach(viewStore.state.content) { cell in
-                            let size = CGSize(width: proxy.size.width - 50, height: 400)
+                            let size = CGSize(width: proxy.size.width - 30, height: 400)
                             DiscoveryCollectionView(discovery: cell, size: size)
+                                .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
                         }
-                    }
+                    //}
                     .padding(.bottom, 60)
                 }
-            }
-            .task {
-                await viewStore.send(.fetchContent, while: \.isLoading)
+                .listStyle(PlainListStyle())
+                .refreshable {
+                    await viewStore.send(.fetchContent, while: \.isLoading)
+                }
             }
         }
         .background(VEXAColors.background)
