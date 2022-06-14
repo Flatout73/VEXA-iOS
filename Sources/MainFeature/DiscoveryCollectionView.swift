@@ -11,6 +11,7 @@ import SharedModels
 struct DiscoveryCollectionView: View {
 
     let discovery: Discovery
+    let size: CGSize
 
     @ViewBuilder
     var overlay: some View {
@@ -34,22 +35,27 @@ struct DiscoveryCollectionView: View {
 
         }
         .foregroundColor(.white)
+        .padding()
         .background(.black.opacity(0.34))
         .cornerRadius(radius: 10, corners: [.topLeft, .topRight])
     }
 
     var body: some View {
         ZStack(alignment: .bottom) {
-                AsyncImage(url: discovery.image) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView()
-                }
-                .cornerRadius(10)
-                .clipped()
-
+            AsyncImage(url: discovery.image) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: size.width, height: size.height, alignment: .center)
+            .clipped()
+            .cornerRadius(10)
+            .overlay(alignment: .top) {
+                overlay
+            }
+            
             HStack(spacing: 10) {
                 VStack {
                     HStack {
@@ -65,22 +71,20 @@ struct DiscoveryCollectionView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-
+                
                 Spacer()
-
+                
                 Text("PIC")
                     .font(.subheadline)
                     .foregroundColor(.black)
                     .fontWeight(.bold)
             }
+            .padding()
             .background(.white)
-            .border(Color.gray, width: 2)
             .cornerRadius(10)
             .alignmentGuide(.bottom) { d in d[.bottom] / 2 }
+            .frame(width: size.width - 30, alignment: .bottom)
         }
-        .overlay(alignment: .top) {
-            overlay
-        }
-        .padding(EdgeInsets(top: 20, leading: 25, bottom: 40, trailing: 25))
     }
 }
+

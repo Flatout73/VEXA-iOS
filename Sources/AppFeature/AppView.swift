@@ -99,11 +99,10 @@ public struct AppView: View {
                     VStack {
                         if self.viewStore.selectedScreen == .profile {
                             Image(systemName: "person.fill")
-                            Text("profileSelected")
                         } else {
                             Image(systemName: "person")
-                            Text("profile")
                         }
+                        Text("profile")
                     }
                 }
             #if DEBUG

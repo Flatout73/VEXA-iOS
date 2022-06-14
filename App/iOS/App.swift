@@ -29,6 +29,23 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
 	) -> Bool {
 		self.viewStore.send(.appDelegate(.didFinishLaunching))
+
+        let tabBarAppeareance = UITabBarAppearance()
+        tabBarAppeareance.configureWithOpaqueBackground()
+        tabBarAppeareance.shadowColor = .white // For line separator of the tab bar
+        tabBarAppeareance.backgroundColor = .white
+
+        UITabBar.appearance().standardAppearance = tabBarAppeareance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppeareance
+
+        let navBarAppeareance = UINavigationBarAppearance()
+        navBarAppeareance.configureWithOpaqueBackground()
+        navBarAppeareance.backgroundColor = UIColor(VEXAColors.background)
+        navBarAppeareance.shadowColor = UIColor(VEXAColors.background)
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppeareance
+        UINavigationBar.appearance().standardAppearance = navBarAppeareance
+        UINavigationBar.appearance().compactAppearance = navBarAppeareance
+
 		return true
 	}
 

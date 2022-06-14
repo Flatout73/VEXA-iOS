@@ -8,4 +8,7 @@
 
 //MARK: - Main
 "discovery" = "Discovery";
-"search" = "Sarch";
+"search" = "Search";
+
+//MARK: - Profile
+"profile" = "Profile";

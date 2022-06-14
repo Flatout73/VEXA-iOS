@@ -18,7 +18,7 @@ import Protobuf
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
-    public var content: [Discovery] = []
+    public var content: [Discovery] = Mock.discovery
 
     public var isLoading = false
 

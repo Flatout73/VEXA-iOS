@@ -9,3 +9,6 @@
 //MARK: - Main
 "discovery" = "Открытие";
 "search" = "Поиск";
+
+//MARK: - Profile
+"profile" = "Профиль";

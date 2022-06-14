@@ -10,4 +10,5 @@ import SwiftUI
 
 public enum VEXAColors {
 	public static var text: Color { Color(#function, bundle: .module) }
+    public static var background: Color { Color(#function, bundle: .module) }
 }

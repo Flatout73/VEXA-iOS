@@ -4,6 +4,7 @@ import Analytics
 import Log
 import CoreUI
 import SharedModels
+import Resources
 
 public struct MainView: View {
 	let store: Store<MainState, MainAction>
@@ -18,24 +19,33 @@ public struct MainView: View {
 	@ViewBuilder
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewStore.state.content) { cell in
-                        DiscoveryCollectionView(discovery: cell)
+            GeometryReader { proxy in
+                ScrollView {
+                    LazyVStack(spacing: 60) {
+                        ForEach(viewStore.state.content) { cell in
+                            let size = CGSize(width: proxy.size.width - 50, height: 400)
+                            DiscoveryCollectionView(discovery: cell, size: size)
+                        }
                     }
+                    .padding(.bottom, 60)
                 }
             }
-            //.background(Color.gray)
             .task {
                 await viewStore.send(.fetchContent, while: \.isLoading)
             }
         }
+        .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $search, prompt: "search")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {
+                Menu(content: {
+                    Button("Category") {
 
+                    }
+                    Button("Ambassador") {
+
+                    }
                 }, label: {
                     Image(systemName: "list.dash")
                 })
@@ -47,7 +57,7 @@ public struct MainView: View {
         NavigationView {
             mainContent
                 //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            //.navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(StackNavigationViewStyle())
             //.zIndex(0)
                 .onAppear {
                     // just sample
@@ -55,6 +65,7 @@ public struct MainView: View {
                     VEXALogger.shared.debug("main screen")
                 }
         }
+
         .alert(self.store.scope(state: \.alert, action: MainAction.alert), dismiss: .dismiss)
     }
 }
