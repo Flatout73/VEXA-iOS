@@ -18,7 +18,7 @@ import Protobuf
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
-    public var content: [Protobuf.Content] = []
+    public var content: [Discovery] = []
 
     public var isLoading = false
 
@@ -30,7 +30,7 @@ public struct MainState: Equatable {
 public enum MainAction: Equatable {
 	case alert(AlertAction)
     case fetchContent
-    case show([Protobuf.Content])
+    case show([Discovery])
     case showError(String)
 
 	public enum AlertAction: Equatable {
@@ -63,7 +63,16 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         return Effect.task(operation: {
             do {
                 let content: [Protobuf.Content] = try await environment.apiClient.send(request)
-                return MainAction.show(content)
+                return MainAction.show(
+                    content.map {
+                        return Discovery(id: $0.id,
+                                         ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
+                                         universityName: "Uni",
+                                         videoName: $0.title,
+                                         category: "Category",
+                                         image: URL(string: $0.imageURL))
+                    }
+                )
             } catch {
                 return MainAction.showError(error.localizedDescription)
             }

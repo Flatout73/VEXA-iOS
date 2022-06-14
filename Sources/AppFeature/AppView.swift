@@ -73,9 +73,6 @@ public struct AppView: View {
     @ObservedObject
     var viewStore: ViewStore<AppState, AppAction>
     
-    @Namespace
-    private var namespace
-    
     public init(store: Store<AppState, AppAction>) {
         self.store = store
         self.viewStore = ViewStore(store)
@@ -84,35 +81,39 @@ public struct AppView: View {
     public var body: some View {
         let mainStore: Store<MainState, MainAction> = store.scope(state: \.mainState, action: AppAction.main)
         TabView(selection: self.viewStore.binding(get: \.selectedScreen, send: AppAction.changeScreen)) {
-            MainView(store: mainStore, namespace: namespace)
+            MainView(store: mainStore)
                 .tag(AppState.Screen.main)
                 .tabItem {
-//                    VStack {
-//                        Text("")
+                    VStack {
                         if self.viewStore.selectedScreen == .main {
-                            Text("homeSelected")
+                            Image(systemName: "house.fill")
                         } else {
-                            Text("home")
+                            Image(systemName: "house")
                         }
-//                    }
+                        Text("discovery")
+                    }
                 }
             ProfileView(store: store.scope(state: \.profileState, action: AppAction.profile))
                 .tag(AppState.Screen.profile)
                 .tabItem {
-//                    VStack {
-//                        Text("")
+                    VStack {
                         if self.viewStore.selectedScreen == .profile {
+                            Image(systemName: "person.fill")
                             Text("profileSelected")
                         } else {
+                            Image(systemName: "person")
                             Text("profile")
                         }
-  //                  }
+                    }
                 }
             #if DEBUG
             DebugView()
                 .tag(AppState.Screen.debug)
                 .tabItem {
-                    Text("Debug")
+                    VStack {
+                        Image(systemName: "gear")
+                        Text("Debug")
+                    }
                 }
             #endif
         }
