@@ -9,7 +9,7 @@ import SwiftUI
 import SharedModels
 
 struct DiscoveryCollectionView: View {
-
+    
     let discovery: Discovery
     let size: CGSize
 
@@ -41,6 +41,7 @@ struct DiscoveryCollectionView: View {
     }
 
     var body: some View {
+        
         ZStack(alignment: .bottom) {
             AsyncImage(url: discovery.image) { image in
                 image
@@ -74,10 +75,16 @@ struct DiscoveryCollectionView: View {
                 
                 Spacer()
                 
-                Text("PIC")
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                    .fontWeight(.bold)
+                Button(action: {
+                    print("message button pressed")
+                    
+                }) {
+                        Image("Message", bundle: .module)
+                            .renderingMode(.original)
+                            .foregroundColor(.gray)
+                            
+                }
+                .buttonStyle(MyPrimitiveButtonStyle())
             }
             .padding()
             .background(.white)
@@ -88,3 +95,31 @@ struct DiscoveryCollectionView: View {
     }
 }
 
+
+struct MyPrimitiveButtonStyle: PrimitiveButtonStyle {
+
+    func makeBody(configuration: PrimitiveButtonStyle.Configuration) -> some View {
+        MyButton(configuration: configuration)
+    }
+
+    struct MyButton: View {
+        @GestureState private var pressed = false
+
+        let configuration: PrimitiveButtonStyle.Configuration
+
+        @State private var didTriggered = false
+
+        var body: some View {
+            
+            let longPress = LongPressGesture(minimumDuration: 400, maximumDistance: 400.0)
+                .updating($pressed) { value, state, _ in
+                    state = value
+                    self.configuration.trigger()
+            }
+
+            return configuration.label
+                .opacity(pressed ? 0.2 : 1.0)
+                .gesture(longPress)
+        }
+    }
+}

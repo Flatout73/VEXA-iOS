@@ -67,7 +67,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                     content.map {
                         return Discovery(id: $0.id,
                                          ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
-                                         universityName: "Uni",
+                                         universityName: "University",
                                          videoName: $0.title,
                                          category: "Category",
                                          image: URL(string: $0.imageURL))
