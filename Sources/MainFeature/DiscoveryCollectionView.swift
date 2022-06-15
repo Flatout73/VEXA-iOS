@@ -74,52 +74,20 @@ struct DiscoveryCollectionView: View {
                 }
                 
                 Spacer()
-                
+
                 Button(action: {
                     print("message button pressed")
                     
                 }) {
-                        Image("Message", bundle: .module)
-                            .renderingMode(.original)
-                            .foregroundColor(.gray)
-                            
+                    Image("Message", bundle: .module)
                 }
-                .buttonStyle(MyPrimitiveButtonStyle())
+                .buttonStyle(PlainButtonStyle())
             }
             .padding()
             .background(.white)
             .cornerRadius(10)
             .alignmentGuide(.bottom) { d in d[.bottom] / 2 }
             .frame(width: size.width - 30, alignment: .bottom)
-        }
-    }
-}
-
-
-struct MyPrimitiveButtonStyle: PrimitiveButtonStyle {
-
-    func makeBody(configuration: PrimitiveButtonStyle.Configuration) -> some View {
-        MyButton(configuration: configuration)
-    }
-
-    struct MyButton: View {
-        @GestureState private var pressed = false
-
-        let configuration: PrimitiveButtonStyle.Configuration
-
-        @State private var didTriggered = false
-
-        var body: some View {
-            
-            let longPress = LongPressGesture(minimumDuration: 400, maximumDistance: 400.0)
-                .updating($pressed) { value, state, _ in
-                    state = value
-                    self.configuration.trigger()
-            }
-
-            return configuration.label
-                .opacity(pressed ? 0.2 : 1.0)
-                .gesture(longPress)
         }
     }
 }

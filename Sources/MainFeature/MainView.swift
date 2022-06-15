@@ -51,7 +51,7 @@ public struct MainView: View {
 
                     }
                 }, label: {
-                    Image(systemName: "list.dash")
+                    Image("filters", bundle: .module)
                 })
             }
         }
