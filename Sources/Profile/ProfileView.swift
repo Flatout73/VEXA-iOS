@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import CoreUI
 import Resources
+import SharedModels
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
@@ -16,12 +17,14 @@ public struct ProfileView: View {
 	public init(store: Store<ProfileState, ProfileAction>) {
 		self.store = store
 	}
-
+    
+    let user = User(id: "0", firstName: "Leonid", secondName: "Leonidovich", email: "Leonid@mail.ru", dateOfBirth: "04.04.1944", country: "Russia", nativeLanguage: "Russian", image: URL(string: "https://i.stack.imgur.com/e54hT.png"))
+    
 	public var body: some View {
 		WithViewStore(store) { viewStore in
 			VStack(alignment: .center) {
 				Picker("Screen", selection: viewStore.binding(get: \.screen, send: ProfileAction.changeTo)) {
-					ForEach(ProfileState.Screen.allCases) {
+					ForEach(ProfileState.Screen.allCases) { 
 						Text(LocalizedStringKey($0.title))
 							.tag($0)
 					}
@@ -30,13 +33,15 @@ public struct ProfileView: View {
 
 				Spacer()
 
-				switch viewStore.screen {
-						// TODO: Add separate modules for every screen
-					case .stage:
-						Text("kekes")
-					default:
-						EmptyView()
-				}
+                switch viewStore.screen {
+                    // TODO: Add separate modules for every screen
+                case .heal:
+                    UserProfile(user: user)
+                case .stage:
+                    Text("kekes")
+                default:
+                    EmptyView()
+                }
 			}
 			.padding()
 		}
