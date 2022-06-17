@@ -26,7 +26,7 @@ public struct ProfileState: Equatable {
 		var title: String {
 			switch self {
 				case .heal:
-					return "first_aid_kit"
+					return "Profile"
 				case .stage:
 					return "stage"
 				case .data:

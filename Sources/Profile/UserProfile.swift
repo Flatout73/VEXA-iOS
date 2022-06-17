@@ -12,6 +12,8 @@ struct UserProfile: View {
     
     let user: User
     
+    // MARK: - Top View
+    
     var topView: some View {
         
         HStack {
@@ -57,6 +59,8 @@ struct UserProfile: View {
         .background(Color.white)
     }
     
+    // MARK: - About User Information View
+    
     var aboutView: some View {
         VStack (spacing: 10) {
             
@@ -69,86 +73,246 @@ struct UserProfile: View {
                 
                 Text("About")
                     .foregroundColor(.black)
-                    .font(Font.system(size: 20))
+                    .font(Font.system(size: 18))
                 Spacer()
             }
             
             HStack {
                 Text("Email:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                     .fontWeight(.bold)
                 
                 Text(user.email)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                 Spacer()
             }
+            
+            Divider()
             
             HStack {
                 Text("Date of Birth:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                     .fontWeight(.bold)
                 
                 Text(user.dateOfBirth)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                 Spacer()
             }
+            
+            Divider()
             
             HStack {
                 Text("Country:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                     .fontWeight(.bold)
                 
                 Text(user.country)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                 Spacer()
             }
+            
+            Divider()
             
             HStack {
                 Text("Native Language:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                     .fontWeight(.bold)
                 
                 Text(user.nativeLanguage)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: 14))
                 Spacer()
+            }
+            
+            Divider()
+            
+            Button(action: {
+                
+            }) {
+                Text("See more")
+                    .foregroundColor(.green)
+                    .font(.subheadline)
             }
         }
         .background(Color.white)
         .cornerRadius(10)
     }
     
+    // MARK: - Horizontal Scroll View with Universities
+    
+    var universitiesView: some View {
+        
+        
+//        var image: String
+//        var title: String
+        
+        ScrollView(.horizontal, showsIndicators: false) {
+            VStack(spacing: 5) {
+                
+                HStack (spacing: 10) {
+                    ForEach(0..<10) { index in
+                        VStack {
+                            // MARK: - Change for an image
+                            Text("University \(index)")
+                                .foregroundColor(.white)
+                                .font(Font.system(size: 20))
+                                .frame(width: 85, height: 85)
+                                .background(.green)
+                            
+                            Text("University Name \(index)")
+                                .font(Font.system(size: 10))
+                                .foregroundColor(.gray)
+                                .bold()
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    // MARK: - Horizontal Scroll View with Content
+
+    var studentContentView: some View {
+        
+        ScrollView(.horizontal, showsIndicators: false) {
+            
+            VStack(spacing: 5) {
+                HStack (spacing: 10) {
+                    ForEach(user.content, id: \.self) { content in
+                        Button(action: {
+                            print("Process to content")
+                        }) {
+                            Image(content, bundle: .module)
+                                .resizable()
+                                .frame(width: 85, height: 85)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Horizontal Scroll View with Liked Content
+    
+    var likesView: some View {
+
+        ScrollView(.horizontal, showsIndicators: false) {
+
+            VStack(spacing: 5) {
+                HStack (spacing: 10) {
+                    ForEach(user.content, id: \.self) { content in
+                        Button(action: {
+                            print("Process to liked content by student")
+                        }) {
+                            Image(content, bundle: .module)
+                                .resizable()
+                                .frame(width: 85, height: 85)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
     var body: some View {
         
         ScrollView (.vertical) {
             VStack {
                 
-                topView
-                
-                Button(action: {
-                    print("button pressed")
-                }) {
-                    Text("Message")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
+                Group {
+                    
+                    topView
+                    
+                    Button(action: {
+                        print("button pressed")
+                    }) {
+                        Text("Message")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
+                    }
+                    .background(Color.green)
+                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    
+                    aboutView
+                        .padding()
+                    
+                    Spacer()
+                    Divider()
+                    
+                    HStack(spacing: 5) {
+                        Text("Universities")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.green)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Text("15")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.gray)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Spacer()
+                    }
+                    
+                    universitiesView
+                    
+                    Divider()
+                    
+                    HStack(spacing: 5) {
+                        Text("My Content")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.green)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Text("15")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.gray)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Spacer()
+                    }
+                    
                 }
-                .background(Color.green)
-                .cornerRadius(10)
-                .frame(maxWidth: .infinity, maxHeight: 50)
                 
-                aboutView
-                    .padding()
+                Group {
+                    
+                    Divider()
+                    
+                    studentContentView
+                    
+                    Divider()
+                    
+                    HStack(spacing: 5) {
+                        Text("Liked")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.green)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Text("15")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.gray)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Spacer()
+                    }
+                    
+                    likesView
+                    
+                    Divider()
+                }
                 
-                Spacer()
             }
         }
+        .background(Color.clear)
     }
     
 }

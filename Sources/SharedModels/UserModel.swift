@@ -11,9 +11,10 @@ import Foundation
 public struct User: Identifiable, Equatable {
     public let id: String
     public let firstName, secondName, email, dateOfBirth, country, nativeLanguage: String
+    public let universities, content: [String]
     public let image: URL?
 
-    public init(id: String, firstName: String, secondName: String, email: String, dateOfBirth: String, country: String, nativeLanguage: String, image: URL? = nil) {
+    public init(id: String, firstName: String, secondName: String, email: String, dateOfBirth: String, country: String, nativeLanguage: String, universities: [String], content: [String], image: URL? = nil) {
         self.id = id
         self.firstName = firstName
         self.secondName = secondName
@@ -22,5 +23,7 @@ public struct User: Identifiable, Equatable {
         self.country = country
         self.nativeLanguage = nativeLanguage
         self.image = image
+        self.universities = universities
+        self.content = content
     }
 }
