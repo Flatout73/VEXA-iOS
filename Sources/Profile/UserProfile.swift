@@ -12,6 +12,8 @@ struct UserProfile: View {
     
     let user: User
     
+    @State private var showingSheet = false
+    
     // MARK: - Top View
     
     var topView: some View {
@@ -134,24 +136,58 @@ struct UserProfile: View {
             Divider()
             
             Button(action: {
-                
+                showingSheet.toggle()
             }) {
                 Text("See more")
                     .foregroundColor(.green)
                     .font(.subheadline)
+            }
+            .sheet(isPresented: $showingSheet) {
+                textView
             }
         }
         .background(Color.white)
         .cornerRadius(10)
     }
     
+    // MARK: - Extra Text Fields for view
+    
+    var textView: some View {
+     
+        VStack {
+            HStack {
+                Text("Extra Text:")
+                    .foregroundColor(.gray)
+                    .font(Font.system(size: 14))
+                    .fontWeight(.bold)
+                
+                Text("User Info")
+                    .foregroundColor(.gray)
+                    .font(Font.system(size: 14))
+                Spacer()
+            }
+            
+            Divider()
+            
+            HStack {
+                Text("Extra Text:")
+                    .foregroundColor(.gray)
+                    .font(Font.system(size: 14))
+                    .fontWeight(.bold)
+                
+                Text("User Info")
+                    .foregroundColor(.gray)
+                    .font(Font.system(size: 14))
+                Spacer()
+            }
+        }
+        
+        
+    }
+    
     // MARK: - Horizontal Scroll View with Universities
     
     var universitiesView: some View {
-        
-        
-//        var image: String
-//        var title: String
         
         ScrollView(.horizontal, showsIndicators: false) {
             VStack(spacing: 5) {
