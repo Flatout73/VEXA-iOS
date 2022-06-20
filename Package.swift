@@ -11,7 +11,7 @@ var package = Package(
         .iOS(.v15),
     ],
     products: [
-        .library(name: "Build", targets: ["Build"]),
+        .library(name: "AddContent", targets: ["AddContent"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "MainFeature", targets: ["MainFeature"]),
@@ -38,16 +38,15 @@ var package = Package(
     ],
     targets: [
         .target(
-            name: "Build",
+            name: "AddContent",
             dependencies: [
-
+                "SharedModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),
         .target(
             name: "SharedModels",
             dependencies: [
-                "Build",
-
             ]
         ),
         .target(
@@ -55,8 +54,8 @@ var package = Package(
             dependencies: [
                 "SharedModels",
                 "ApiClient",
-                "Build",
                 "MainFeature",
+                "AddContent",
                 "Profile",
                 "UIApplicationClient",
                 "CoreUI",

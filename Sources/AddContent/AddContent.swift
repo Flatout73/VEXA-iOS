@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Build {
+public struct AddContent {
 	public init() {
 		
 	}

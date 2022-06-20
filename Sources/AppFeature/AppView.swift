@@ -5,10 +5,12 @@ import MainFeature
 import Profile
 import Services
 import Log
+import AddContent
 
 public struct AppState: Equatable {
     public enum Screen: String {
         case main
+        case addContent
         case profile
         case debug
     }
@@ -72,27 +74,45 @@ public struct AppView: View {
     let store: Store<AppState, AppAction>
     @ObservedObject
     var viewStore: ViewStore<AppState, AppAction>
+
+    let isAmbassador: Bool
     
-    public init(store: Store<AppState, AppAction>) {
+    public init(store: Store<AppState, AppAction>, isAmbassador: Bool = false) {
         self.store = store
         self.viewStore = ViewStore(store)
+        self.isAmbassador = isAmbassador
     }
     
     public var body: some View {
         let mainStore: Store<MainState, MainAction> = store.scope(state: \.mainState, action: AppAction.main)
         TabView(selection: self.viewStore.binding(get: \.selectedScreen, send: AppAction.changeScreen)) {
-            MainView(store: mainStore)
-                .tag(AppState.Screen.main)
-                .tabItem {
-                    VStack {
-                        if self.viewStore.selectedScreen == .main {
-                            Image(systemName: "house.fill")
-                        } else {
-                            Image(systemName: "house")
+            if isAmbassador {
+                AddContentView()
+                    .tag(AppState.Screen.addContent)
+                    .tabItem {
+                        VStack {
+                            if self.viewStore.selectedScreen == .main {
+                                Image(systemName: "plus.circle.fill")
+                            } else {
+                                Image(systemName: "plus")
+                            }
+                            Text("add_content")
                         }
-                        Text("discovery")
                     }
-                }
+            } else {
+                MainView(store: mainStore)
+                    .tag(AppState.Screen.main)
+                    .tabItem {
+                        VStack {
+                            if self.viewStore.selectedScreen == .main {
+                                Image(systemName: "house.fill")
+                            } else {
+                                Image(systemName: "house")
+                            }
+                            Text("discovery")
+                        }
+                    }
+            }
             ProfileView(store: store.scope(state: \.profileState, action: AppAction.profile))
                 .tag(AppState.Screen.profile)
                 .tabItem {
