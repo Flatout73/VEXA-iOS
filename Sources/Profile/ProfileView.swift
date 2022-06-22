@@ -44,6 +44,7 @@ public struct ProfileView: View {
                     UniProfileView(university: university)
                 default:
                     EmptyView()
+//                    UniversityPageView(u)
                 }
 			}
 			.padding()
