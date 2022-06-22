@@ -25,6 +25,8 @@
 		714D903327BA69A300770F4E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		714D903527BA69A500770F4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		714D903A27BA69A500770F4E /* VEXA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEXA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		716E8C832861E18D00C4C9FF /* VEXA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VEXA.entitlements; sourceTree = "<group>"; };
+		716E8C842861E19100C4C9FF /* VEXA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VEXA-Info.plist"; sourceTree = "<group>"; };
 		718F213D2861266000B2071D /* Ambassador.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ambassador.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		718F213F2861266000B2071D /* AmbassadorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorApp.swift; sourceTree = "<group>"; };
 		718F21432861266C00B2071D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +63,8 @@
 		7107F64D27BA91EF00870239 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				716E8C842861E19100C4C9FF /* VEXA-Info.plist */,
+				716E8C832861E18D00C4C9FF /* VEXA.entitlements */,
 				714D903527BA69A500770F4E /* Assets.xcassets */,
 				714D903327BA69A300770F4E /* App.swift */,
 				71D410AC27D13E4800A6EDE2 /* Media.xcassets */,
