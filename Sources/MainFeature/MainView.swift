@@ -22,12 +22,17 @@ public struct MainView: View {
             GeometryReader { proxy in
                 List {
                     //LazyVStack(spacing: 60) {
-                        ForEach(viewStore.state.content) { cell in
-                            let size = CGSize(width: proxy.size.width - 30, height: 400)
-                            DiscoveryCollectionView(discovery: cell, size: size)
-                                .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
+                    ForEach(viewStore.state.content) { cell in
+                        let size = CGSize(width: proxy.size.width - 30, height: 400)
+                        DiscoveryCollectionView(discovery: cell, size: size)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .background(
+                                NavigationLink("") {
+                                    ContentView(discovery: cell)
+                                }
+                            )
                         }
                     //}
                     .padding(.bottom, 60)

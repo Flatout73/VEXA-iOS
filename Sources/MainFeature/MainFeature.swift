@@ -70,6 +70,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                                          universityName: "University",
                                          videoName: $0.title,
                                          category: "Category",
+                                         videoURL: URL(string: $0.videoURL),
                                          image: URL(string: $0.imageURL))
                     }
                 )
