@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SharedModels
+import Resources
 
 struct DiscoveryCollectionView: View {
     
@@ -62,8 +63,8 @@ struct DiscoveryCollectionView: View {
                     HStack {
                         Text(discovery.ambassador)
                             .font(.subheadline)
+                            .foregroundColor(VEXAColors.mainGreen)
                             .fontWeight(.bold)
-                            .foregroundColor(.green)
                         Text("Ambassador")
                             .font(.subheadline)
                             .foregroundColor(.gray)

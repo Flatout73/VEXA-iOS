@@ -7,8 +7,9 @@
 
 import SwiftUI
 import SharedModels
+import Resources
 
-struct UserProfile: View {
+struct UserProfileView: View {
     
     let user: User
     
@@ -75,19 +76,19 @@ struct UserProfile: View {
                 
                 Text("About")
                     .foregroundColor(.black)
-                    .font(Font.system(size: 18))
+                    .font(.title3)
                 Spacer()
             }
             
             HStack {
                 Text("Email:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text(user.email)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
             
@@ -96,12 +97,12 @@ struct UserProfile: View {
             HStack {
                 Text("Date of Birth:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text(user.dateOfBirth)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
             
@@ -110,12 +111,12 @@ struct UserProfile: View {
             HStack {
                 Text("Country:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text(user.country)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
             
@@ -124,26 +125,28 @@ struct UserProfile: View {
             HStack {
                 Text("Native Language:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text(user.nativeLanguage)
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
             
             Divider()
             
-            Button(action: {
-                showingSheet.toggle()
-            }) {
-                Text("See more")
-                    .foregroundColor(.green)
-                    .font(.subheadline)
-            }
-            .sheet(isPresented: $showingSheet) {
-                textView
+            Group {
+                Button(action: {
+                    showingSheet.toggle()
+                }) {
+                    Text(showingSheet ? "Hide" : "See more")
+                        .foregroundColor(VEXAColors.mainGreen)
+                        .font(.subheadline)
+                }
+                if showingSheet {
+                    textView
+                }
             }
         }
         .background(Color.white)
@@ -158,12 +161,12 @@ struct UserProfile: View {
             HStack {
                 Text("Extra Text:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text("User Info")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
             
@@ -172,12 +175,12 @@ struct UserProfile: View {
             HStack {
                 Text("Extra Text:")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                     .fontWeight(.bold)
                 
                 Text("User Info")
                     .foregroundColor(.gray)
-                    .font(Font.system(size: 14))
+                    .font(.subheadline)
                 Spacer()
             }
         }
@@ -200,7 +203,7 @@ struct UserProfile: View {
                                 .foregroundColor(.white)
                                 .font(Font.system(size: 20))
                                 .frame(width: 85, height: 85)
-                                .background(.green)
+                                .background(VEXAColors.mainGreen)
                             
                             Text("University Name \(index)")
                                 .font(Font.system(size: 10))
@@ -275,7 +278,7 @@ struct UserProfile: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
                     }
-                    .background(Color.green)
+                    .background(VEXAColors.mainGreen)
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     
@@ -288,7 +291,7 @@ struct UserProfile: View {
                     HStack(spacing: 5) {
                         Text("Universities")
                             .font(Font.system(size: 14))
-                            .foregroundColor(.green)
+                            .foregroundColor(VEXAColors.mainGreen)
                             .bold()
                             .frame(alignment: .leading)
                         Text("15")
@@ -306,7 +309,7 @@ struct UserProfile: View {
                     HStack(spacing: 5) {
                         Text("My Content")
                             .font(Font.system(size: 14))
-                            .foregroundColor(.green)
+                            .foregroundColor(VEXAColors.mainGreen)
                             .bold()
                             .frame(alignment: .leading)
                         Text("15")
@@ -330,7 +333,7 @@ struct UserProfile: View {
                     HStack(spacing: 5) {
                         Text("Liked")
                             .font(Font.system(size: 14))
-                            .foregroundColor(.green)
+                            .foregroundColor(VEXAColors.mainGreen)
                             .bold()
                             .frame(alignment: .leading)
                         Text("15")

@@ -10,6 +10,7 @@ import ComposableArchitecture
 import CoreUI
 import Resources
 import SharedModels
+import UniversityProfile
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
@@ -18,7 +19,9 @@ public struct ProfileView: View {
 		self.store = store
 	}
     
-    let user = User(id: "0", firstName: "Leonid", secondName: "Leonidovich", email: "Leonid@mail.ru", dateOfBirth: "04.04.1944", country: "Russia", nativeLanguage: "Russian", universities: ["University Name", "University Name2"], content: ["Jane", "aboutIMG"], image: URL(string: "https://i.stack.imgur.com/e54hT.png"))
+    let user = Mock.user
+    
+    let university = Mock.university
     
 	public var body: some View {
 		WithViewStore(store) { viewStore in
@@ -36,11 +39,12 @@ public struct ProfileView: View {
                 switch viewStore.screen {
                     // TODO: Add separate modules for every screen
                 case .heal:
-                    UserProfile(user: user)
+                    UserProfileView(user: user)
                 case .stage:
-                    Text("kekes")
+                    UniProfileView(university: university)
                 default:
                     EmptyView()
+//                    UniversityPageView(u)
                 }
             }
 			.padding()
