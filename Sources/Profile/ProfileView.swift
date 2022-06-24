@@ -11,6 +11,8 @@ import CoreUI
 import Resources
 import SharedModels
 import UniversityProfile
+import UniversitiesList
+
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
@@ -22,7 +24,7 @@ public struct ProfileView: View {
     let user = Mock.user
     
     let university = Mock.university
-    
+
 	public var body: some View {
 		WithViewStore(store) { viewStore in
 			VStack(alignment: .center) {
@@ -44,7 +46,6 @@ public struct ProfileView: View {
                     UniProfileView(university: university)
                 default:
                     EmptyView()
-//                    UniversityPageView(u)
                 }
 			}
 			.padding()

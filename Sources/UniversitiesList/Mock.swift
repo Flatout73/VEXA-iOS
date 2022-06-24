@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SharedModels
 
 public extension Mock {
     static var universities: [University] {
