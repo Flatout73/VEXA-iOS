@@ -63,6 +63,7 @@ var package = Package(
                 "UIApplicationClient",
                 "CoreUI",
                 "Services",
+                "UniversitiesList",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),

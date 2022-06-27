@@ -18,14 +18,17 @@ public struct AppState: Equatable {
     }
     var mainState: MainState
     var profileState: ProfileState
-    var universityListState: UniversityListState
+   // var universityListState: UniversityListState
     
     var selectedScreen = Screen.main
     
-    public init(mainState: MainState = MainState(), profileState: ProfileState = ProfileState(), universityListState: UniversityListState = UniversityListState()) {
+    public init(mainState: MainState = MainState(),
+                profileState: ProfileState = ProfileState()
+    //            universityListState: UniversityListState = UniversityListState()
+    ) {
         self.mainState = mainState
         self.profileState = profileState
-        self.universityListState = universityListState
+        //self.universityListState = universityListState
     }
 }
 
@@ -33,7 +36,7 @@ public enum AppAction: Equatable {
     case appDelegate(AppDelegateAction)
     case main(MainAction)
     case profile(ProfileAction)
-    case universityList(UniversityListAction)
+    //case universityList(UniversityListAction)
     
     case changeScreen(AppState.Screen)
 }
@@ -46,9 +49,9 @@ extension AppEnvironment {
         ProfileEnvironment()
     }
     
-    var universityList: UniversityListEnvironment {
-        UniversityListEnvironment()
-    }
+//    var universityList: UniversityListEnvironment {
+//        UniversityListEnvironment()
+//    }
 }
 
 public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -75,8 +78,8 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         return .none
     case .changeScreen(let screen):
         state.selectedScreen = screen
-    case .universityList(_):
-        return .none
+//    case .universityList:
+//        return .none
     }
     return .none
 }
@@ -111,6 +114,7 @@ public struct AppView: View {
                     }
                 }
             if isAmbassador {
+                // Add video
                 AddContentView()
                     .tag(AppState.Screen.addContent)
                     .tabItem {
@@ -125,19 +129,18 @@ public struct AppView: View {
                     }
                 }
             // Engage
-            UniversityListView(store: store.scope(state: \.universityListState, action: AppAction.universityList))
-                .tag(AppState.Screen.universityList)
-                .tabItem {
-                    VStack {
-                        if self.viewStore.selectedScreen == .main {
-                            Image(systemName: "magnifyingglass.circle.fill")
-                        } else {
-                            Image(systemName: "magnifyingglass.circle")
-                        }
-                        Text("Engage")
-                    }
-                }
-            // Add video
+//            UniversityListView(store: store.scope(state: \.universityListState, action: AppAction.universityList))
+//                .tag(AppState.Screen.universityList)
+//                .tabItem {
+//                    VStack {
+//                        if self.viewStore.selectedScreen == .main {
+//                            Image(systemName: "magnifyingglass.circle.fill")
+//                        } else {
+//                            Image(systemName: "magnifyingglass.circle")
+//                        }
+//                        Text("Engage")
+//                    }
+//                }
             
             
             // User Profile
