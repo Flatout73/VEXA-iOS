@@ -15,6 +15,7 @@ var package = Package(
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "MainFeature", targets: ["MainFeature"]),
+        .library(name: "ContentDetails", targets: ["ContentDetails"]),
         .library(name: "Profile", targets: ["Profile"]),
         .library(name: "Resources", type: .dynamic, targets: ["Resources"]),
         .library(name: "Core", targets: ["Core"]),
@@ -74,6 +75,20 @@ var package = Package(
                 "CoreUI",
                 "Services",
                 "ApiClient",
+                "ContentDetails",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .target(
+            name: "ContentDetails",
+            dependencies: [
+                "SharedModels",
+                "Resources",
+                "Analytics",
+                "Log",
+                "CoreUI",
+                "Services",
+                "ApiClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),
@@ -94,7 +109,10 @@ var package = Package(
                     //.process("Fonts")
                 ]
                ),
-        .target(name: "Core", dependencies: ["KeychainAccess"]),
+        .target(name: "Core", dependencies: [
+            "KeychainAccess",
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+        ]),
         .target(name: "CoreUI",
                 dependencies: [
                     "Resources",

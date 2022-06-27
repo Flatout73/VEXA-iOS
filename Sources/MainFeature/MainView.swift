@@ -5,6 +5,8 @@ import Log
 import CoreUI
 import SharedModels
 import Resources
+import ContentDetails
+import CasePaths
 
 public struct MainView: View {
 	let store: Store<MainState, MainAction>
@@ -29,9 +31,20 @@ public struct MainView: View {
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                             .background(
-                                NavigationLink("") {
-                                    ContentView(discovery: cell)
-                                }
+                                NavigationLink(
+                                  destination:
+                                    ContentDetailsView(store:
+                                    self.store.scope(
+                                        state: { (/MainRoute.details).extract(from: $0.route)! },
+                                        action: MainAction.details
+                                    )),
+                                  tag: MainRoute.Tag.details,
+                                  selection: viewStore.binding(
+                                    get: { return $0.route?.tag },
+                                    send: { _ in MainAction.setNavigation(.details(ContentDetailsState(discovery: cell))) }
+                                  )) {
+                                      EmptyView()
+                                  }
                             )
                         }
                     //}
