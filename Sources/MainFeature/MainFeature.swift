@@ -21,14 +21,10 @@ import CasePaths
 public enum MainRoute: Equatable {
     case details(ContentDetailsState)
 
-    public enum Tag: String {
-        case details
-    }
-
-    public var tag: Tag {
+    public var tag: String {
         switch self {
-        case .details:
-            return .details
+        case .details(let state):
+            return "state_\(state.discovery.id)"
         }
     }
 }

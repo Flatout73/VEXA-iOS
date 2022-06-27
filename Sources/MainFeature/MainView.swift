@@ -32,19 +32,18 @@ public struct MainView: View {
                             .listRowSeparator(.hidden)
                             .background(
                                 NavigationLink(
-                                  destination:
-                                    ContentDetailsView(store:
-                                    self.store.scope(
-                                        state: { (/MainRoute.details).extract(from: $0.route)! },
-                                        action: MainAction.details
-                                    )),
-                                  tag: MainRoute.Tag.details,
-                                  selection: viewStore.binding(
-                                    get: { return $0.route?.tag },
-                                    send: { _ in MainAction.setNavigation(.details(ContentDetailsState(discovery: cell))) }
-                                  )) {
-                                      EmptyView()
-                                  }
+                                    destination: IfLetStore(
+                                        self.store.scope(
+                                            state: (\MainState.route).appending(path: /MainRoute.details).extract(from:),
+                                            action: MainAction.details
+                                        ), then: { ContentDetailsView(store: $0) }),
+                                    tag: MainRoute.details(ContentDetailsState(discovery: cell)).tag,
+                                    selection: viewStore.binding(
+                                        get: { return $0.route?.tag },
+                                        send: { _ in MainAction.setNavigation(.details(ContentDetailsState(discovery: cell))) }
+                                    )) {
+                                        EmptyView()
+                                    }
                             )
                         }
                     //}
@@ -80,7 +79,7 @@ public struct MainView: View {
             mainContent
                 //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .navigationViewStyle(StackNavigationViewStyle())
-            //.zIndex(0)
+            .zIndex(0)
                 .onAppear {
                     // just sample
                     //VEXAAnalytics.shared.log(event: "main_screen_appeared")
