@@ -1,5 +1,4 @@
 import ApiClient
-import Build
 import ComposableArchitecture
 import SharedModels
 import UIApplicationClient
@@ -9,7 +8,6 @@ public struct AppEnvironment {
   public var apiClient: APIClient
   public var applicationClient: UIApplicationClient
   public var backgroundQueue: AnySchedulerOf<DispatchQueue>
-  public var build: Build
   public var mainQueue: AnySchedulerOf<DispatchQueue>
   public var mainRunLoop: AnySchedulerOf<RunLoop>
   public var setUserInterfaceStyle: (UIUserInterfaceStyle) -> Effect<Never, Never>
@@ -19,7 +17,6 @@ public struct AppEnvironment {
     apiClient: APIClient,
     applicationClient: UIApplicationClient,
     backgroundQueue: AnySchedulerOf<DispatchQueue>,
-    build: Build,
     mainQueue: AnySchedulerOf<DispatchQueue>,
     mainRunLoop: AnySchedulerOf<RunLoop>,
     setUserInterfaceStyle: @escaping (UIUserInterfaceStyle) -> Effect<Never, Never>,
@@ -28,7 +25,6 @@ public struct AppEnvironment {
     self.apiClient = apiClient
     self.applicationClient = applicationClient
     self.backgroundQueue = backgroundQueue
-    self.build = build
     self.mainQueue = mainQueue
     self.mainRunLoop = mainRunLoop
     self.setUserInterfaceStyle = setUserInterfaceStyle

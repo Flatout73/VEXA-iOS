@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		714D904327BA69A500770F4E /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714D903327BA69A300770F4E /* App.swift */; };
 		714D904727BA69A500770F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 714D903527BA69A500770F4E /* Assets.xcassets */; };
+		718F21402861266000B2071D /* AmbassadorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718F213F2861266000B2071D /* AmbassadorApp.swift */; };
+		718F21442861266C00B2071D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718F21432861266C00B2071D /* Assets.xcassets */; };
+		718F21472861266C00B2071D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 718F21462861266C00B2071D /* Preview Assets.xcassets */; };
+		718F214E286128DA00B2071D /* Analytics in Frameworks */ = {isa = PBXBuildFile; productRef = 718F214D286128DA00B2071D /* Analytics */; };
+		718F214F28612B4900B2071D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71F49B1827BD8A4B00E2704E /* Localizable.strings */; };
+		718F21562861395C00B2071D /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 718F21552861395C00B2071D /* AppFeature */; };
 		7194E7FD27BAA2C80022D043 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 7194E7FC27BAA2C80022D043 /* AppFeature */; };
 		71D410AD27D13E4800A6EDE2 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71D410AC27D13E4800A6EDE2 /* Media.xcassets */; };
 		71DD779D27C4173A006AB459 /* Analytics in Frameworks */ = {isa = PBXBuildFile; productRef = 71DD779C27C4173A006AB459 /* Analytics */; };
@@ -19,12 +25,17 @@
 		714D903327BA69A300770F4E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		714D903527BA69A500770F4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		714D903A27BA69A500770F4E /* VEXA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VEXA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		716E8C832861E18D00C4C9FF /* VEXA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VEXA.entitlements; sourceTree = "<group>"; };
+		716E8C842861E19100C4C9FF /* VEXA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VEXA-Info.plist"; sourceTree = "<group>"; };
+		718F213D2861266000B2071D /* Ambassador.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ambassador.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		718F213F2861266000B2071D /* AmbassadorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorApp.swift; sourceTree = "<group>"; };
+		718F21432861266C00B2071D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		718F21462861266C00B2071D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		718F215028612CDE00B2071D /* Ambassador.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ambassador.entitlements; sourceTree = "<group>"; };
 		7194E7FA27BAA2990022D043 /* VEXA */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = VEXA; path = ..; sourceTree = "<group>"; };
 		71D410AC27D13E4800A6EDE2 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		71F49B1727BD8A4B00E2704E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71F49B1927BD8A6C00E2704E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		897BCDCE27C4154A00C1D330 /* VEXA-iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VEXA-iOS--Info.plist"; sourceTree = "<group>"; };
-		897F735627C4DCC600B3E9D2 /* VEXA (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "VEXA (iOS).entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,13 +48,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		718F213A2861266000B2071D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				718F214E286128DA00B2071D /* Analytics in Frameworks */,
+				718F21562861395C00B2071D /* AppFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7107F64D27BA91EF00870239 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				71F49B1827BD8A4B00E2704E /* Localizable.strings */,
+				716E8C842861E19100C4C9FF /* VEXA-Info.plist */,
+				716E8C832861E18D00C4C9FF /* VEXA.entitlements */,
 				714D903527BA69A500770F4E /* Assets.xcassets */,
 				714D903327BA69A300770F4E /* App.swift */,
 				71D410AC27D13E4800A6EDE2 /* Media.xcassets */,
@@ -54,10 +75,10 @@
 		714D902D27BA69A300770F4E = {
 			isa = PBXGroup;
 			children = (
-				897F735627C4DCC600B3E9D2 /* VEXA (iOS).entitlements */,
-				897BCDCE27C4154A00C1D330 /* VEXA-iOS--Info.plist */,
+				71F49B1827BD8A4B00E2704E /* Localizable.strings */,
 				7194E7FA27BAA2990022D043 /* VEXA */,
 				7107F64D27BA91EF00870239 /* iOS */,
+				718F213E2861266000B2071D /* Ambassador */,
 				714D903B27BA69A500770F4E /* Products */,
 				7194E7FB27BAA2C80022D043 /* Frameworks */,
 			);
@@ -67,8 +88,28 @@
 			isa = PBXGroup;
 			children = (
 				714D903A27BA69A500770F4E /* VEXA.app */,
+				718F213D2861266000B2071D /* Ambassador.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		718F213E2861266000B2071D /* Ambassador */ = {
+			isa = PBXGroup;
+			children = (
+				718F215028612CDE00B2071D /* Ambassador.entitlements */,
+				718F213F2861266000B2071D /* AmbassadorApp.swift */,
+				718F21432861266C00B2071D /* Assets.xcassets */,
+				718F21452861266C00B2071D /* Preview Content */,
+			);
+			path = Ambassador;
+			sourceTree = "<group>";
+		};
+		718F21452861266C00B2071D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				718F21462861266C00B2071D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		7194E7FB27BAA2C80022D043 /* Frameworks */ = {
@@ -102,6 +143,27 @@
 			productReference = 714D903A27BA69A500770F4E /* VEXA.app */;
 			productType = "com.apple.product-type.application";
 		};
+		718F213C2861266000B2071D /* Ambassador */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 718F214A2861266C00B2071D /* Build configuration list for PBXNativeTarget "Ambassador" */;
+			buildPhases = (
+				718F21392861266000B2071D /* Sources */,
+				718F213A2861266000B2071D /* Frameworks */,
+				718F213B2861266000B2071D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ambassador;
+			packageProductDependencies = (
+				718F214D286128DA00B2071D /* Analytics */,
+				718F21552861395C00B2071D /* AppFeature */,
+			);
+			productName = Ambassador;
+			productReference = 718F213D2861266000B2071D /* Ambassador.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -109,11 +171,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					714D903927BA69A500770F4E = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					718F213C2861266000B2071D = {
+						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
 			};
@@ -135,6 +200,7 @@
 			projectRoot = "";
 			targets = (
 				714D903927BA69A500770F4E /* VEXA (iOS) */,
+				718F213C2861266000B2071D /* Ambassador */,
 			);
 		};
 /* End PBXProject section */
@@ -150,6 +216,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		718F213B2861266000B2071D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				718F21472861266C00B2071D /* Preview Assets.xcassets in Resources */,
+				718F214F28612B4900B2071D /* Localizable.strings in Resources */,
+				718F21442861266C00B2071D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -158,6 +234,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				714D904327BA69A500770F4E /* App.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		718F21392861266000B2071D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				718F21402861266000B2071D /* AmbassadorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,16 +378,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "VEXA (iOS).entitlements";
+				CODE_SIGN_ENTITLEMENTS = iOS/VEXA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9KTCLUT7B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "VEXA-iOS--Info.plist";
+				INFOPLIST_FILE = "iOS/VEXA-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VEXA;
-				INFOPLIST_KEY_NSCameraUsageDescription = "При выключенной камере коуч не сможет эффективно оценивать твои эмоциональные реакции, что существенно снизит качество сессии. Перейди в настройки, чтобы дать приложению доступ к камере.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Для загрузки контента";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = faceid_description;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -323,6 +407,7 @@
 				PRODUCT_NAME = VEXA;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -334,16 +419,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "VEXA (iOS).entitlements";
+				CODE_SIGN_ENTITLEMENTS = iOS/VEXA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9KTCLUT7B4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "VEXA-iOS--Info.plist";
+				INFOPLIST_FILE = "iOS/VEXA-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VEXA;
-				INFOPLIST_KEY_NSCameraUsageDescription = "При выключенной камере коуч не сможет эффективно оценивать твои эмоциональные реакции, что существенно снизит качество сессии. Перейди в настройки, чтобы дать приложению доступ к камере.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Для загрузки контента";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = faceid_description;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -370,6 +455,75 @@
 			};
 			name = Release;
 		};
+		718F21482861266C00B2071D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Ambassador/Ambassador.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Ambassador/Preview Content\"";
+				DEVELOPMENT_TEAM = 98A95ZRNVF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vexa.Ambassador;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG AMBASSADOR";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		718F21492861266C00B2071D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Ambassador/Ambassador.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Ambassador/Preview Content\"";
+				DEVELOPMENT_TEAM = 98A95ZRNVF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vexa.Ambassador;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = AMBASSADOR;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -391,6 +545,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		718F214A2861266C00B2071D /* Build configuration list for PBXNativeTarget "Ambassador" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				718F21482861266C00B2071D /* Debug */,
+				718F21492861266C00B2071D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -405,6 +568,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		718F214D286128DA00B2071D /* Analytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Analytics;
+		};
+		718F21552861395C00B2071D /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
+		};
 		7194E7FC27BAA2C80022D043 /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppFeature;

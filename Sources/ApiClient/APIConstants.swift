@@ -8,7 +8,11 @@
 import Foundation
 
 public enum APIConstants {
-    static let baseURL = URL(string: "https://vexa-app.herokuapp.com/api")! //URL(string: "http://127.0.0.1:8080/api")!
+//    #if DEBUG
+//    static let baseURL = URL(string: "http://127.0.0.1:8080/api")!
+//    #else
+    static let baseURL = URL(string: "https://vexa-app.herokuapp.com/api")!
+//    #endif
 
     enum Auth {
         static let refresh = "/auth/refresh"
