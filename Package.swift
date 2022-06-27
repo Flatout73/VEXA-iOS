@@ -24,7 +24,8 @@ var package = Package(
         .library(name: "Log", targets: ["Log"]),
         .library(name: "Services", targets: ["Services"]),
         .library(name: "Protobuf", targets: ["Protobuf"]),
-        .library(name: "UniversityProfile", targets: ["UniversityProfile"])
+        .library(name: "UniversityProfile", targets: ["UniversityProfile"]),
+        .library(name: "UniversitiesList", targets: ["UniversitiesList"]),
     ],
     dependencies: [
         .package(name: "iPhoneNumberField",
@@ -97,6 +98,7 @@ var package = Package(
                     "SharedModels",
                     "CoreUI",
                     "UniversityProfile",
+                    "UniversitiesList",
                     .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
                 ]
                ),
@@ -131,6 +133,12 @@ var package = Package(
             .product(name: "SwiftProtobuf", package: "swift-protobuf")
         ]),
         .target(name: "UniversityProfile", dependencies: [
+            "SharedModels",
+            "CoreUI",
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+        ]
+       ),
+        .target(name: "UniversitiesList", dependencies: [
             "SharedModels",
             "CoreUI",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
