@@ -1,8 +1,8 @@
 //
-//  VEXA_iOSApp.swift
-//  Shared
+//  AmbassadorApp.swift
+//  Ambassador
 //
-//  Created by Leonid Lyadveykin on 14.02.2022.
+//  Created by Leonid Lyadveykin on 21.06.2022.
 //
 
 import AppFeature
@@ -14,20 +14,20 @@ import Resources
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
   let store = Store(
-	initialState: .init(),
-	reducer: appReducer,
-	environment: .live
+    initialState: .init(),
+    reducer: appReducer,
+    environment: .live
   )
   lazy var viewStore = ViewStore(
-	self.store.scope(state: { _ in () }),
-	removeDuplicates: ==
+    self.store.scope(state: { _ in () }),
+    removeDuplicates: ==
   )
-    
-	func application(
-		_ application: UIApplication,
-		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-	) -> Bool {
-		self.viewStore.send(.appDelegate(.didFinishLaunching))
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        self.viewStore.send(.appDelegate(.didFinishLaunching))
 
         let tabBarAppeareance = UITabBarAppearance()
         tabBarAppeareance.configureWithOpaqueBackground()
@@ -45,38 +45,38 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         UINavigationBar.appearance().standardAppearance = navBarAppeareance
         UINavigationBar.appearance().compactAppearance = navBarAppeareance
 
-		return true
-	}
+        return true
+    }
 
   func application(
-	_ application: UIApplication,
-	didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    _ application: UIApplication,
+    didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
   ) {
-	self.viewStore.send(.appDelegate(.didRegisterForRemoteNotifications(.success(deviceToken))))
+    self.viewStore.send(.appDelegate(.didRegisterForRemoteNotifications(.success(deviceToken))))
   }
-    
+
     func application(_ application: UIApplication, didReceiveRemoteNotification notification: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("\(#function)")
         completionHandler(.noData)
     }
-    
+
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         print("\(#function)")
         return false
     }
 
   func application(
-	_ application: UIApplication,
-	didFailToRegisterForRemoteNotificationsWithError error: Error
+    _ application: UIApplication,
+    didFailToRegisterForRemoteNotificationsWithError error: Error
   ) {
-	self.viewStore.send(
-	  .appDelegate(.didRegisterForRemoteNotifications(.failure(error as NSError)))
-	)
+    self.viewStore.send(
+      .appDelegate(.didRegisterForRemoteNotifications(.failure(error as NSError)))
+    )
   }
 }
 
 @main
-struct VEXAApp: App {
+struct AmbassadorApp: App {
   @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
   @Environment(\.scenePhase) private var scenePhase
 
@@ -85,12 +85,12 @@ struct VEXAApp: App {
   }
 
   var body: some Scene {
-	WindowGroup {
-	  AppView(store: self.appDelegate.store)
-	}
-	//.onChange(of: self.scenePhase) {
-	  //self.appDelegate.viewStore.send(.didChangeScenePhase($0))
-	//}
+    WindowGroup {
+        AppView(store: self.appDelegate.store, isAmbassador: true)
+    }
+    //.onChange(of: self.scenePhase) {
+      //self.appDelegate.viewStore.send(.didChangeScenePhase($0))
+    //}
   }
 }
 
@@ -113,3 +113,4 @@ extension AppEnvironment {
         )
     }
 }
+

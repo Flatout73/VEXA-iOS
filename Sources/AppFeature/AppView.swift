@@ -6,10 +6,12 @@ import Profile
 import Services
 import Log
 import UniversitiesList
+import AddContent
 
 public struct AppState: Equatable {
     public enum Screen: String {
         case main
+        case addContent
         case profile
         case universityList
         case debug
@@ -83,10 +85,13 @@ public struct AppView: View {
     let store: Store<AppState, AppAction>
     @ObservedObject
     var viewStore: ViewStore<AppState, AppAction>
+
+    let isAmbassador: Bool
     
-    public init(store: Store<AppState, AppAction>) {
+    public init(store: Store<AppState, AppAction>, isAmbassador: Bool = false) {
         self.store = store
         self.viewStore = ViewStore(store)
+        self.isAmbassador = isAmbassador
     }
     
     public var body: some View {
@@ -103,6 +108,20 @@ public struct AppView: View {
                             Image(systemName: "house")
                         }
                         Text("discovery")
+                    }
+                }
+            if isAmbassador {
+                AddContentView()
+                    .tag(AppState.Screen.addContent)
+                    .tabItem {
+                        VStack {
+                            if self.viewStore.selectedScreen == .main {
+                                Image(systemName: "plus.circle.fill")
+                            } else {
+                                Image(systemName: "plus")
+                            }
+                            Text("add_content")
+                        }
                     }
                 }
             // Engage

@@ -15,6 +15,12 @@ import AVKit
 import ApiClient
 import Core
 import Protobuf
+import ContentDetails
+import CasePaths
+
+public enum MainRoute: Hashable {
+    case details(ContentDetailsState)
+}
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
@@ -22,7 +28,9 @@ public struct MainState: Equatable {
 
     public var isLoading = false
 
-	public init() {
+    public var route: MainRoute?
+
+    public init() {
 
 	}
 }
@@ -33,10 +41,19 @@ public enum MainAction: Equatable {
     case show([Discovery])
     case showError(String)
 
+    case details(ContentDetailsAction)
+    case setNavigation(MainRoute?)
+
 	public enum AlertAction: Equatable {
 		case dismiss
 		case go(String)
 	}
+}
+
+extension MainEnvironment {
+    var contentDetails: ContentDetailsEnvironment {
+        ContentDetailsEnvironment(apiClient: self.apiClient)
+    }
 }
 
 public struct MainEnvironment {
@@ -50,7 +67,11 @@ public struct MainEnvironment {
 }
 
 public let mainReducer = Reducer<MainState, MainAction, MainEnvironment>.combine(
-	mainReducerCore
+	mainReducerCore,
+    contentDetailsReducerCore._pullback(
+        state: (\MainState.route).appending(path: /MainRoute.details),
+        action: /MainAction.details,
+        environment: \.contentDetails)
 )
 
 let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, action, environment in
@@ -70,6 +91,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                                          universityName: "University",
                                          videoName: $0.title,
                                          category: "Category",
+                                         videoURL: URL(string: $0.videoURL),
                                          image: URL(string: $0.imageURL))
                     }
                 )
@@ -89,6 +111,10 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
     case .show(let content):
         state.isLoading = false
         state.content = content
+    case .details:
+        return .none
+    case .setNavigation(let tag):
+        state.route = tag
     }
 
 	return .none

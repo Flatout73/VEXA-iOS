@@ -47,7 +47,7 @@ public struct ProfileView: View {
                 default:
                     EmptyView()
                 }
-			}
+            }
 			.padding()
 		}
 	}

@@ -12,3 +12,6 @@
 
 //MARK: - Profile
 "profile" = "Профиль";
+
+//MARK: - Profile
+"add_content" = "Добавить контент";

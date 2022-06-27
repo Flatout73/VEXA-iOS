@@ -11,10 +11,11 @@ var package = Package(
         .iOS(.v15),
     ],
     products: [
-        .library(name: "Build", targets: ["Build"]),
+        .library(name: "AddContent", targets: ["AddContent"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "MainFeature", targets: ["MainFeature"]),
+        .library(name: "ContentDetails", targets: ["ContentDetails"]),
         .library(name: "Profile", targets: ["Profile"]),
         .library(name: "Resources", type: .dynamic, targets: ["Resources"]),
         .library(name: "Core", targets: ["Core"]),
@@ -40,16 +41,15 @@ var package = Package(
     ],
     targets: [
         .target(
-            name: "Build",
+            name: "AddContent",
             dependencies: [
-
+                "SharedModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),
         .target(
             name: "SharedModels",
             dependencies: [
-                "Build",
-
             ]
         ),
         .target(
@@ -57,8 +57,8 @@ var package = Package(
             dependencies: [
                 "SharedModels",
                 "ApiClient",
-                "Build",
                 "MainFeature",
+                "AddContent",
                 "Profile",
                 "UIApplicationClient",
                 "CoreUI",
@@ -68,6 +68,20 @@ var package = Package(
         ),
         .target(
             name: "MainFeature",
+            dependencies: [
+                "SharedModels",
+                "Resources",
+                "Analytics",
+                "Log",
+                "CoreUI",
+                "Services",
+                "ApiClient",
+                "ContentDetails",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .target(
+            name: "ContentDetails",
             dependencies: [
                 "SharedModels",
                 "Resources",
@@ -97,7 +111,10 @@ var package = Package(
                     //.process("Fonts")
                 ]
                ),
-        .target(name: "Core", dependencies: ["KeychainAccess"]),
+        .target(name: "Core", dependencies: [
+            "KeychainAccess",
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+        ]),
         .target(name: "CoreUI",
                 dependencies: [
                     "Resources",
