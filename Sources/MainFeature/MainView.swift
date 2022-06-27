@@ -18,6 +18,23 @@ public struct MainView: View {
 		self.store = store
 	}
 
+    @ViewBuilder
+    func backgroundNavigation(for cell: Discovery, viewStore: ViewStore<MainState, MainAction>) -> some View {
+        NavigationLink(
+            destination: IfLetStore(
+                self.store.scope(
+                    state: (\MainState.route).appending(path: /MainRoute.details).extract(from:),
+                    action: MainAction.details
+                ), then: { ContentDetailsView(store: $0) }),
+            tag: MainRoute.details(ContentDetailsState(discovery: cell)),
+            selection: viewStore.binding(
+                get: \.route,
+                send: MainAction.setNavigation
+            )) {
+                EmptyView()
+            }
+    }
+
 	@ViewBuilder
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
@@ -30,21 +47,7 @@ public struct MainView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
-                            .background(
-                                NavigationLink(
-                                    destination: IfLetStore(
-                                        self.store.scope(
-                                            state: (\MainState.route).appending(path: /MainRoute.details).extract(from:),
-                                            action: MainAction.details
-                                        ), then: { ContentDetailsView(store: $0) }),
-                                    tag: MainRoute.details(ContentDetailsState(discovery: cell)).tag,
-                                    selection: viewStore.binding(
-                                        get: { return $0.route?.tag },
-                                        send: { _ in MainAction.setNavigation(.details(ContentDetailsState(discovery: cell))) }
-                                    )) {
-                                        EmptyView()
-                                    }
-                            )
+                            .background(backgroundNavigation(for: cell, viewStore: viewStore))
                         }
                     //}
                     .padding(.bottom, 60)

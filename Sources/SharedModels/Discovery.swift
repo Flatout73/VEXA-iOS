@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Discovery: Identifiable, Equatable {
+public struct Discovery: Identifiable, Hashable {
     public let id: String
     public let ambassador, universityName, videoName, category: String
     public let videoURL: URL?

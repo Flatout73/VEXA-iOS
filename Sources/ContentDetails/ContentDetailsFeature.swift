@@ -7,7 +7,7 @@ import ApiClient
 import Core
 import Protobuf
 
-public struct ContentDetailsState: Equatable {
+public struct ContentDetailsState: Hashable {
     public var alert: AlertState<ContentDetailsAction.AlertAction>?
 
     public var discovery: Discovery
@@ -23,7 +23,7 @@ public enum ContentDetailsAction: Equatable {
     case alert(AlertAction)
     case showError(String)
 
-    public enum AlertAction: Equatable {
+    public enum AlertAction: Hashable {
         case dismiss
         case go(String)
     }

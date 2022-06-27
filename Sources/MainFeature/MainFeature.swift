@@ -18,15 +18,8 @@ import Protobuf
 import ContentDetails
 import CasePaths
 
-public enum MainRoute: Equatable {
+public enum MainRoute: Hashable {
     case details(ContentDetailsState)
-
-    public var tag: String {
-        switch self {
-        case .details(let state):
-            return "state_\(state.discovery.id)"
-        }
-    }
 }
 
 public struct MainState: Equatable {
