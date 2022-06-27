@@ -22,6 +22,7 @@ public struct ContentDetailsState: Hashable {
 public enum ContentDetailsAction: Equatable {
     case alert(AlertAction)
     case showError(String)
+    case shareShown(Bool)
 
     public enum AlertAction: Hashable {
         case dismiss
