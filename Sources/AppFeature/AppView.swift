@@ -10,7 +10,7 @@ import AddContent
 
 public struct AppState: Equatable {
     public enum Screen: String {
-        case main
+        case discovery
         case addContent
         case profile
         case universityList
@@ -20,7 +20,7 @@ public struct AppState: Equatable {
     var profileState: ProfileState
    // var universityListState: UniversityListState
     
-    var selectedScreen = Screen.main
+    var selectedScreen = Screen.discovery
     
     public init(mainState: MainState = MainState(),
                 profileState: ProfileState = ProfileState()
@@ -102,10 +102,10 @@ public struct AppView: View {
         TabView(selection: self.viewStore.binding(get: \.selectedScreen, send: AppAction.changeScreen)) {
             // Discovery
             MainView(store: mainStore)
-                .tag(AppState.Screen.main)
+                .tag(AppState.Screen.discovery)
                 .tabItem {
                     VStack {
-                        if self.viewStore.selectedScreen == .main {
+                        if self.viewStore.selectedScreen == .discovery {
                             Image(systemName: "house.fill")
                         } else {
                             Image(systemName: "house")
@@ -119,7 +119,7 @@ public struct AppView: View {
                     .tag(AppState.Screen.addContent)
                     .tabItem {
                         VStack {
-                            if self.viewStore.selectedScreen == .main {
+                            if self.viewStore.selectedScreen == .discovery {
                                 Image(systemName: "plus.circle.fill")
                             } else {
                                 Image(systemName: "plus")
@@ -168,6 +168,10 @@ public struct AppView: View {
                     }
                 }
             #endif
+        }
+        .onOpenURL { url in
+            let screen = AppState.Screen(rawValue: url.host ?? "discovery") ?? .discovery
+            viewStore.send(.changeScreen(screen))
         }
     }
 }

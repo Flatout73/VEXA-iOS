@@ -41,7 +41,7 @@ public struct ContentDetailsView: View {
                 })
             }
             .sheet(isPresented: $isShareSheetShown) {
-                return ShareSheet(activityItems: [URL(string: "vexa://video/\(viewStore.state.discovery.id)")])
+                return ShareSheet(activityItems: [URL(string: "vexa://discovery/\(viewStore.state.discovery.id)")])
             }
         }
         .background(VEXAColors.background)

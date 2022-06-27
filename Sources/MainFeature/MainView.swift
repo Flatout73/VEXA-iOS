@@ -57,6 +57,13 @@ public struct MainView: View {
                     await viewStore.send(.fetchContent, while: \.isLoading)
                 }
             }
+            .onOpenURL { url in
+                guard url.host == "discovery" else { return }
+                let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                if let id = urlComponents?.path, let content = viewStore.state.content.first(where: { "/\($0.id)" == id }) {
+                    viewStore.send(.setNavigation(.details(ContentDetailsState(discovery: content))))
+                }
+            }
         }
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
@@ -89,7 +96,6 @@ public struct MainView: View {
                     VEXALogger.shared.debug("main screen")
                 }
         }
-
         .alert(self.store.scope(state: \.alert, action: MainAction.alert), dismiss: .dismiss)
     }
 }
