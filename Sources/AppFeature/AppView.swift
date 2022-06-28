@@ -99,13 +99,10 @@ public struct AppView: View {
     let store: Store<AppState, AppAction>
     @ObservedObject
     var viewStore: ViewStore<AppState, AppAction>
-
-    let isAmbassador: Bool
     
-    public init(store: Store<AppState, AppAction>, isAmbassador: Bool = false) {
+    public init(store: Store<AppState, AppAction>) {
         self.store = store
         self.viewStore = ViewStore(store)
-        self.isAmbassador = isAmbassador
     }
     
     public var body: some View {
@@ -137,6 +134,7 @@ public struct AppView: View {
                             }
                             Text("add_content")
                         }
+                        Text("discovery")
                     }
                 }
             // Engage
