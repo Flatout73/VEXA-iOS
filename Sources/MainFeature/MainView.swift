@@ -11,9 +11,6 @@ import CasePaths
 public struct MainView: View {
 	let store: Store<MainState, MainAction>
 
-    @State
-    private var search = ""
-
 	public init(store: Store<MainState, MainAction>) {
 		self.store = store
 	}
@@ -41,7 +38,7 @@ public struct MainView: View {
             GeometryReader { proxy in
                 List {
                     //LazyVStack(spacing: 60) {
-                    ForEach(viewStore.state.content) { cell in
+                    ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
                         let size = CGSize(width: proxy.size.width - 30, height: 400)
                         DiscoveryCollectionView(discovery: cell, size: size)
                             .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
@@ -57,6 +54,7 @@ public struct MainView: View {
                     await viewStore.send(.fetchContent, while: \.isLoading)
                 }
             }
+            .searchable(text: viewStore.binding(get: \.searchText, send: MainAction.search), prompt: "search")
             .onOpenURL { url in
                 guard url.host == "discovery" else { return }
                 let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
@@ -67,7 +65,6 @@ public struct MainView: View {
         }
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $search, prompt: "search")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Menu(content: {

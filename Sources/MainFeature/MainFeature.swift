@@ -26,9 +26,13 @@ public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
     public var content: [Discovery] = Mock.discovery
 
+    public var filteredContent: [Discovery]?
+
     public var isLoading = false
 
     public var route: MainRoute?
+
+    public var searchText = ""
 
     public init() {
 
@@ -40,6 +44,8 @@ public enum MainAction: Equatable {
     case fetchContent
     case show([Discovery])
     case showError(String)
+
+    case search(String)
 
     case details(ContentDetailsAction)
     case setNavigation(MainRoute?)
@@ -116,6 +122,14 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         return .none
     case .setNavigation(let tag):
         state.route = tag
+    case .search(let text):
+        state.searchText = text
+        if !text.isEmpty {
+            state.filteredContent = state.content.filter({ $0.ambassador.contains(text) || $0.category.contains(text) ||
+                $0.universityName.contains(text) || $0.videoName.contains(text) })
+        } else {
+            state.filteredContent = nil
+        }
     }
 
 	return .none
