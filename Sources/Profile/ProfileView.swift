@@ -30,6 +30,28 @@ public struct ProfileView: View {
     
     let university = Mock.university
 
+    // MARK: - Horizontal Scroll View with Content
+
+    var studentContentView: some View {
+
+        ScrollView(.horizontal, showsIndicators: false) {
+
+            VStack(spacing: 5) {
+                HStack (spacing: 10) {
+                    ForEach(user.content, id: \.self) { content in
+                        Button(action: {
+                            print("Process to content")
+                        }) {
+                            Image(content, bundle: .module)
+                                .resizable()
+                                .frame(width: 85, height: 85)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 	public var main: some View {
         WithViewStore(store) { viewStore in
             ScrollView (.vertical) {
@@ -54,6 +76,8 @@ public struct ProfileView: View {
                                 .frame(alignment: .leading)
                             Spacer()
                         }
+
+                        studentContentView
                     }
                 }
             }
