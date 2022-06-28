@@ -43,7 +43,7 @@ public struct ProfileView: View {
                 case .heal:
                     UserProfileView(user: user)
                 case .stage:
-                    UniProfileView(university: university)
+                    UserSettingsView(user: user)
                 default:
                     EmptyView()
                 }

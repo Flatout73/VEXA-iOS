@@ -21,18 +21,18 @@ public struct AppState: Equatable {
     var mainState: MainState
     var profileState: ProfileState
     var chatState: ChatState
-   // var universityListState: UniversityListState
+    var universityListState: UniversityListState
     
     var selectedScreen = Screen.discovery
     
     public init(mainState: MainState = MainState(),
                 profileState: ProfileState = ProfileState(),
-                chatState: ChatState = ChatState()
-    //            universityListState: UniversityListState = UniversityListState()
+                chatState: ChatState = ChatState(),
+                universityListState: UniversityListState = UniversityListState()
     ) {
         self.mainState = mainState
         self.profileState = profileState
-        //self.universityListState = universityListState
+        self.universityListState = universityListState
         self.chatState = chatState
     }
 }
@@ -41,7 +41,7 @@ public enum AppAction: Equatable {
     case appDelegate(AppDelegateAction)
     case main(MainAction)
     case profile(ProfileAction)
-    //case universityList(UniversityListAction)
+    case universityList(UniversityListAction)
     case chat(ChatAction)
     
     case changeScreen(AppState.Screen)
@@ -55,9 +55,9 @@ extension AppEnvironment {
         ProfileEnvironment()
     }
     
-//    var universityList: UniversityListEnvironment {
-//        UniversityListEnvironment()
-//    }
+    var universityList: UniversityListEnvironment {
+        UniversityListEnvironment()
+    }
 }
 
 public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -87,8 +87,8 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         return .none
     case .changeScreen(let screen):
         state.selectedScreen = screen
-//    case .universityList:
-//        return .none
+    case .universityList:
+        return .none
     case .chat(_):
         return .none
     }
@@ -137,21 +137,22 @@ public struct AppView: View {
                             }
                             Text("add_content")
                         }
+                        Text("discovery")
                     }
                 }
             // Engage
-//            UniversityListView(store: store.scope(state: \.universityListState, action: AppAction.universityList))
-//                .tag(AppState.Screen.universityList)
-//                .tabItem {
-//                    VStack {
-//                        if self.viewStore.selectedScreen == .main {
-//                            Image(systemName: "magnifyingglass.circle.fill")
-//                        } else {
-//                            Image(systemName: "magnifyingglass.circle")
-//                        }
-//                        Text("Engage")
-//                    }
-//                }
+            UniversityListView(store: store.scope(state: \.universityListState, action: AppAction.universityList))
+                .tag(AppState.Screen.universityList)
+                .tabItem {
+                    VStack {
+                        if self.viewStore.selectedScreen == .universityList {
+                            Image(systemName: "magnifyingglass.circle.fill")
+                        } else {
+                            Image(systemName: "magnifyingglass.circle")
+                        }
+                        Text("Engage")
+                    }
+                }
             
             
             // User Profile
