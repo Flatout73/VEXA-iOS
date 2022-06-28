@@ -21,6 +21,7 @@ public enum ChatAction: Equatable {
     case alert(AlertAction)
     case showError(String)
     case connect
+    case sendMessage(String)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -30,10 +31,11 @@ public enum ChatAction: Equatable {
 
 public struct ChatEnvironment {
     let apiClient: APIClient
-    let chatClient = SocketClient()
+    let chatClient: SocketClient
 
-    public init(apiClient: APIClient) {
+    public init(apiClient: APIClient, socketClient: SocketClient) {
         self.apiClient = apiClient
+        self.chatClient = socketClient
     }
 }
 
@@ -48,6 +50,14 @@ public let chatReducerCore = Reducer<ChatState, ChatAction, ChatEnvironment> { s
         printLog(error)
     case .connect:
         environment.chatClient.openWebSocket()
+    case .sendMessage(let text):
+        var message = WebSocketMessage()
+        message.id = UUID().uuidString
+        message.client = Constants.uuid.uuidString
+        var content = ChatMessage()
+        content.text = text
+        message.content = WebSocketMessage.OneOf_Content.textMessage(content)
+        try? environment.chatClient.send(message: message)
     }
 
     return .none

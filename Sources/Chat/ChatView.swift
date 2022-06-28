@@ -14,10 +14,16 @@ public struct ChatView: View {
     @ViewBuilder
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
-            Text("")
-                .onAppear {
-                    viewStore.send(.connect)
+            VStack {
+                Text("Test")
+                    .onAppear {
+                        viewStore.send(.connect)
+                    }
+                
+                Button("send") {
+                    viewStore.send(.sendMessage("Test"))
                 }
+            }
         }
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)

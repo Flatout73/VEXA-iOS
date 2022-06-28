@@ -58,6 +58,10 @@ extension AppEnvironment {
     var universityList: UniversityListEnvironment {
         UniversityListEnvironment()
     }
+
+    var chat: ChatEnvironment {
+        ChatEnvironment(apiClient: apiClient, socketClient: socketClient)
+    }
 }
 
 public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -72,7 +76,7 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         environment: \.profile),
 
     chatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
-                             environment: { ChatEnvironment(apiClient: $0.apiClient) }),
+                             environment: \.chat),
     
     appReducerCore
 )
