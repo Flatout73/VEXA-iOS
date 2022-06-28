@@ -7,28 +7,33 @@ import Services
 import Log
 import UniversitiesList
 import AddContent
+import Chat
 
 public struct AppState: Equatable {
     public enum Screen: String {
         case discovery
         case addContent
         case profile
+        case chat
         case universityList
         case debug
     }
     var mainState: MainState
     var profileState: ProfileState
+    var chatState: ChatState
    // var universityListState: UniversityListState
     
     var selectedScreen = Screen.discovery
     
     public init(mainState: MainState = MainState(),
-                profileState: ProfileState = ProfileState()
+                profileState: ProfileState = ProfileState(),
+                chatState: ChatState = ChatState()
     //            universityListState: UniversityListState = UniversityListState()
     ) {
         self.mainState = mainState
         self.profileState = profileState
         //self.universityListState = universityListState
+        self.chatState = chatState
     }
 }
 
@@ -37,6 +42,7 @@ public enum AppAction: Equatable {
     case main(MainAction)
     case profile(ProfileAction)
     //case universityList(UniversityListAction)
+    case chat(ChatAction)
     
     case changeScreen(AppState.Screen)
 }
@@ -64,6 +70,9 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         state: \.profileState,
         action: /AppAction.profile,
         environment: \.profile),
+
+    chatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
+                             environment: { ChatEnvironment(apiClient: $0.apiClient) }),
     
     appReducerCore
 )
@@ -80,6 +89,8 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         state.selectedScreen = screen
 //    case .universityList:
 //        return .none
+    case .chat(_):
+        return .none
     }
     return .none
 }
@@ -156,7 +167,19 @@ public struct AppView: View {
                         Text("profile")
                     }
                 }
-            
+
+            ChatView(store: store.scope(state: \.chatState, action: AppAction.chat))
+                .tag(AppState.Screen.chat)
+                .tabItem {
+                    VStack {
+                        if self.viewStore.selectedScreen == .chat {
+                            Image(systemName: "person.fill")
+                        } else {
+                            Image(systemName: "person")
+                        }
+                        Text("chat")
+                    }
+                }
                                
             #if DEBUG
             DebugView()

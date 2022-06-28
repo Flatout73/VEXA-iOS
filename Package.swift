@@ -26,6 +26,7 @@ var package = Package(
         .library(name: "Protobuf", targets: ["Protobuf"]),
         .library(name: "UniversityProfile", targets: ["UniversityProfile"]),
         .library(name: "UniversitiesList", targets: ["UniversitiesList"]),
+        .library(name: "Chat", targets: ["Chat"]),
     ],
     dependencies: [
         .package(name: "iPhoneNumberField",
@@ -60,6 +61,7 @@ var package = Package(
                 "MainFeature",
                 "AddContent",
                 "Profile",
+                "Chat",
                 "UIApplicationClient",
                 "CoreUI",
                 "Services",
@@ -145,6 +147,13 @@ var package = Package(
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),
+        .target(name: "Chat",
+                dependencies: [
+                    "SharedModels",
+                    "CoreUI",
+                    .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                ]
+        ),
     ]
 )
 
