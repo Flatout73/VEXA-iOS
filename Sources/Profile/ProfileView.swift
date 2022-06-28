@@ -16,39 +16,64 @@ import UniversitiesList
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
+    let isAmbassador: Bool
 
-	public init(store: Store<ProfileState, ProfileAction>) {
+    @State
+    private var showSettings = false
+
+    public init(store: Store<ProfileState, ProfileAction>, isAmbassador: Bool) {
 		self.store = store
+        self.isAmbassador = isAmbassador
 	}
     
     let user = Mock.user
     
     let university = Mock.university
 
-	public var body: some View {
-		WithViewStore(store) { viewStore in
-			VStack(alignment: .center) {
-				Picker("Screen", selection: viewStore.binding(get: \.screen, send: ProfileAction.changeTo)) {
-					ForEach(ProfileState.Screen.allCases) { 
-						Text(LocalizedStringKey($0.title))
-							.tag($0)
-					}
-				}
-				.pickerStyle(.segmented)
-
-				Spacer()
-
-                switch viewStore.screen {
-                    // TODO: Add separate modules for every screen
-                case .heal:
+	public var main: some View {
+        WithViewStore(store) { viewStore in
+            ScrollView (.vertical) {
+                VStack(spacing: 16) {
                     UserProfileView(user: user)
-                case .stage:
-                    UserSettingsView(user: user)
-                default:
-                    EmptyView()
+                        .padding()
+                        .background(VEXAColors.background)
+
+                    if isAmbassador {
+                        Divider()
+                        
+                        HStack(spacing: 5) {
+                            Text("My Content")
+                                .font(Font.system(size: 14))
+                                .foregroundColor(VEXAColors.mainGreen)
+                                .bold()
+                                .frame(alignment: .leading)
+                            Text("15")
+                                .font(Font.system(size: 14))
+                                .foregroundColor(.gray)
+                                .bold()
+                                .frame(alignment: .leading)
+                            Spacer()
+                        }
+                    }
                 }
             }
-			.padding()
-		}
+            .background(VEXAColors.background)
+        }
+        .sheet(isPresented: $showSettings) {
+            UserSettingsView(user: user)
+        }
 	}
+
+    public var body: some View {
+        NavigationView {
+            main
+                .toolbar {
+                    Button("Edit") {
+                        showSettings = true
+                    }
+                }
+                .navigationTitle("profile")
+                .navigationBarTitleDisplayMode(.inline)
+        }
+    }
 }

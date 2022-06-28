@@ -156,7 +156,7 @@ public struct AppView: View {
             
             
             // User Profile
-            ProfileView(store: store.scope(state: \.profileState, action: AppAction.profile))
+            ProfileView(store: store.scope(state: \.profileState, action: AppAction.profile), isAmbassador: isAmbassador)
                 .tag(AppState.Screen.profile)
                 .tabItem {
                     VStack {

@@ -59,7 +59,6 @@ struct UserProfileView: View {
             Spacer()
         }
         .padding()
-        .background(Color.white)
     }
     
     // MARK: - About User Information View
@@ -149,7 +148,8 @@ struct UserProfileView: View {
                 }
             }
         }
-        .background(Color.white)
+        .padding()
+        .background(VEXAColors.formBackground)
         .cornerRadius(10)
     }
     
@@ -194,7 +194,7 @@ struct UserProfileView: View {
         
         ScrollView(.horizontal, showsIndicators: false) {
             VStack(spacing: 5) {
-                
+
                 HStack (spacing: 10) {
                     ForEach(0..<10) { index in
                         VStack {
@@ -263,95 +263,72 @@ struct UserProfileView: View {
     
     @ViewBuilder
     var body: some View {
-        
-        ScrollView (.vertical) {
-            VStack {
+        VStack {
+            
+            Group {
                 
-                Group {
-                    
-                    topView
-                    
-                    Button(action: {
-                        print("button pressed")
-                    }) {
-                        Text("Message")
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
-                    }
-                    .background(VEXAColors.mainGreen)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    
-                    aboutView
-                        .padding()
-                    
+                topView
+                
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Text("Message")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
+                }
+                .background(VEXAColors.mainGreen)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                
+                aboutView
+                
+                Spacer()
+                Divider()
+                
+                HStack(spacing: 5) {
+                    Text("Universities")
+                        .font(Font.system(size: 14))
+                        .foregroundColor(VEXAColors.mainGreen)
+                        .bold()
+                        .frame(alignment: .leading)
+                    Text("15")
+                        .font(Font.system(size: 14))
+                        .foregroundColor(.gray)
+                        .bold()
+                        .frame(alignment: .leading)
                     Spacer()
-                    Divider()
-                    
-                    HStack(spacing: 5) {
-                        Text("Universities")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Text("15")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-                    
-                    universitiesView
-                    
-                    Divider()
-                    
-                    HStack(spacing: 5) {
-                        Text("My Content")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Text("15")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-                    
                 }
                 
-                Group {
-                    
-                    Divider()
-                    
-                    studentContentView
-                    
-                    Divider()
-                    
-                    HStack(spacing: 5) {
-                        Text("Liked")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Text("15")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-                    
-                    likesView
-                    
-                    Divider()
-                }
+                universitiesView
                 
             }
+            
+            Group {
+                
+                studentContentView
+                
+                Divider()
+                
+                HStack(spacing: 5) {
+                    Text("Liked")
+                        .font(Font.system(size: 14))
+                        .foregroundColor(VEXAColors.mainGreen)
+                        .bold()
+                        .frame(alignment: .leading)
+                    Text("15")
+                        .font(Font.system(size: 14))
+                        .foregroundColor(.gray)
+                        .bold()
+                        .frame(alignment: .leading)
+                    Spacer()
+                }
+                
+                likesView
+                
+                Divider()
+            }
+            
         }
-        .background(Color.clear)
     }
     
 }

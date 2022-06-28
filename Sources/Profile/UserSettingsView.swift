@@ -15,14 +15,11 @@ struct UserSettingsView: View {
     
     @ViewBuilder
     var body: some View {
-        
-        ScrollView (.vertical) {
-            
+        ScrollView {
             TopView(user: user)
             Divider()
             GeneralInfoView(user: user)
-            
+                .padding()
         }
     }
-    
 }
