@@ -25,8 +25,9 @@ public struct University: Identifiable, Equatable {
     public var programList: String
     public var content: [String]
     public var link: String
+    public var price: String
  
-    public init(id: String, universityName: String, universityLogos: [String], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String) {
+    public init(id: String, universityName: String, universityLogos: [String], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String, price: String) {
         
         self.id = id
         self.universityName = universityName
@@ -43,6 +44,7 @@ public struct University: Identifiable, Equatable {
         self.programList = programList
         self.content = content
         self.link = link
+        self.price = price
     }
     
 }

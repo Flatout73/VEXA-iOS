@@ -18,9 +18,10 @@ public struct UniversityPageView: View {
     
     let university: University
     let size: CGSize
-
+    
     @ViewBuilder
     public var body: some View {
+        VStack(alignment: .leading) {
             HStack() {
                 Image(university.universityLogos[0], bundle: .module)
                     .resizable()
@@ -38,10 +39,12 @@ public struct UniversityPageView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
+                Spacer()
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .circular).stroke(Color(uiColor: .tertiaryLabel), lineWidth: 1)
-            )
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
     }
     
     

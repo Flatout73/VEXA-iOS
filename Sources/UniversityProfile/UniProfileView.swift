@@ -20,7 +20,7 @@ public struct UniProfileView: View {
     let university: University
 
     @ViewBuilder
-    public var body: some View {
+    public var main: some View {
         ScrollView (.vertical) {
             VStack() {
                 TopView(university: university)
@@ -60,21 +60,27 @@ public struct UniProfileView: View {
                     Divider()
                     
                     UniversitySizeView(university: university)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                        
                     Divider()
                     
                     RequirementsView(university: university)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    
                     
                     Group {
+                        Divider()
+                        
                         FacilitiesView(university: university)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        
+                        Divider()
+                        
+                        PriceView(university: university)
+
+                        Divider()
                         
                         MapView()
                             .frame(height: 110)
+                        
+                        Divider()
                         
                         ContactView(university: university)
                             .foregroundColor(.white)
@@ -82,6 +88,19 @@ public struct UniProfileView: View {
                     }
                 }
             }
+        }
+        .padding()
+        .background(VEXAColors.background)
+    }
+    
+    public var body: some View {
+        NavigationView {
+            main
+                .toolbar {
+                    
+                }
+                .navigationTitle(university.universityName)
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
     

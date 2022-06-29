@@ -19,8 +19,6 @@ public struct UniversityListView: View {
     let store: Store<UniversityListState, UniversityListAction>
     
     
-    @State
-    private var search = ""
     
     public init(store: Store<UniversityListState, UniversityListAction>) {
         self.store = store
@@ -31,13 +29,14 @@ public struct UniversityListView: View {
         WithViewStore(self.store) { viewStore in
             GeometryReader { proxy in
                 List {
-                    ForEach(viewStore.state.content) { cell in
+                    ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
                         let size = CGSize(width: proxy.size.width - 30, height: 100)
                         UniversityPageView(university: cell, size: size)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                             .listRowBackground(Color.clear)
-                            .padding(10)
+                            .cornerRadius(20)
+                            .padding(5)
                             .background(
                                 NavigationLink("") {
                                     UniProfileView(university: cell)
@@ -48,10 +47,10 @@ public struct UniversityListView: View {
                 }
                 .listStyle(PlainListStyle())
             }
+            .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
         }
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $search, prompt: "search")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -62,6 +61,7 @@ public struct UniversityListView: View {
             }
         }
     }
+    
 
     public var body: some View {
         NavigationView {
@@ -78,3 +78,5 @@ public struct UniversityListView: View {
     
     }
 }
+
+

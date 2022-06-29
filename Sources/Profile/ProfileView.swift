@@ -92,9 +92,13 @@ public struct ProfileView: View {
         NavigationView {
             main
                 .toolbar {
-                    Button("Edit") {
+                    Button(action: {
                         showSettings = true
+                    }) {
+                        Image("editProfile", bundle: .module)
+                            .foregroundColor(.gray)
                     }
+                    
                 }
                 .navigationTitle("profile")
                 .navigationBarTitleDisplayMode(.inline)
