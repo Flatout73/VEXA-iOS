@@ -14,13 +14,15 @@ public struct AuthorizationView: View {
     @ViewBuilder
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
-            VStack {
+            VStack(spacing: 16) {
                 TextField("email", text: viewStore.binding(get: \.login, send: AuthorizationAction.changeLogin))
                 TextField("password", text: viewStore.binding(get: \.password, send: AuthorizationAction.changePassword))
-            }
 
-            Button("Send") {
-                viewStore.send(.login)
+                    .padding()
+
+                Button("Send") {
+                    viewStore.send(.login)
+                }
             }
         }
         .background(VEXAColors.background)

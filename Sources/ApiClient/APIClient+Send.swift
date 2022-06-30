@@ -33,7 +33,7 @@ extension APIClient {
                 return try T(unpackingAny: generalResponse.content)
             }
         case .failure(let error):
-            if let errorResponse = try? ErrorResponse(jsonUTF8Data: response.data!) {
+            if let data = response.data, let errorResponse = try? ErrorResponse(jsonUTF8Data: data) {
                 throw ServerError.server(errorResponse.reason)
             } else {
                 throw error.underlyingError ?? error

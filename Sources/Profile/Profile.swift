@@ -12,18 +12,20 @@ import SharedModels
 
 public struct ProfileState: Equatable {
     
-    public var content: User = Mock.user
+    public var user: User?
     
     public var isLoading = false
 
-	public init() {
-
+    public init(user: User? = Mock.user) {
+        self.user = user
 	}
 }
 
 public enum ProfileAction: Equatable {
     case show(User)
     case showError(String)
+
+    case showLoginScreen
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -43,10 +45,12 @@ public let mainReducer = Reducer<ProfileState, ProfileAction, ProfileEnvironment
 
 public let profileReducer = Reducer<ProfileState, ProfileAction, ProfileEnvironment> { state, action, environment in
 	switch action {
-    case .show(let content):
-        state.content = content
+    case .show(let user):
+        state.user = user
     case .showError(let error):
         state.isLoading = false
+    case .showLoginScreen:
+        break
     }
 
 	return .none

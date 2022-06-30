@@ -10,8 +10,8 @@ import Protobuf
 public struct AuthorizationState: Equatable {
     public var alert: AlertState<AuthorizationAction.AlertAction>?
 
-    var login = ""
-    var password = ""
+    var login = "test@test.ru"
+    var password = "123456"
 
     public var isLoading = false
 
@@ -60,14 +60,19 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
     case .login:
         let login = state.login
         let password = state.password
-        Effect.task(operation: { () -> AuthorizationAction in 
-            let response: LoginResponse = try await environment.apiClient.send(
-                AuthorizationRequest.login(email: login, password: password)
-            )
-            let token = AuthorizationToken(accessToken: response.accessToken,
-                                           refreshToken: response.refreshToken)
-            return AuthorizationAction.updateCachedToken(token)
+        return Effect.task(operation: { () -> AuthorizationAction in
+            do {
+                let response: LoginResponse = try await environment.apiClient.send(
+                    AuthorizationRequest.login(email: login, password: password)
+                )
+                let token = AuthorizationToken(accessToken: response.accessToken,
+                                               refreshToken: response.refreshToken)
+                return AuthorizationAction.updateCachedToken(token)
+            } catch {
+                return AuthorizationAction.showError(error.localizedDescription)
+            }
         })
+        .receive(on: DispatchQueue.main)
         .eraseToEffect()
     case .updateCachedToken(let token):
         environment.tokenManager.authorizationToken = token

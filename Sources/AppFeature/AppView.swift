@@ -31,7 +31,7 @@ public struct AppState: Equatable {
     var isAuthorizationShown = false
     
     public init(mainState: MainState = MainState(),
-                profileState: ProfileState = ProfileState(),
+                profileState: ProfileState = ProfileState(user: nil),
                 chatState: ChatState = ChatState(),
                 universityListState: UniversityListState = UniversityListState(),
                 authorizationState: AuthorizationState = AuthorizationState()
@@ -103,8 +103,13 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         return .none
     case .main:
         return .none
-    case .profile(_):
-        return .none
+    case .profile(let action):
+        switch action {
+        case .showLoginScreen:
+            state.isAuthorizationShown = true
+        default:
+            break
+        }
     case .changeScreen(let screen):
         state.selectedScreen = screen
     case .universityList:
