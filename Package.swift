@@ -14,6 +14,7 @@ var package = Package(
         .library(name: "AddContent", targets: ["AddContent"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
+        .library(name: "Authorization", targets: ["Authorization"]),
         .library(name: "MainFeature", targets: ["MainFeature"]),
         .library(name: "ContentDetails", targets: ["ContentDetails"]),
         .library(name: "Profile", targets: ["Profile"]),
@@ -66,6 +67,17 @@ var package = Package(
                 "CoreUI",
                 "Services",
                 "UniversitiesList",
+                "Authorization",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ]
+        ),
+        .target(
+            name: "Authorization",
+            dependencies: [
+                "SharedModels",
+                "CoreUI",
+                "Services",
+                "ApiClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),
@@ -144,6 +156,7 @@ var package = Package(
         .target(name: "UniversitiesList", dependencies: [
             "SharedModels",
             "CoreUI",
+            "Log",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),
@@ -151,6 +164,7 @@ var package = Package(
                 dependencies: [
                     "SharedModels",
                     "CoreUI",
+                    "ApiClient",
                     .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
                 ]
         ),

@@ -6,6 +6,7 @@ import UIKit
 
 public struct AppEnvironment {
     public var apiClient: APIClient
+    public let tokenManager: TokenManager
     public let socketClient: SocketClient
     public var applicationClient: UIApplicationClient
     public var backgroundQueue: AnySchedulerOf<DispatchQueue>
@@ -16,6 +17,7 @@ public struct AppEnvironment {
     
     public init(
         apiClient: APIClient,
+        tokenManager: TokenManager,
         socketClient: SocketClient,
         applicationClient: UIApplicationClient,
         backgroundQueue: AnySchedulerOf<DispatchQueue>,
@@ -25,6 +27,7 @@ public struct AppEnvironment {
         timeZone: @escaping () -> TimeZone
     ) {
         self.apiClient = apiClient
+        self.tokenManager = tokenManager
         self.socketClient = socketClient
         self.applicationClient = applicationClient
         self.backgroundQueue = backgroundQueue
