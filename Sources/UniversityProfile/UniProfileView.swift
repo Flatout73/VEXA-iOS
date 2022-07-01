@@ -29,11 +29,15 @@ public struct UniProfileView: View {
                 Divider()
                 VStack(alignment: .leading) {
                     HStack(spacing: 5) {
-                        Text("Ambassadors")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .frame(alignment: .leading)
+                        
+                        NavigationLink(destination: AmbassadorListView(university: university)) {
+                            
+                            Text("Ambassadors")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(VEXAColors.mainGreen)
+                                .frame(alignment: .leading)
+                        }
                         Text("15")
                             .font(.subheadline)
                             .foregroundColor(.gray)
@@ -44,11 +48,15 @@ public struct UniProfileView: View {
                     Divider()
                     
                     HStack(spacing: 5) {
-                        Text("Videos")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .frame(alignment: .leading)
+                        Button(action: {
+                            print("Videos screen proceed")
+                        }) {
+                            Text("Videos")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(VEXAColors.mainGreen)
+                                .frame(alignment: .leading)
+                        }
                         Text("15")
                             .font(.subheadline)
                             .foregroundColor(.gray)

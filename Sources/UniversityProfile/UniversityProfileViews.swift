@@ -278,17 +278,17 @@ struct PriceView: View {
                 Image("facilities", bundle: .module)
                     .resizable()
                     .frame(width: 40, height: 40)
-                Text("Price Range")
-                    .font(.title2)
-                    .foregroundColor(.black)
-                    .bold()
+                VStack(alignment: .leading) {
+                    Text("Price Range")
+                        .font(.title2)
+                        .foregroundColor(.black)
+                        .bold()
+                    Text("\(university.price)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
                 Spacer()
             }
-            
-            Text("\(university.price)")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
         }
         .padding()
         .frame(maxWidth: .infinity)
