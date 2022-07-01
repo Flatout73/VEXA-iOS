@@ -29,8 +29,7 @@ extension APIClient {
             if let errorResponse = try? ErrorResponse(jsonString: val) {
                 throw ServerError.server(errorResponse.reason)
             } else {
-                let generalResponse = try GeneralResponse(jsonString: val)
-                return try T(unpackingAny: generalResponse.content)
+                return try T(jsonString: val, options: options)
             }
         case .failure(let error):
             if let data = response.data, let errorResponse = try? ErrorResponse(jsonUTF8Data: data) {

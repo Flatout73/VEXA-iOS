@@ -24,4 +24,15 @@ enum AuthorizationRequest: ApiClient.Request {
             return "/auth/login"
         }
     }
+
+    var paramaters: Parameters? {
+        switch self {
+        case .login(let email, let password):
+            var paramaters: [String: Any] = [:]
+            paramaters["email"] = email
+            paramaters["password"] = password
+            return paramaters
+        }
+
+    }
 }
