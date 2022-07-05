@@ -11,12 +11,13 @@ public struct ContentDetailsState: Hashable {
     public var alert: AlertState<ContentDetailsAction.AlertAction>?
 
     public var discovery: Discovery
-
+    
     public var isLoading = false
 
     public init(discovery: Discovery) {
         self.discovery = discovery
     }
+    
 }
 
 public enum ContentDetailsAction: Equatable {

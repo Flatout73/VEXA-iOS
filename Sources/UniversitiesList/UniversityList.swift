@@ -59,7 +59,7 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
     case .search(let text):
         state.searchText = text
         if !text.isEmpty {
-            state.filteredContent = state.content.filter({ $0.universityName.contains(text) })
+            state.filteredContent = state.content.filter({ $0.name.contains(text) })
         } else {
             state.filteredContent = nil
         }

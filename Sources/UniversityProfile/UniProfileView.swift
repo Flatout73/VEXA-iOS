@@ -102,17 +102,13 @@ public struct UniProfileView: View {
     }
     
     public var body: some View {
-        NavigationView {
             main
                 .toolbar {
                     
                 }
-                .navigationTitle(university.universityName)
+                .navigationTitle(university.name)
                 .navigationBarTitleDisplayMode(.inline)
         }
-    }
-    
-    
 }
 
 

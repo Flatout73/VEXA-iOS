@@ -11,9 +11,9 @@ import Foundation
 public struct University: Identifiable, Equatable {
     
     public let id: String
-    public var universityName: String
+    public var name: String
     public var universityLogos: [String]
-    public var hashtags: [String]
+    public var tags: [String]
     public var type: String
     public var location: String
     public var size: String
@@ -30,9 +30,9 @@ public struct University: Identifiable, Equatable {
     public init(id: String, universityName: String, universityLogos: [String], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String, price: String) {
         
         self.id = id
-        self.universityName = universityName
+        self.name = universityName
         self.universityLogos = universityLogos
-        self.hashtags = hashtags
+        self.tags = hashtags
         self.type = type
         self.location = location
         self.size = size

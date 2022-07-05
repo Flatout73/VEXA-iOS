@@ -55,7 +55,6 @@ public struct AmbassadorListView: View {
     
 
     public var body: some View {
-        NavigationView {
             mainContent
                 //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .navigationViewStyle(StackNavigationViewStyle())
@@ -65,7 +64,5 @@ public struct AmbassadorListView: View {
                     //VEXAAnalytics.shared.log(event: "main_screen_appeared")
                     VEXALogger.shared.debug("main screen")
                 }
-        }
-    
     }
 }

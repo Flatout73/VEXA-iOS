@@ -28,7 +28,7 @@ public struct UniversityPageView: View {
                     .frame(width: 75, height: 75)
                     .cornerRadius(10)
                 VStack(alignment: .leading) {
-                    Text(university.universityName)
+                    Text(university.name)
                         .font(.title2)
                         .foregroundColor(.black)
                         .bold()

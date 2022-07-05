@@ -42,11 +42,11 @@ struct ButtonView: View {
         VStack {
             
             HStack(spacing: 20) {
-                ForEach(0..<university.hashtags.count, id: \.self) { index in
-                    Text(self.university.hashtags[index])
+                ForEach(0..<university.tags.count, id: \.self) { index in
+                    Text(self.university.tags[index])
                 }
-                .padding(2)
-                .background(Color(UIColor.systemGray6))
+                .padding(6)
+                .background(Color(UIColor.systemGray5))
                 .foregroundColor(.secondary)
                 .font(.subheadline)
                 .cornerRadius(5)

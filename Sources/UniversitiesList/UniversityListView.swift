@@ -36,7 +36,7 @@ public struct UniversityListView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                             .listRowBackground(Color.clear)
                             .cornerRadius(20)
-                            .padding(5)
+                            .padding(10)
                             .background(
                                 NavigationLink("") {
                                     UniProfileView(university: cell)
