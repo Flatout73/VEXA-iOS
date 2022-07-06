@@ -11,7 +11,7 @@ import Resources
 
 struct TopView: View {
     
-    let user: User
+    let user: StudentModel
     
     var body: some View {
         VStack {
@@ -36,7 +36,7 @@ struct TopView: View {
 
 struct GeneralInfoView: View {
     
-    let user: User
+    let user: StudentModel
     
     @State private var userFirstName: String = ""
     @State private var userSecondName: String = ""

@@ -11,7 +11,7 @@ import Resources
 
 struct UserProfileView: View {
     
-    let user: User
+    let user: StudentModel
     
     @State private var showingSheet = false
     
@@ -99,7 +99,7 @@ struct UserProfileView: View {
                     .font(.subheadline)
                     .fontWeight(.bold)
                 
-                Text(user.dateOfBirth)
+                Text(user.dateOfBirth, formatter: DateFormatter())
                     .foregroundColor(.gray)
                     .font(.subheadline)
                 Spacer()
@@ -219,25 +219,25 @@ struct UserProfileView: View {
     
     // MARK: - Horizontal Scroll View with Liked Content
     
-    var likesView: some View {
-
-        ScrollView(.horizontal, showsIndicators: false) {
-
-            VStack(spacing: 5) {
-                HStack (spacing: 10) {
-                    ForEach(user.content, id: \.self) { content in
-                        Button(action: {
-                            print("Process to liked content by student")
-                        }) {
-                            Image(content, bundle: .module)
-                                .resizable()
-                                .frame(width: 85, height: 85)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    var likesView: some View {
+//
+//        ScrollView(.horizontal, showsIndicators: false) {
+//
+//            VStack(spacing: 5) {
+//                HStack (spacing: 10) {
+//                    ForEach(user.content, id: \.self) { content in
+//                        Button(action: {
+//                            print("Process to liked content by student")
+//                        }) {
+//                            Image(content, bundle: .module)
+//                                .resizable()
+//                                .frame(width: 85, height: 85)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     @ViewBuilder
     var body: some View {
@@ -299,7 +299,7 @@ struct UserProfileView: View {
                     Spacer()
                 }
                 
-                likesView
+               // likesView
                 
                 Divider()
             }

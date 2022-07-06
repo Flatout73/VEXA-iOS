@@ -61,7 +61,7 @@ extension AppEnvironment {
         MainEnvironment(apiClient: apiClient)
     }
     var profile: ProfileEnvironment {
-        ProfileEnvironment()
+        ProfileEnvironment(userService: userService)
     }
     
     var universityList: UniversityListEnvironment {

@@ -143,7 +143,11 @@ var package = Package(
             .product(name: "Pulse", package: "Pulse"),
             .product(name: "PulseUI", package: "Pulse")
         ]),
-        .target(name: "Services"),
+        .target(name: "Services", dependencies: [
+            "Core",
+            "SharedModels",
+            "Protobuf"
+        ]),
         .target(name: "Protobuf", dependencies: [
             .product(name: "SwiftProtobuf", package: "swift-protobuf")
         ]),

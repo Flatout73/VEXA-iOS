@@ -11,7 +11,7 @@ import Resources
 
 struct UserSettingsView: View {
     
-    let user: User
+    let user: StudentModel
     
     @ViewBuilder
     var body: some View {

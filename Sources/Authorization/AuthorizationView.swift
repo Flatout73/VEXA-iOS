@@ -7,6 +7,9 @@ import Resources
 public struct AuthorizationView: View {
     let store: Store<AuthorizationState, AuthorizationAction>
 
+    @Environment(\.dismiss)
+    var dismiss
+
     public init(store: Store<AuthorizationState, AuthorizationAction>) {
         self.store = store
     }
@@ -24,6 +27,11 @@ public struct AuthorizationView: View {
                     viewStore.send(.login)
                 }
             }
+            .onChange(of: viewStore.token, perform: { token in
+                if token != nil {
+                    dismiss()
+                }
+            })
         }
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
@@ -34,7 +42,6 @@ public struct AuthorizationView: View {
             mainContent
             .navigationViewStyle(StackNavigationViewStyle())
         }
-
         .alert(self.store.scope(state: \.alert, action: AuthorizationAction.alert), dismiss: .dismiss)
     }
 }

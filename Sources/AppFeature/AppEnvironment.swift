@@ -3,11 +3,13 @@ import ComposableArchitecture
 import SharedModels
 import UIApplicationClient
 import UIKit
+import Services
 
 public struct AppEnvironment {
     public var apiClient: APIClient
     public let tokenManager: TokenManager
     public let socketClient: SocketClient
+    public let userService: UserService
     public var applicationClient: UIApplicationClient
     public var backgroundQueue: AnySchedulerOf<DispatchQueue>
     public var mainQueue: AnySchedulerOf<DispatchQueue>
@@ -19,6 +21,7 @@ public struct AppEnvironment {
         apiClient: APIClient,
         tokenManager: TokenManager,
         socketClient: SocketClient,
+        userService: UserService,
         applicationClient: UIApplicationClient,
         backgroundQueue: AnySchedulerOf<DispatchQueue>,
         mainQueue: AnySchedulerOf<DispatchQueue>,
@@ -29,6 +32,7 @@ public struct AppEnvironment {
         self.apiClient = apiClient
         self.tokenManager = tokenManager
         self.socketClient = socketClient
+        self.userService = userService
         self.applicationClient = applicationClient
         self.backgroundQueue = backgroundQueue
         self.mainQueue = mainQueue

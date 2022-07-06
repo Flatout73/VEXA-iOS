@@ -9,23 +9,26 @@ import Foundation
 import SwiftUI
 import ComposableArchitecture
 import SharedModels
+import Services
 
 public struct ProfileState: Equatable {
     
-    public var user: User?
+    public var user: StudentModel?
     
     public var isLoading = false
 
-    public init(user: User? = Mock.user) {
+    public init(user: StudentModel?) {
         self.user = user
 	}
 }
 
 public enum ProfileAction: Equatable {
-    case show(User)
+    case show(StudentModel?)
     case showError(String)
 
     case showLoginScreen
+
+    case onAppear
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -34,8 +37,10 @@ public enum ProfileAction: Equatable {
 }
 
 public struct ProfileEnvironment {
-	public init() {
-		
+    let userService: UserService
+
+	public init(userService: UserService) {
+        self.userService = userService
 	}
 }
 
@@ -51,6 +56,17 @@ public let profileReducer = Reducer<ProfileState, ProfileAction, ProfileEnvironm
         state.isLoading = false
     case .showLoginScreen:
         break
+    case .onAppear:
+        return .task(operation: {
+            do {
+                let user = try await environment.userService.fetchUser()
+                return ProfileAction.show(user)
+            } catch {
+                return ProfileAction.showError(error.localizedDescription)
+            }
+        })
+        .receive(on: DispatchQueue.main)
+        .eraseToEffect()
     }
 
 	return .none

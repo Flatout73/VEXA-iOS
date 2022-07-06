@@ -15,6 +15,8 @@ public struct AuthorizationState: Equatable {
 
     public var isLoading = false
 
+    var token: AuthorizationToken?
+
     public init() {
 
     }
@@ -76,6 +78,7 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
         .eraseToEffect()
     case .updateCachedToken(let token):
         environment.tokenManager.authorizationToken = token
+        state.token = token
     }
 
     return .none

@@ -11,13 +11,16 @@ import SwiftUI
 import UIApplicationClient
 import ComposableArchitecture
 import Resources
+import Services
+import Profile
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
   let store = Store(
-	initialState: .init(),
+    initialState: AppState(profileState: ProfileState(user: AppEnvironment.live.userService.user)),
 	reducer: appReducer,
 	environment: .live
   )
+
   lazy var viewStore = ViewStore(
 	self.store.scope(state: { _ in () }),
 	removeDuplicates: ==
@@ -104,6 +107,7 @@ extension AppEnvironment {
             apiClient: apiClient,
             tokenManager: tokenManager,
             socketClient: socketClient,
+            userService: UserService(apiClient: apiClient),
             applicationClient: .live,
             backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
             mainQueue: .main,

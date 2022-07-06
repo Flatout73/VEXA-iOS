@@ -32,25 +32,25 @@ public struct ProfileView: View {
 
     // MARK: - Horizontal Scroll View with Content
 
-    func studentContentView(for user: User) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            VStack(spacing: 5) {
-                HStack (spacing: 10) {
-                    ForEach(user.content, id: \.self) { content in
-                        Button(action: {
-                            print("Process to content")
-                        }) {
-                            Image(content, bundle: .module)
-                                .resizable()
-                                .frame(width: 85, height: 85)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    func studentContentView(for user: StudentModel) -> some View {
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            VStack(spacing: 5) {
+//                HStack (spacing: 10) {
+//                    ForEach(user.content, id: \.self) { content in
+//                        Button(action: {
+//                            print("Process to content")
+//                        }) {
+//                            Image(content, bundle: .module)
+//                                .resizable()
+//                                .frame(width: 85, height: 85)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-    public func main(for user: User) -> some View {
+    public func main(for user: StudentModel) -> some View {
         ScrollView (.vertical) {
             VStack(spacing: 16) {
                 UserProfileView(user: user)
@@ -74,7 +74,7 @@ public struct ProfileView: View {
                         Spacer()
                     }
 
-                    studentContentView(for: user)
+                    //studentContentView(for: user)
                 }
             }
         }
@@ -83,9 +83,13 @@ public struct ProfileView: View {
             UserSettingsView(user: user)
         }
         .toolbar {
-            Button("Edit") {
+            Button(action: {
                 showSettings = true
-            }
+            }, label: {
+                Image("editProfile", bundle: .module)
+                    .foregroundColor(.gray)
+
+            })
         }
         .navigationTitle("profile")
         .navigationBarTitleDisplayMode(.inline)
@@ -98,6 +102,9 @@ public struct ProfileView: View {
             } else {
                 placeholder
             }
+        }
+        .onAppear {
+            viewStore.send(.onAppear)
         }
     }
 

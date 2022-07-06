@@ -19,7 +19,7 @@ class VEXAAuthenticator: Authenticator {
 
     func apply(_ credential: Credential, to urlRequest: inout URLRequest) {
         if let token = credential.authorizationToken?.accessToken {
-            urlRequest.headers.add(.authorization(token))
+            urlRequest.headers.add(.authorization(bearerToken: token))
         }
     }
 
@@ -80,7 +80,7 @@ class VEXAAuthenticator: Authenticator {
     }
 
     private func refreshRequest(for token: AuthorizationToken) throws -> URLRequest {
-        let apiURL = URL(string: APIConstants.Auth.refresh)!
+        let apiURL = APIConstants.baseURL.appendingPathComponent(APIConstants.Auth.refresh)
         var request = URLRequest(url: apiURL)
         request.httpMethod = "POST"
         var tokenRequest = AccessTokenRequest()
