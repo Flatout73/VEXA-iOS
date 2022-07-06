@@ -8,6 +8,8 @@
 import SwiftUI
 import SharedModels
 import Resources
+import Log
+import CoreUI
 
 struct UserProfileView: View {
     
@@ -21,22 +23,18 @@ struct UserProfileView: View {
         
         HStack {
             // MARK: - Need to rewrite the image in AsyncImage
-            //                        AsyncImage(url: user.image) { image in
-            //                            image
-            //                                .resizable()
-            //                                .scaledToFill()
-            //                        } placeholder: {
-            //                            ProgressView()
-            //                        }
-            //                        .frame(width: 20, height: 20, alignment: .trailing)
-            //                        .clipped()
-            //                        .cornerRadius(10)
-            Image("Jane", bundle: .module)
-                .resizable()
-                .clipShape(Circle())
-                .shadow(radius: 10)
-                .overlay(Circle().stroke(Color.white, lineWidth: 5))
-                .frame(width: 100, height: 100)
+            AsyncImage(url: user.imageURL) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .clipShape(Circle())
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 85, height: 85)
+            .clipped()
+            .cornerRadius(10)
+
             
             VStack (alignment: .leading, spacing: 10) {
                 HStack {
@@ -246,17 +244,11 @@ struct UserProfileView: View {
             Group {
                 
                 topView
-                
-                Button(action: {
-                    print("button pressed")
-                }) {
-                    Text("Message")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
+
+                Button("Message") {
+                    VEXALogger.shared.debug("button pressed")
                 }
-                .background(VEXAColors.mainGreen)
-                .cornerRadius(10)
-                .frame(maxWidth: .infinity, maxHeight: 50)
+                .buttonStyle(VEXAButtonStyle())
                 
                 aboutView
                 

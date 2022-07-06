@@ -12,7 +12,7 @@ public struct StudentModel: Identifiable, Equatable {
     public let id: String
     public let firstName, secondName, email, country, nativeLanguage: String
     public let dateOfBirth: Date
-    public let image: URL?
+    public let imageURL: URL?
 
     public init(id: String, firstName: String, secondName: String, email: String, dateOfBirth: Date,
                 country: String, nativeLanguage: String, image: URL? = nil) {
@@ -23,7 +23,7 @@ public struct StudentModel: Identifiable, Equatable {
         self.dateOfBirth = dateOfBirth
         self.country = country
         self.nativeLanguage = nativeLanguage
-        self.image = image
+        self.imageURL = image
     }
 }
 

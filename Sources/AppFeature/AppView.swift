@@ -107,6 +107,8 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         switch action {
         case .showLoginScreen:
             state.isAuthorizationShown = true
+        case .logout:
+            environment.tokenManager.authorizationToken = nil
         default:
             break
         }

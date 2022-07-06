@@ -76,6 +76,12 @@ public struct ProfileView: View {
 
                     //studentContentView(for: user)
                 }
+
+                Button("Logout") {
+                    viewStore.send(.logout)
+                }
+                .buttonStyle(SecondaryButtonStyle())
+                .padding()
             }
         }
         .background(VEXAColors.background)

@@ -27,6 +27,7 @@ public enum ProfileAction: Equatable {
     case showError(String)
 
     case showLoginScreen
+    case logout
 
     case onAppear
 
@@ -67,6 +68,9 @@ public let profileReducer = Reducer<ProfileState, ProfileAction, ProfileEnvironm
         })
         .receive(on: DispatchQueue.main)
         .eraseToEffect()
+    case .logout:
+        environment.userService.user = nil
+        state.user = nil
     }
 
 	return .none
