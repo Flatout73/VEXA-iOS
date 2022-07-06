@@ -16,12 +16,12 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 
 """
 
-    static var discovery: [Discovery] {
+    static var discovery: [DiscoveryModel] {
         [
-            Discovery(id: "0", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: "Test desc", image: URL(string: "https://i.stack.imgur.com/Xkh8T.png")),
-            Discovery(id: "1", ambassador: "Pert First", universityName: "University of Tampa", videoName: "Dormatory", category: "Accomodation", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
-            Discovery(id: "2", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
-            Discovery(id: "3", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/e54hT.png")),
+            DiscoveryModel(id: "0", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: "Test desc", image: URL(string: "https://i.stack.imgur.com/Xkh8T.png")),
+            DiscoveryModel(id: "1", ambassador: "Pert First", universityName: "University of Tampa", videoName: "Dormatory", category: "Accomodation", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
+            DiscoveryModel(id: "2", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
+            DiscoveryModel(id: "3", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/e54hT.png")),
         ]
     }
 }

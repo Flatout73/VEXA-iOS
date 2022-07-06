@@ -30,50 +30,16 @@ public struct ProfileView: View {
     
     let university = Mock.university
 
-    // MARK: - Horizontal Scroll View with Content
-
-//    func studentContentView(for user: StudentModel) -> some View {
-//        ScrollView(.horizontal, showsIndicators: false) {
-//            VStack(spacing: 5) {
-//                HStack (spacing: 10) {
-//                    ForEach(user.content, id: \.self) { content in
-//                        Button(action: {
-//                            print("Process to content")
-//                        }) {
-//                            Image(content, bundle: .module)
-//                                .resizable()
-//                                .frame(width: 85, height: 85)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public func main(for user: StudentModel) -> some View {
         ScrollView (.vertical) {
             VStack(spacing: 16) {
                 if isAmbassador {
-                    Divider()
-
-                    HStack(spacing: 5) {
-                        Text("My Content")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Text("15")
-                            .font(Font.system(size: 14))
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                        Spacer()
-                    }
-
-                    //studentContentView(for: user)
+                    AmbassadorProfileView(content: [])
                 } else {
-                    StudentProfileView(user: user)
+                    StudentProfileView(user: user, isMyProfile: true)
                 }
+
+                Divider()
 
                 Button("Logout") {
                     viewStore.send(.logout)

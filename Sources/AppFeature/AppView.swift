@@ -206,9 +206,9 @@ public struct AppView: View {
                 .tabItem {
                     VStack {
                         if self.viewStore.selectedScreen == .chat {
-                            Image(systemName: "person.fill")
+                            Image(systemName: "message.fill")
                         } else {
-                            Image(systemName: "person")
+                            Image(systemName: "message")
                         }
                         Text("chat")
                     }

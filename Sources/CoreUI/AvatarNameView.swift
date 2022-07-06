@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import Resources
 
 public struct AvatarNameView: View {
     let imageURL: URL?
     let name: String
+    let profileStatus: LocalizedStringKey?
 
-    public init(imageURL: URL?, name: String) {
+    public init(imageURL: URL?, name: String, profileStatus: LocalizedStringKey?) {
         self.imageURL = imageURL
         self.name = name
+        self.profileStatus = profileStatus
     }
 
     public var body: some View {
@@ -35,18 +38,17 @@ public struct AvatarNameView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text(name)
-                        .foregroundColor(.black)
-                        .font(.subheadline)
-                        .fontWeight(.bold)
+                        .font(.headline)
                 }
 
-                Text("Profile status")
-                    .foregroundColor(.black)
-                    .font(.subheadline)
-
+                if let profileStatus = profileStatus {
+                    Text(profileStatus)
+                }
             }
+            .foregroundColor(VEXAColors.text)
+            .font(.subheadline)
             Spacer()
         }
-        .padding()
+        .padding(.horizontal, 5)
     }
 }

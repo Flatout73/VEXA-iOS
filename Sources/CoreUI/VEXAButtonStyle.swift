@@ -18,7 +18,7 @@ public struct VEXAButtonStyle: ButtonStyle {
         configuration
             .label
             .foregroundColor(.white)
-            .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: 44, maxHeight: 44, alignment: .center)
             .background(VEXAColors.mainGreen)
             .cornerRadius(10)
             .opacity(configuration.isPressed ? 0.7 : 1.0)

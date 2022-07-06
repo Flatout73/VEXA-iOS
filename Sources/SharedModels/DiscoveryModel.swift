@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Discovery: Identifiable, Hashable {
+public struct DiscoveryModel: Identifiable, Hashable {
     public let id: String
     public let ambassador, universityName, videoName, category: String
     public let desctription: String
@@ -28,4 +28,8 @@ public struct Discovery: Identifiable, Hashable {
         self.videoURL = videoURL
         self.image = image
     }
+}
+
+extension DiscoveryModel: Codable {
+    
 }

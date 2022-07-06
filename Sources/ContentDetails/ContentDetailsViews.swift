@@ -15,7 +15,7 @@ import AVKit
 
 struct ButtonsView: View {
     
-    let discovery: Discovery
+    let discovery: DiscoveryModel
     
     var body: some View {
         
@@ -50,7 +50,7 @@ struct ButtonsView: View {
 
 struct AmassadorView: View {
     
-    let discovery: Discovery
+    let discovery: DiscoveryModel
     
     var body: some View {
         
@@ -107,7 +107,7 @@ struct DescriptionView: View {
     @State
     private var showingSheet = false
     
-    let discovery: Discovery
+    let discovery: DiscoveryModel
     
     var body: some View {
         VStack {

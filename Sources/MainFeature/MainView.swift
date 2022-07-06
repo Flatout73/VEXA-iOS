@@ -16,7 +16,7 @@ public struct MainView: View {
 	}
 
     @ViewBuilder
-    func backgroundNavigation(for cell: Discovery, viewStore: ViewStore<MainState, MainAction>) -> some View {
+    func backgroundNavigation(for cell: DiscoveryModel, viewStore: ViewStore<MainState, MainAction>) -> some View {
         NavigationLink(
             destination: IfLetStore(
                 self.store.scope(

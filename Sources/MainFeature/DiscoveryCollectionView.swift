@@ -11,7 +11,7 @@ import Resources
 
 struct DiscoveryCollectionView: View {
     
-    let discovery: Discovery
+    let discovery: DiscoveryModel
     let size: CGSize
 
     @ViewBuilder

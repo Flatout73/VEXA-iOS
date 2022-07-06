@@ -24,9 +24,9 @@ public enum MainRoute: Hashable {
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
-    public var content: [Discovery] = Mock.discovery
+    public var content: [DiscoveryModel] = Mock.discovery
 
-    public var filteredContent: [Discovery]?
+    public var filteredContent: [DiscoveryModel]?
 
     public var isLoading = false
 
@@ -42,7 +42,7 @@ public struct MainState: Equatable {
 public enum MainAction: Equatable {
 	case alert(AlertAction)
     case fetchContent
-    case show([Discovery])
+    case show([DiscoveryModel])
     case showError(String)
 
     case search(String)
@@ -92,7 +92,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                 let content: [Protobuf.Content] = try await environment.apiClient.send(request)
                 return MainAction.show(
                     content.map {
-                        return Discovery(id: $0.id,
+                        return DiscoveryModel(id: $0.id,
                                          ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
                                          universityName: "University",
                                          videoName: $0.title,

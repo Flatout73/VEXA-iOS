@@ -7,27 +7,24 @@
 
 import SwiftUI
 import Resources
+import SharedModels
 
 struct LikesView: View {
-    let content: [URL]
+    let content: [DiscoveryModel]
 
     var body: some View {
-        Group {
-            Divider()
+        VStack {
             HStack(spacing: 5) {
                 Button("liked", action: {
-
+                    
                 })
                 Text(String(content.count))
                     .font(.callout)
                     .foregroundColor(.gray)
-                    .bold()
                 Spacer()
             }
-
+            
             likesView
-
-            Divider()
         }
 
     }
@@ -41,7 +38,7 @@ struct LikesView: View {
                         Button(action: {
                             print("Process to liked content by student")
                         }) {
-                            AsyncImage(url: content) { image in
+                            AsyncImage(url: content.image) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()

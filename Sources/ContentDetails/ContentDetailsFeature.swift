@@ -10,11 +10,11 @@ import Protobuf
 public struct ContentDetailsState: Hashable {
     public var alert: AlertState<ContentDetailsAction.AlertAction>?
 
-    public var discovery: Discovery
+    public var discovery: DiscoveryModel
     
     public var isLoading = false
 
-    public init(discovery: Discovery) {
+    public init(discovery: DiscoveryModel) {
         self.discovery = discovery
     }
     
