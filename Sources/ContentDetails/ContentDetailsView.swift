@@ -11,6 +11,7 @@ public struct ContentDetailsView: View {
     @State
     private var isShareSheetShown = false
 
+
     public init(store: Store<ContentDetailsState, ContentDetailsAction>) {
         self.store = store
     }
@@ -26,11 +27,23 @@ public struct ContentDetailsView: View {
                     Text("No video")
                 }
                 ScrollView {
-                    VStack {
-                        Text(viewStore.state.discovery.desctription)
-                            .font(.body)
-                            .padding()
+                    VStack(alignment: .leading) {
+                        
+                        Text(viewStore.state.discovery.videoName)
+                            .font(.title3)
+                            .foregroundColor(.black)
+                            .bold()
+                        
+                        
+                        ButtonsView(discovery: viewStore.state.discovery)
+                        
+                        AmassadorView(discovery: viewStore.state.discovery)
+
                     }
+                    .padding()
+                    
+                    DescriptionView(discovery: viewStore.state.discovery)
+                    
                 }
             }
             .toolbar {

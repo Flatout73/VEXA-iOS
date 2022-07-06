@@ -42,11 +42,11 @@ struct ButtonView: View {
         VStack {
             
             HStack(spacing: 20) {
-                ForEach(0..<university.hashtags.count, id: \.self) { index in
-                    Text(self.university.hashtags[index])
+                ForEach(0..<university.tags.count, id: \.self) { index in
+                    Text(self.university.tags[index])
                 }
-                .padding(2)
-                .background(Color(UIColor.systemGray6))
+                .padding(6)
+                .background(Color(UIColor.systemGray5))
                 .foregroundColor(.secondary)
                 .font(.subheadline)
                 .cornerRadius(5)
@@ -165,21 +165,27 @@ struct UniversitySizeView: View {
     let university: University
     
     var body: some View {
-        HStack(spacing: 10) {
-            Image("sizePicture", bundle: .module)
-                .resizable()
-                .frame(width: 40, height: 40)
-            VStack(alignment: .leading) {
-                Text("Size of University")
-                    .font(.title2)
-                    .foregroundColor(.black)
-                    .bold()
-                Text(university.size)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+        VStack(alignment: .leading) {
+            HStack(spacing: 10) {
+                Image("sizePicture", bundle: .module)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                VStack(alignment: .leading) {
+                    Text("Size of University")
+                        .font(.title2)
+                        .foregroundColor(.black)
+                        .bold()
+                    Text(university.size)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
             }
         }
         .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
+        .cornerRadius(10)
     }
 }
 
@@ -226,6 +232,10 @@ struct RequirementsView: View {
             .font(.subheadline)
             .foregroundColor(.gray)
         }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
+        .cornerRadius(10)
     }
 }
 
@@ -243,14 +253,47 @@ struct FacilitiesView: View {
                     .font(.title2)
                     .foregroundColor(.black)
                     .bold()
+                Spacer()
             }
-            .padding()
             
             Text("\(university.facilities)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
         }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
+        .cornerRadius(10)
+    }
+}
+
+struct PriceView: View {
+    
+    let university: University
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(spacing: 10) {
+                Image("facilities", bundle: .module)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                VStack(alignment: .leading) {
+                    Text("Price Range")
+                        .font(.title2)
+                        .foregroundColor(.black)
+                        .bold()
+                    Text("\(university.price)")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
+        .cornerRadius(10)
     }
 }
 
@@ -264,7 +307,7 @@ struct ContactView: View {
                 Image("phone", bundle: .module)
                     .resizable()
                     .frame(width: 40, height: 40)
-                VStack {
+                VStack(alignment: .leading) {
                     Text(university.phone)
                         .font(.title2)
                         .foregroundColor(.black)
@@ -273,10 +316,13 @@ struct ContactView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
+                Spacer()
             }
-            .padding()
-            
         }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(VEXAColors.formBackground)
+        .cornerRadius(10)
     }
 }
 

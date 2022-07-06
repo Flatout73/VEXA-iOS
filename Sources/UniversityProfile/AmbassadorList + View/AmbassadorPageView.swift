@@ -2,44 +2,48 @@
 //  File.swift
 //  
 //
-//  Created by Егор on 22.06.2022.
+//  Created by Егор on 30.06.2022.
 //
 
 import SwiftUI
 import Resources
 import SharedModels
 
-public struct UniversityPageView: View {
+public struct AmbassadorPageView: View {
     
-    public init(university: University, size: CGSize) {
-        self.university = university
+    public init(ambassador: String, size: CGSize) {
+        self.ambassador = ambassador
         self.size = size
     }
     
-    let university: University
+    let ambassador: String
     let size: CGSize
     
     @ViewBuilder
     public var body: some View {
         VStack(alignment: .leading) {
             HStack() {
-                Image(university.universityLogos[0], bundle: .module)
+                Image("Jane", bundle: .module)
                     .resizable()
                     .frame(width: 75, height: 75)
                     .cornerRadius(10)
                 VStack(alignment: .leading) {
-                    Text(university.name)
+                    Text("Jane Jhonson")
                         .font(.title2)
                         .foregroundColor(.black)
                         .bold()
-                    Text(university.type)
+                    Text("Harper College Amassador")
                         .font(.subheadline)
                         .foregroundColor(.black)
-                    Text(university.contactInformation)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
                 }
                 Spacer()
+                Button(action: {
+                    print("message button pressed")
+                    
+                }) {
+                    Image("Message", bundle: .module)
+                }
+                .buttonStyle(PlainButtonStyle())
             }
         }
         .padding()
@@ -49,7 +53,4 @@ public struct UniversityPageView: View {
     
     
 }
-
-
-
 

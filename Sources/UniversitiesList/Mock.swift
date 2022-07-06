@@ -31,7 +31,8 @@ public extension Mock {
                 phone: "+1 (847) 925-6000",
                 programList: "https://www.harpercollege.edu/index.php",
                 content: ["Harper College", "Harper College", "HarperLifeStyle"],
-                link: "https://www.harpercollege.edu/index.php"
+                link: "https://www.harpercollege.edu/index.php",
+                price: "$20,000 per year for undergraduate studies, $30,000 for graduate studies"
             ),
             
             University(
@@ -54,7 +55,8 @@ public extension Mock {
                 phone: "+1 (847) 925-6000",
                 programList: "https://www.harpercollege.edu/index.php",
                 content: ["Harper College", "Harper College", "HarperLifeStyle"],
-                link: "https://www.harpercollege.edu/index.php"
+                link: "https://www.harpercollege.edu/index.php",
+                price: "$20,000 per year for undergraduate studies, $30,000 for graduate studies"
             )
         ]
     }

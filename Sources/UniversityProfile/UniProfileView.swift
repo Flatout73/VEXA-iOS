@@ -20,7 +20,7 @@ public struct UniProfileView: View {
     let university: University
 
     @ViewBuilder
-    public var body: some View {
+    public var main: some View {
         ScrollView (.vertical) {
             VStack() {
                 TopView(university: university)
@@ -29,11 +29,15 @@ public struct UniProfileView: View {
                 Divider()
                 VStack(alignment: .leading) {
                     HStack(spacing: 5) {
-                        Text("Ambassadors")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .frame(alignment: .leading)
+                        
+                        NavigationLink(destination: AmbassadorListView(university: university)) {
+                            
+                            Text("Ambassadors")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(VEXAColors.mainGreen)
+                                .frame(alignment: .leading)
+                        }
                         Text("15")
                             .font(.subheadline)
                             .foregroundColor(.gray)
@@ -44,11 +48,15 @@ public struct UniProfileView: View {
                     Divider()
                     
                     HStack(spacing: 5) {
-                        Text("Videos")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(VEXAColors.mainGreen)
-                            .frame(alignment: .leading)
+                        Button(action: {
+                            print("Videos screen proceed")
+                        }) {
+                            Text("Videos")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(VEXAColors.mainGreen)
+                                .frame(alignment: .leading)
+                        }
                         Text("15")
                             .font(.subheadline)
                             .foregroundColor(.gray)
@@ -60,21 +68,27 @@ public struct UniProfileView: View {
                     Divider()
                     
                     UniversitySizeView(university: university)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                        
                     Divider()
                     
                     RequirementsView(university: university)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    
                     
                     Group {
+                        Divider()
+                        
                         FacilitiesView(university: university)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        
+                        Divider()
+                        
+                        PriceView(university: university)
+
+                        Divider()
                         
                         MapView()
                             .frame(height: 110)
+                        
+                        Divider()
                         
                         ContactView(university: university)
                             .foregroundColor(.white)
@@ -83,9 +97,18 @@ public struct UniProfileView: View {
                 }
             }
         }
+        .padding()
+        .background(VEXAColors.background)
     }
     
-    
+    public var body: some View {
+            main
+                .toolbar {
+                    
+                }
+                .navigationTitle(university.name)
+                .navigationBarTitleDisplayMode(.inline)
+        }
 }
 
 

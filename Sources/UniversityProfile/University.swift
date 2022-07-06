@@ -5,10 +5,13 @@
 //  Created by Егор on 20.06.2022.
 //
 
-import Foundation
 import SwiftUI
 import ComposableArchitecture
+import Analytics
+import Log
+import CoreUI
 import SharedModels
+import Resources
 
 public struct UniversityState: Equatable {
     

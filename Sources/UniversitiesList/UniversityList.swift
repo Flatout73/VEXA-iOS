@@ -17,6 +17,10 @@ public struct UniversityListState: Equatable {
     
     public var content: [University] = Mock.universities
     
+    public var filteredContent: [University]?
+    
+    public var searchText = ""
+    
     public var isLoading = false
 
     public init() {
@@ -28,6 +32,7 @@ public enum UniversityListAction: Equatable {
     
     case show([University])
     case showError(String)
+    case search(String)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -51,6 +56,13 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
         state.content = content
     case .showError(let error):
         state.isLoading = false
+    case .search(let text):
+        state.searchText = text
+        if !text.isEmpty {
+            state.filteredContent = state.content.filter({ $0.name.contains(text) })
+        } else {
+            state.filteredContent = nil
+        }
     }
 
     return .none
