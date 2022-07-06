@@ -10,12 +10,12 @@ import SharedModels
 
 public extension Mock {
     
-    static var university: University {
+    static var university: UniversityModel {
         
-        University(
+        UniversityModel(
             id: "0",
             universityName: "Harper College",
-            universityLogos: ["Harper College", "harperExample1", "harperExample2", "harperExample3"],
+            universityLogos: [],
             hashtags: ["#2 year", "#public", "#harper", "#community"],
             type: "2-year, Public, Community college",
             location: "Palatine, IL, USA",

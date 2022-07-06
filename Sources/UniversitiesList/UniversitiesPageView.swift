@@ -11,22 +11,27 @@ import SharedModels
 
 public struct UniversityPageView: View {
     
-    public init(university: University, size: CGSize) {
+    public init(university: UniversityModel, size: CGSize) {
         self.university = university
         self.size = size
     }
     
-    let university: University
+    let university: UniversityModel
     let size: CGSize
     
     @ViewBuilder
     public var body: some View {
         VStack(alignment: .leading) {
             HStack() {
-                Image(university.universityLogos[0], bundle: .module)
-                    .resizable()
-                    .frame(width: 75, height: 75)
-                    .cornerRadius(10)
+                AsyncImage(url: university.universityLogos.first) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 75, height: 75)
+                .cornerRadius(10)
                 VStack(alignment: .leading) {
                     Text(university.name)
                         .font(.title2)

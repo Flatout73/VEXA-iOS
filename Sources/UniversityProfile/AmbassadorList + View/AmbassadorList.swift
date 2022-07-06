@@ -16,11 +16,11 @@ import Resources
 
 public struct AmbassadorListView: View {
     
-    public init(university: University) {
+    public init(university: UniversityModel) {
         self.university = university
     }
     
-    let university: University
+    let university: UniversityModel
     
     @ViewBuilder
     public var mainContent: some View {

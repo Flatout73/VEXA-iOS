@@ -9,15 +9,17 @@ import SwiftUI
 import Resources
 
 public struct SecondaryButtonStyle: ButtonStyle {
+    let color: Color
 
-    public init() {
-
+    public init(color: Color = VEXAColors.mainGreen) {
+        self.color = color
     }
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
-            .foregroundColor(VEXAColors.red)
+            .font(.callout)
+            .foregroundColor(color)
             .opacity(configuration.isPressed ? 0.7 : 1.0)
     }
 }

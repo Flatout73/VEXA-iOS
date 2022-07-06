@@ -9,12 +9,12 @@ import Foundation
 import SharedModels
 
 public extension Mock {
-    static var universities: [University] {
+    static var universities: [UniversityModel] {
         [
-            University(
+            UniversityModel(
                 id: "0",
                 universityName: "Harper College",
-                universityLogos: ["Harper College", "harperExample1", "harperExample2", "harperExample3"],
+                universityLogos: [],
                 hashtags: ["#2 year", "#public", "#harper", "#community"],
                 type: "2-year, Public, Community college",
                 location: "Palatine, IL, USA",
@@ -35,10 +35,10 @@ public extension Mock {
                 price: "$20,000 per year for undergraduate studies, $30,000 for graduate studies"
             ),
             
-            University(
+            UniversityModel(
                 id: "0",
                 universityName: "Harper College",
-                universityLogos: ["Harper College", "harperExample1", "harperExample2", "harperExample3"],
+                universityLogos: [],
                 hashtags: ["#2 year", "#public", "#harper", "#community"],
                 type: "2-year, Public, Community college",
                 location: "Palatine, IL, USA",

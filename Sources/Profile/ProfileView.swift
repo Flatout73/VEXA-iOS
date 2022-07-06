@@ -53,10 +53,6 @@ public struct ProfileView: View {
     public func main(for user: StudentModel) -> some View {
         ScrollView (.vertical) {
             VStack(spacing: 16) {
-                UserProfileView(user: user)
-                    .padding()
-                    .background(VEXAColors.background)
-
                 if isAmbassador {
                     Divider()
 
@@ -75,14 +71,17 @@ public struct ProfileView: View {
                     }
 
                     //studentContentView(for: user)
+                } else {
+                    StudentProfileView(user: user)
                 }
 
                 Button("Logout") {
                     viewStore.send(.logout)
                 }
-                .buttonStyle(SecondaryButtonStyle())
-                .padding()
+                .buttonStyle(SecondaryButtonStyle(color: VEXAColors.red))
             }
+            .padding()
+            .background(VEXAColors.background)
         }
         .background(VEXAColors.background)
         .sheet(isPresented: $showSettings) {

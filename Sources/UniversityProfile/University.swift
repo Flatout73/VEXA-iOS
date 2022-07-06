@@ -15,7 +15,7 @@ import Resources
 
 public struct UniversityState: Equatable {
     
-    public var content: University = Mock.university
+    public var content: UniversityModel = Mock.university
     
     public var isLoading = false
 
@@ -26,7 +26,7 @@ public struct UniversityState: Equatable {
 
 public enum UniversityAction: Equatable {
     
-    case show(University)
+    case show(UniversityModel)
     case showError(String)
 
     public enum AlertAction: Equatable {

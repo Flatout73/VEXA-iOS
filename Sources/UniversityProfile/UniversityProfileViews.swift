@@ -12,7 +12,7 @@ import Resources
 
 struct TopView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         
@@ -21,9 +21,14 @@ struct TopView: View {
             VStack() {
                 HStack (spacing: 10) {
                     ForEach(university.universityLogos, id: \.self) { content in
-                        Image(content, bundle: .module)
-                            .resizable()
-                            .frame(height: 175)
+                        AsyncImage(url: content) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(height: 175)
                     }
                     .padding(10)
                 }
@@ -35,7 +40,7 @@ struct TopView: View {
 
 struct ButtonView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         
@@ -94,7 +99,7 @@ struct ButtonView: View {
 
 struct AmbassadorsView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         
@@ -125,7 +130,7 @@ struct AmbassadorsView: View {
 
 struct VideosView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         
@@ -162,7 +167,7 @@ struct VideosView: View {
 
 struct UniversitySizeView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -191,7 +196,7 @@ struct UniversitySizeView: View {
 
 struct RequirementsView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -241,7 +246,7 @@ struct RequirementsView: View {
 
 struct FacilitiesView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -270,7 +275,7 @@ struct FacilitiesView: View {
 
 struct PriceView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -299,7 +304,7 @@ struct PriceView: View {
 
 struct ContactView: View {
     
-    let university: University
+    let university: UniversityModel
     
     var body: some View {
         VStack(alignment: .leading) {

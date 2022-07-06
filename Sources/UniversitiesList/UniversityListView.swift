@@ -14,11 +14,8 @@ import SharedModels
 import Resources
 import UniversityProfile
 
-
 public struct UniversityListView: View {
     let store: Store<UniversityListState, UniversityListAction>
-    
-    
     
     public init(store: Store<UniversityListState, UniversityListAction>) {
         self.store = store

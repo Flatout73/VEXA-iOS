@@ -146,7 +146,8 @@ var package = Package(
         .target(name: "Services", dependencies: [
             "Core",
             "SharedModels",
-            "Protobuf"
+            "Protobuf",
+            "ApiClient"
         ]),
         .target(name: "Protobuf", dependencies: [
             .product(name: "SwiftProtobuf", package: "swift-protobuf")
@@ -154,6 +155,7 @@ var package = Package(
         .target(name: "UniversityProfile", dependencies: [
             "SharedModels",
             "CoreUI",
+            "Log",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),
@@ -161,6 +163,7 @@ var package = Package(
             "SharedModels",
             "CoreUI",
             "Log",
+            "UniversityProfile",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),
@@ -169,6 +172,7 @@ var package = Package(
                     "SharedModels",
                     "CoreUI",
                     "ApiClient",
+                    "Services",
                     .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
                 ]
         ),

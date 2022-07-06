@@ -12,6 +12,8 @@
 
 //MARK: - Profile
 "profile" = "Profile";
-
-//MARK: - Profile
 "add_content" = "Add content";
+"hide" = "Hide";
+"see_more" = "See more";
+"liked" = "liked";
+"universities" = "Universities";

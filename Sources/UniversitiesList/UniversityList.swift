@@ -15,9 +15,9 @@ import Resources
 
 public struct UniversityListState: Equatable {
     
-    public var content: [University] = Mock.universities
+    public var content: [UniversityModel] = Mock.universities
     
-    public var filteredContent: [University]?
+    public var filteredContent: [UniversityModel]?
     
     public var searchText = ""
     
@@ -30,7 +30,7 @@ public struct UniversityListState: Equatable {
 
 public enum UniversityListAction: Equatable {
     
-    case show([University])
+    case show([UniversityModel])
     case showError(String)
     case search(String)
 

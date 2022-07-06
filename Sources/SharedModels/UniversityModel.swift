@@ -8,11 +8,11 @@
 import Foundation
 
 
-public struct University: Identifiable, Equatable {
+public struct UniversityModel: Identifiable, Equatable {
     
     public let id: String
     public var name: String
-    public var universityLogos: [String]
+    public var universityLogos: [URL]
     public var tags: [String]
     public var type: String
     public var location: String
@@ -27,7 +27,7 @@ public struct University: Identifiable, Equatable {
     public var link: String
     public var price: String
  
-    public init(id: String, universityName: String, universityLogos: [String], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String, price: String) {
+    public init(id: String, universityName: String, universityLogos: [URL], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String, price: String) {
         
         self.id = id
         self.name = universityName
@@ -46,5 +46,9 @@ public struct University: Identifiable, Equatable {
         self.link = link
         self.price = price
     }
+    
+}
+
+extension UniversityModel: Codable {
     
 }

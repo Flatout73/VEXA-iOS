@@ -32,7 +32,7 @@ public class UserService {
                                  dateOfBirth: Date(),
                                  country: student.currentCountry,
                                  nativeLanguage: student.nativeLanguage,
-                                 image: URL(string: student.user.imageURL))
+                                        image: URL(string: student.user.imageURL))
         self.user = studentModel
         return studentModel
     }
