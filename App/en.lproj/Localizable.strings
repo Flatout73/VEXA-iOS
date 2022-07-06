@@ -6,15 +6,23 @@
   
 */
 
+//MARK: - Common
+"universities" = "Universities";
+"student" = "Student";
+"back" = "Back";
+
 //MARK: - Main
 "discovery" = "Discovery";
 "search" = "Search";
 
 //MARK: - Profile
 "profile" = "Profile";
+"profile_placeholder" = "Log in to see your profile";
 "add_content" = "Add content";
 "hide" = "Hide";
 "see_more" = "See more";
 "liked" = "liked";
-"universities" = "Universities";
 "email_not_verified" = "Email not verified";
+
+//MARK: - Authorization
+"log_in" = "Log in";

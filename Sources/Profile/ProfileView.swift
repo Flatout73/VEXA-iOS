@@ -80,8 +80,25 @@ public struct ProfileView: View {
     }
 
     var placeholder: some View {
-        Button("Login") {
-            viewStore.send(.showLoginScreen)
+        VStack(spacing: 32) {
+            Image(systemName: "person.fill")
+                .resizable()
+                .foregroundColor(Color(red: 189/255, green: 189/255, blue: 189/255))
+                .padding(32)
+                .background(VEXAColors.itemBackground)
+                .clipShape(Circle())
+                .frame(width: 100, height: 100, alignment: .center)
+
+            Text("profile_placeholder")
+                .font(.body)
+                .multilineTextAlignment(.center)
+
+            Button("log_in") {
+                viewStore.send(.showLoginScreen)
+            }
+            .buttonStyle(VEXAButtonStyle())
         }
+        .padding()
+        .navigationBarHidden(true)
     }
 }

@@ -15,6 +15,7 @@ public enum VEXAColors {
     public static var mainGreen: Color { Color(#function, bundle: .module) }
     public static var red: Color { Color(#function, bundle: .module) }
     public static var grayText: Color { Color(#function, bundle: .module) }
+    public static var itemBackground: Color { Color(#function, bundle: .module) }
 }
 
 

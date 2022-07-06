@@ -118,8 +118,13 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         return .none
     case .chat(_):
         return .none
-    case .authorization:
-        return .none
+    case .authorization(let action):
+        switch action {
+        case .updateCachedToken:
+            return Effect(value: AppAction.profile(.onAppear))
+        default:
+            return .none
+        }
     case .showAuth(let show):
         state.isAuthorizationShown = show
     }

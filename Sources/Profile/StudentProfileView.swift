@@ -21,7 +21,7 @@ struct StudentProfileView: View {
         VStack(spacing: 16) {
             let nameComponents = PersonNameComponents(givenName: user.firstName, familyName: user.secondName)
             AvatarNameView(imageURL: user.imageURL, name: nameFormatter.string(from: nameComponents),
-                           profileStatus: user.status.title)
+                           profileStatus: user.status.title ?? LocalizedStringKey("student"))
 
             if !isMyProfile {
                 Button("Message") {

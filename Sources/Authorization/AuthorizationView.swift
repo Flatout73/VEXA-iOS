@@ -17,15 +17,23 @@ public struct AuthorizationView: View {
     @ViewBuilder
     public var mainContent: some View {
         WithViewStore(self.store) { viewStore in
-            VStack(spacing: 16) {
-                TextField("email", text: viewStore.binding(get: \.login, send: AuthorizationAction.changeLogin))
-                TextField("password", text: viewStore.binding(get: \.password, send: AuthorizationAction.changePassword))
+            ScrollView {
+                VStack(spacing: 38) {
+                    LogoView()
 
-                    .padding()
+                    VStack(spacing: 16) {
+                        TextField("email", text: viewStore.binding(get: \.login, send: AuthorizationAction.changeLogin))
+                            .textFieldStyle(VEXATextFieldStyle())
+                        TextField("password", text: viewStore.binding(get: \.password, send: AuthorizationAction.changePassword))
+                            .textFieldStyle(VEXATextFieldStyle())
+                    }
 
-                Button("Send") {
-                    viewStore.send(.login)
+                    Button("log_in") {
+                        viewStore.send(.login)
+                    }
+                    .buttonStyle(VEXAButtonStyle())
                 }
+                .padding()
             }
             .onChange(of: viewStore.token, perform: { token in
                 if token != nil {
@@ -33,13 +41,20 @@ public struct AuthorizationView: View {
                 }
             })
         }
-        .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction, content: {
+                Button("back", action: {
+                    dismiss()
+                })
+            })
+        }
     }
 
     public var body: some View {
         NavigationView {
             mainContent
+                .background(VEXAColors.background)
             .navigationViewStyle(StackNavigationViewStyle())
         }
         .alert(self.store.scope(state: \.alert, action: AuthorizationAction.alert), dismiss: .dismiss)

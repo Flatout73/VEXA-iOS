@@ -6,15 +6,23 @@
   
 */
 
+//MARK: - Common
+"universities" = "Университеты";
+"student" = "Cтудент";
+"back" = "Назад";
+
 //MARK: - Main
 "discovery" = "Открытие";
 "search" = "Поиск";
 
 //MARK: - Profile
 "profile" = "Профиль";
+"profile_placeholder" = "Войдите для просмотра профиля";
 "add_content" = "Добавить контент";
 "hide" = "Скрыть";
 "see_more" = "Показать больше";
 "liked" = "Понравилось";
-"universities" = "Университеты";
 "email_not_verified" = "Email не верифицирован";
+
+//MARK: - Authorization
+"log_in" = "Вход";
