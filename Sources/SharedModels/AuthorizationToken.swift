@@ -7,7 +7,12 @@
 
 import Foundation
 
-public struct AuthorizationToken: Codable {
+public struct AuthorizationToken: Codable, Equatable {
     public let accessToken: String
     public let refreshToken: String
+
+    public init(accessToken: String, refreshToken: String) {
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+    }
 }

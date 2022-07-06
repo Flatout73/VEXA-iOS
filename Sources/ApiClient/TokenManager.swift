@@ -16,7 +16,7 @@ import Analytics
 
 public class TokenManager: AuthenticationCredential {
     @KeychainStorage(key: "authorizationToken")
-    var authorizationToken: AuthorizationToken?
+    public var authorizationToken: AuthorizationToken?
     let analyticsPrefix = "tokenManager"
 
     public var requiresRefresh: Bool {

@@ -3,10 +3,17 @@ import ComposableArchitecture
 import Foundation
 import SharedModels
 import Alamofire
+import SwiftProtobuf
 
 public actor APIClient {
     let session: Session
     let interceptor: AuthenticationInterceptor<VEXAAuthenticator>
+
+    lazy var options: JSONDecodingOptions = {
+        var options = JSONDecodingOptions()
+        options.ignoreUnknownFields = true
+        return options
+    }()
 
     public init(tokenManager: TokenManager,
                 configuration: URLSessionConfiguration = .default,

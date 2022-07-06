@@ -387,7 +387,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/VEXA-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VEXA;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Для загрузки контента";
+				INFOPLIST_KEY_NSCameraUsageDescription = "For content uploading";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = faceid_description;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -428,7 +428,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/VEXA-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VEXA;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Для загрузки контента";
+				INFOPLIST_KEY_NSCameraUsageDescription = "For content uploading";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = faceid_description;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

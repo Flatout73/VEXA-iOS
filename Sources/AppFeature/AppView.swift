@@ -8,6 +8,7 @@ import Log
 import UniversitiesList
 import AddContent
 import Chat
+import Authorization
 
 public struct AppState: Equatable {
     public enum Screen: String {
@@ -22,18 +23,24 @@ public struct AppState: Equatable {
     var profileState: ProfileState
     var chatState: ChatState
     var universityListState: UniversityListState
+
+    var authorizationState: AuthorizationState
     
     var selectedScreen = Screen.discovery
+
+    var isAuthorizationShown = false
     
     public init(mainState: MainState = MainState(),
-                profileState: ProfileState = ProfileState(),
+                profileState: ProfileState = ProfileState(user: nil),
                 chatState: ChatState = ChatState(),
-                universityListState: UniversityListState = UniversityListState()
+                universityListState: UniversityListState = UniversityListState(),
+                authorizationState: AuthorizationState = AuthorizationState()
     ) {
         self.mainState = mainState
         self.profileState = profileState
         self.universityListState = universityListState
         self.chatState = chatState
+        self.authorizationState = authorizationState
     }
 }
 
@@ -43,8 +50,10 @@ public enum AppAction: Equatable {
     case profile(ProfileAction)
     case universityList(UniversityListAction)
     case chat(ChatAction)
+    case authorization(AuthorizationAction)
     
     case changeScreen(AppState.Screen)
+    case showAuth(Bool)
 }
 
 extension AppEnvironment {
@@ -57,6 +66,14 @@ extension AppEnvironment {
     
     var universityList: UniversityListEnvironment {
         UniversityListEnvironment()
+    }
+
+    var chat: ChatEnvironment {
+        ChatEnvironment(apiClient: apiClient, socketClient: socketClient)
+    }
+
+    var authorization: AuthorizationEnvironment {
+        AuthorizationEnvironment(apiClient: apiClient, tokenManager: tokenManager)
     }
 }
 
@@ -72,7 +89,10 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         environment: \.profile),
 
     chatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
-                             environment: { ChatEnvironment(apiClient: $0.apiClient) }),
+                             environment: \.chat),
+
+    authorizationReducerCore.pullback(state: \.authorizationState, action: /AppAction.authorization,
+                                      environment: \.authorization),
     
     appReducerCore
 )
@@ -83,14 +103,23 @@ let appReducerCore = Reducer<AppState, AppAction, AppEnvironment> { state, actio
         return .none
     case .main:
         return .none
-    case .profile(_):
-        return .none
+    case .profile(let action):
+        switch action {
+        case .showLoginScreen:
+            state.isAuthorizationShown = true
+        default:
+            break
+        }
     case .changeScreen(let screen):
         state.selectedScreen = screen
     case .universityList:
         return .none
     case .chat(_):
         return .none
+    case .authorization:
+        return .none
+    case .showAuth(let show):
+        state.isAuthorizationShown = show
     }
     return .none
 }
@@ -107,8 +136,9 @@ public struct AppView: View {
         self.viewStore = ViewStore(store)
         self.isAmbassador = isAmbassador
     }
-    
-    public var body: some View {
+
+    @ViewBuilder
+    var main: some View {
         let mainStore: Store<MainState, MainAction> = store.scope(state: \.mainState, action: AppAction.main)
         TabView(selection: self.viewStore.binding(get: \.selectedScreen, send: AppAction.changeScreen)) {
             // Discovery
@@ -153,8 +183,8 @@ public struct AppView: View {
                         Text("Engage")
                     }
                 }
-            
-            
+
+
             // User Profile
             ProfileView(store: store.scope(state: \.profileState, action: AppAction.profile), isAmbassador: isAmbassador)
                 .tag(AppState.Screen.profile)
@@ -181,7 +211,7 @@ public struct AppView: View {
                         Text("chat")
                     }
                 }
-                               
+
             #if DEBUG
             DebugView()
                 .tag(AppState.Screen.debug)
@@ -193,9 +223,17 @@ public struct AppView: View {
                 }
             #endif
         }
-        .onOpenURL { url in
-            let screen = AppState.Screen(rawValue: url.host ?? "discovery") ?? .discovery
-            viewStore.send(.changeScreen(screen))
-        }
+    }
+    
+    public var body: some View {
+        main
+            .sheet(isPresented: viewStore.binding(get: \.isAuthorizationShown, send: AppAction.showAuth)) {
+                let authStore = self.store.scope(state: \.authorizationState, action: AppAction.authorization)
+                AuthorizationView(store: authStore)
+            }
+            .onOpenURL { url in
+                let screen = AppState.Screen(rawValue: url.host ?? "discovery") ?? .discovery
+                viewStore.send(.changeScreen(screen))
+            }
     }
 }

@@ -16,6 +16,7 @@ import UniversitiesList
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
+    let viewStore: ViewStore<ProfileState, ProfileAction>
     let isAmbassador: Bool
 
     @State
@@ -23,19 +24,16 @@ public struct ProfileView: View {
 
     public init(store: Store<ProfileState, ProfileAction>, isAmbassador: Bool) {
 		self.store = store
+        self.viewStore = ViewStore(store)
         self.isAmbassador = isAmbassador
 	}
-    
-    let user = Mock.user
     
     let university = Mock.university
 
     // MARK: - Horizontal Scroll View with Content
 
-    var studentContentView: some View {
-
+    func studentContentView(for user: User) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
-
             VStack(spacing: 5) {
                 HStack (spacing: 10) {
                     ForEach(user.content, id: \.self) { content in
@@ -52,56 +50,60 @@ public struct ProfileView: View {
         }
     }
 
-	public var main: some View {
-        WithViewStore(store) { viewStore in
-            ScrollView (.vertical) {
-                VStack(spacing: 16) {
-                    UserProfileView(user: user)
-                        .padding()
-                        .background(VEXAColors.background)
+    public func main(for user: User) -> some View {
+        ScrollView (.vertical) {
+            VStack(spacing: 16) {
+                UserProfileView(user: user)
+                    .padding()
+                    .background(VEXAColors.background)
 
-                    if isAmbassador {
-                        Divider()
-                        
-                        HStack(spacing: 5) {
-                            Text("My Content")
-                                .font(Font.system(size: 14))
-                                .foregroundColor(VEXAColors.mainGreen)
-                                .bold()
-                                .frame(alignment: .leading)
-                            Text("15")
-                                .font(Font.system(size: 14))
-                                .foregroundColor(.gray)
-                                .bold()
-                                .frame(alignment: .leading)
-                            Spacer()
-                        }
+                if isAmbassador {
+                    Divider()
 
-                        studentContentView
+                    HStack(spacing: 5) {
+                        Text("My Content")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(VEXAColors.mainGreen)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Text("15")
+                            .font(Font.system(size: 14))
+                            .foregroundColor(.gray)
+                            .bold()
+                            .frame(alignment: .leading)
+                        Spacer()
                     }
+
+                    studentContentView(for: user)
                 }
             }
-            .background(VEXAColors.background)
         }
+        .background(VEXAColors.background)
         .sheet(isPresented: $showSettings) {
             UserSettingsView(user: user)
         }
-	}
+        .toolbar {
+            Button("Edit") {
+                showSettings = true
+            }
+        }
+        .navigationTitle("profile")
+        .navigationBarTitleDisplayMode(.inline)
+    }
 
     public var body: some View {
         NavigationView {
-            main
-                .toolbar {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        Image("editProfile", bundle: .module)
-                            .foregroundColor(.gray)
-                    }
-                    
-                }
-                .navigationTitle("profile")
-                .navigationBarTitleDisplayMode(.inline)
+            if let user = viewStore.user {
+                main(for: user)
+            } else {
+                placeholder
+            }
+        }
+    }
+
+    var placeholder: some View {
+        Button("Login") {
+            viewStore.send(.showLoginScreen)
         }
     }
 }

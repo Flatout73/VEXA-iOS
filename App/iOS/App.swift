@@ -96,10 +96,14 @@ struct VEXAApp: App {
 
 extension AppEnvironment {
     static var live: Self {
-        let apiClient = APIClient(tokenManager: TokenManager())
+        let tokenManager = TokenManager()
+        let apiClient = APIClient(tokenManager: tokenManager)
+        let socketClient = SocketClient()
 
         return Self(
             apiClient: apiClient,
+            tokenManager: tokenManager,
+            socketClient: socketClient,
             applicationClient: .live,
             backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
             mainQueue: .main,
