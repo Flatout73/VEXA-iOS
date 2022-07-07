@@ -93,13 +93,13 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                 return MainAction.show(
                     content.map {
                         return DiscoveryModel(id: $0.id,
-                                         ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
-                                         universityName: "University",
-                                         videoName: $0.title,
-                                         category: "Category",
-                                         desctription: $0.debugDescription,
-                                         videoURL: URL(string: $0.videoURL),
-                                         image: URL(string: $0.imageURL))
+                                              ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
+                                              universityName: $0.ambassador.university.name,
+                                              videoName: $0.title,
+                                              category: $0.category,
+                                              desctription: $0.description_p,
+                                              videoURL: URL(string: $0.videoURL),
+                                              image: URL(string: $0.imageURL))
                     }
                 )
             } catch {

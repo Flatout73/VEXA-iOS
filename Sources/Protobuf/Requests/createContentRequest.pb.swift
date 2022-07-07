@@ -25,8 +25,6 @@ public struct CreateContentRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var ambassadorID: String = String()
-
   public var title: String = String()
 
   public var videoURL: String {
@@ -47,12 +45,24 @@ public struct CreateContentRequest {
   /// Clears the value of `imageURL`. Subsequent reads from it will return its default value.
   public mutating func clearImageURL() {self._imageURL = nil}
 
+  public var description_p: String {
+    get {return _description_p ?? String()}
+    set {_description_p = newValue}
+  }
+  /// Returns true if `description_p` has been explicitly set.
+  public var hasDescription_p: Bool {return self._description_p != nil}
+  /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
+  public mutating func clearDescription_p() {self._description_p = nil}
+
+  public var category: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _videoURL: String? = nil
   fileprivate var _imageURL: String? = nil
+  fileprivate var _description_p: String? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -64,10 +74,11 @@ extension CreateContentRequest: @unchecked Sendable {}
 extension CreateContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "CreateContentRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "ambassadorID"),
     3: .same(proto: "title"),
     4: .same(proto: "videoURL"),
     5: .same(proto: "imageURL"),
+    6: .same(proto: "description"),
+    7: .same(proto: "category"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -76,10 +87,11 @@ extension CreateContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.ambassadorID) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self._videoURL) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self._imageURL) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self._description_p) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.category) }()
       default: break
       }
     }
@@ -90,9 +102,6 @@ extension CreateContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.ambassadorID.isEmpty {
-      try visitor.visitSingularStringField(value: self.ambassadorID, fieldNumber: 1)
-    }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
@@ -102,14 +111,21 @@ extension CreateContentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try { if let v = self._imageURL {
       try visitor.visitSingularStringField(value: v, fieldNumber: 5)
     } }()
+    try { if let v = self._description_p {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 6)
+    } }()
+    if !self.category.isEmpty {
+      try visitor.visitSingularStringField(value: self.category, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: CreateContentRequest, rhs: CreateContentRequest) -> Bool {
-    if lhs.ambassadorID != rhs.ambassadorID {return false}
     if lhs.title != rhs.title {return false}
     if lhs._videoURL != rhs._videoURL {return false}
     if lhs._imageURL != rhs._imageURL {return false}
+    if lhs._description_p != rhs._description_p {return false}
+    if lhs.category != rhs.category {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
