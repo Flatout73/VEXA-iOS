@@ -26,13 +26,13 @@ public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
     public var content: [DiscoveryModel] = Mock.discovery
 
-    public var filteredContent: [DiscoveryModel]?
-
     public var isLoading = false
 
     public var route: MainRoute?
 
-    public var searchText = ""
+    public var searchText: String?
+
+    public var category: ContentCategory?
 
     public init() {
 
@@ -42,10 +42,10 @@ public struct MainState: Equatable {
 public enum MainAction: Equatable {
 	case alert(AlertAction)
     case fetchContent
-    case show([DiscoveryModel])
+    case show([Protobuf.Content])
     case showError(String)
 
-    case search(String)
+    case search(String?, category: ContentCategory?)
 
     case details(ContentDetailsAction)
     case setNavigation(MainRoute?)
@@ -86,21 +86,14 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
 	switch action {
     case .fetchContent:
         state.isLoading = true
+        state.searchText = nil
+        state.category = nil
         let request = APIConstants.Content.discovery
         return Effect.task(operation: {
             do {
                 let content: [Protobuf.Content] = try await environment.apiClient.send(request)
                 return MainAction.show(
-                    content.map {
-                        return DiscoveryModel(id: $0.id,
-                                              ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
-                                              universityName: $0.ambassador.university.name,
-                                              videoName: $0.title,
-                                              category: $0.category,
-                                              desctription: $0.description_p,
-                                              videoURL: URL(string: $0.videoURL),
-                                              image: URL(string: $0.imageURL))
-                    }
+                    content
                 )
             } catch {
                 return MainAction.showError(error.localizedDescription)
@@ -117,19 +110,37 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         printLog(error)
     case .show(let content):
         state.isLoading = false
-        state.content = content
+        state.content = content.map {
+            return DiscoveryModel(id: $0.id,
+                                  ambassador: "\($0.ambassador.user.firstName) \($0.ambassador.user.lastName)",
+                                  universityName: $0.ambassador.university.name,
+                                  videoName: $0.title,
+                                  category: $0.category,
+                                  desctription: $0.description_p,
+                                  videoURL: URL(string: $0.videoURL),
+                                  image: URL(string: $0.imageURL))
+        }
     case .details:
         return .none
     case .setNavigation(let tag):
         state.route = tag
-    case .search(let text):
+    case .search(let text, let category):
         state.searchText = text
-        if !text.isEmpty {
-            state.filteredContent = state.content.filter({ $0.ambassador.contains(text) || $0.category.contains(text) ||
-                $0.universityName.contains(text) || $0.videoName.contains(text) || $0.category.contains(text) })
-        } else {
-            state.filteredContent = nil
+        state.category = category
+
+        guard text?.isEmpty == false || category != nil else {
+            return Effect(value: MainAction.fetchContent)
         }
+
+        let request = APIConstants.Content.search(text, category: category)
+        return Effect.task(operation: {
+            do {
+                let content: [Protobuf.Content] = try await environment.apiClient.send(request)
+                return MainAction.show(content)
+            } catch {
+                return MainAction.show([])
+            }
+        })
     }
 
 	return .none

@@ -39,7 +39,7 @@ public struct MainView: View {
         GeometryReader { proxy in
             List {
                 //LazyVStack(spacing: 60) {
-                ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
+                ForEach(viewStore.state.content) { cell in
                     let size = CGSize(width: proxy.size.width - 30, height: 400)
                     DiscoveryCollectionView(discovery: cell, size: size)
                         .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
@@ -55,7 +55,11 @@ public struct MainView: View {
                 await viewStore.send(.fetchContent, while: \.isLoading)
             }
         }
-        .searchable(text: viewStore.binding(get: \.searchText, send: MainAction.search), prompt: "search")
+        .searchable(text: Binding(get: {
+            viewStore.state.searchText ?? ""
+        }, set: {
+            viewStore.send(MainAction.search($0, category: viewStore.state.category))
+        }), prompt: "search")
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -80,16 +84,16 @@ public struct MainView: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {
-                            ForEach(Category.allCases) { category in
+                            ForEach(ContentCategory.allCases) { category in
                                 Button(action: {
-                                    viewStore.send(.search(category.rawValue))
+                                    viewStore.send(.search(viewStore.state.searchText, category: category))
                                 }, label: {
                                     Label(category.title, systemImage: "checkmark")
-                                        .if(viewStore.searchText == category.rawValue, transform: {
+                                        .if(viewStore.state.category == category, transform: {
                                             $0
                                                 .labelStyle(TitleAndIconLabelStyle())
                                         })
-                                            .if(viewStore.searchText != category.rawValue, transform: {
+                                            .if(viewStore.state.category != category, transform: {
                                                 $0
                                                     .labelStyle(TitleOnlyLabelStyle())
                                             })

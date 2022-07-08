@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public enum Category: String, Codable, CaseIterable, Identifiable {
+public enum ContentCategory: String, Codable, CaseIterable, Identifiable {
     public var id: String { self.rawValue }
 
     case other
