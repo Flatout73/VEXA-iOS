@@ -126,7 +126,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         state.searchText = text
         if !text.isEmpty {
             state.filteredContent = state.content.filter({ $0.ambassador.contains(text) || $0.category.contains(text) ||
-                $0.universityName.contains(text) || $0.videoName.contains(text) })
+                $0.universityName.contains(text) || $0.videoName.contains(text) || $0.category.contains(text) })
         } else {
             state.filteredContent = nil
         }
