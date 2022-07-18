@@ -23,7 +23,7 @@ public struct UniversityPageView: View {
     public var body: some View {
         VStack(alignment: .leading) {
             HStack() {
-                AsyncImage(url: university.universityLogos.first) { image in
+                AsyncImage(url: university.photos.first) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -40,7 +40,7 @@ public struct UniversityPageView: View {
                     Text(university.type)
                         .font(.subheadline)
                         .foregroundColor(.black)
-                    Text(university.contactInformation)
+                    Text(university.address)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

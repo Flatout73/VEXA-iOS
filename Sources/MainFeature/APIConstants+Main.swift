@@ -19,6 +19,8 @@ extension APIConstants {
             switch self {
             case .discovery, .search:
                 return .get
+            case .universities:
+                return .get
             }
         }
 

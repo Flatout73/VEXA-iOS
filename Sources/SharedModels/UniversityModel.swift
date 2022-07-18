@@ -12,38 +12,71 @@ public struct UniversityModel: Identifiable, Equatable {
     
     public let id: String
     public var name: String
-    public var universityLogos: [URL]
+    public var photos: [URL]
     public var tags: [String]
-    public var type: String
-    public var location: String
-    public var size: String
-    public var ambassadors: [String]
-    public var admissionRequirements: [String]
-    public var facilities: String
-    public var contactInformation: String
+    public var applyLink: String
+    public var studentsCount: Int
+    public var gpa: Int
+    public var exams: String
+    public var requirementsDescription: String
+    public var facties: String
+    public var latitude: Double
+    public var longitude: Double
     public var phone: String
+    public var address: String
+    
+    public var type: String
+    public var ambassadors: [String]
+    public var facilities: String
     public var programList: String
     public var content: [String]
-    public var link: String
     public var price: String
  
-    public init(id: String, universityName: String, universityLogos: [URL], hashtags: [String], type: String, location: String, size: String, ambassadors: [String], admissionRequirements: [String], facilities: String, contactInformation: String, phone: String, programList: String, content: [String], link: String, price: String) {
+    public init(id: String,
+                name: String,
+                photos: [URL],
+                tags: [String],
+                applyLink: String,
+                studentsCount: Int,
+                gpa: Int,
+                exams: String,
+                requirementsDescription: String,
+                facties: String,
+                latitude: Double,
+                longitude: Double,
+                phone: String,
+                address: String,
+                
+                type: String,
+                ambassadors: [String],
+                facilities: String,
+                programList: String,
+                content: [String],
+                link: String,
+                price: String) {
         
         self.id = id
-        self.name = universityName
-        self.universityLogos = universityLogos
-        self.tags = hashtags
+        self.name = name
+        self.photos = photos
+        self.tags = tags
+        self.applyLink = applyLink
+        self.studentsCount = studentsCount
+        self.gpa = gpa
+        self.exams = exams
+        self.requirementsDescription = requirementsDescription
+        self.facties = facties
+        self.latitude = latitude
+        self.longitude = longitude
+        self.phone = phone
+        self.address = address
+        
         self.type = type
-        self.location = location
-        self.size = size
         self.ambassadors = ambassadors
-        self.admissionRequirements = admissionRequirements
         self.facilities = facilities
-        self.contactInformation = contactInformation
+        self.address = address
         self.phone = phone
         self.programList = programList
         self.content = content
-        self.link = link
         self.price = price
     }
     

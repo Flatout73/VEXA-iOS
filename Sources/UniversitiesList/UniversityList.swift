@@ -5,13 +5,18 @@
 //  Created by Егор on 23.06.2022.
 //
 
+import Foundation
 import SwiftUI
 import ComposableArchitecture
-import Analytics
-import Log
-import CoreUI
 import SharedModels
-import Resources
+import UIKit
+import Services
+import AVKit
+import ApiClient
+import Core
+import Protobuf
+import ContentDetails
+import CasePaths
 
 public struct UniversityListState: Equatable {
     
@@ -30,6 +35,7 @@ public struct UniversityListState: Equatable {
 
 public enum UniversityListAction: Equatable {
     
+    case fetchContent
     case show([UniversityModel])
     case showError(String)
     case search(String)
@@ -41,8 +47,13 @@ public enum UniversityListAction: Equatable {
 }
 
 public struct UniversityListEnvironment {
-    public init() {
-        
+    
+    let feedbackGenerator: UIImpactFeedbackGenerator
+    let apiClient: APIClient
+    
+    public init(apiClient: APIClient, feedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)) {
+        self.apiClient = apiClient
+        self.feedbackGenerator = feedbackGenerator
     }
 }
 
@@ -52,6 +63,46 @@ public let uniListReducer = Reducer<UniversityListState, UniversityListAction, U
 
 public let universityListReducer = Reducer<UniversityListState, UniversityListAction, UniversityListEnvironment> { state, action, environment in
     switch action {
+    case .fetchContent:
+        state.isLoading = true
+        let request = APIConstants.Universities.fetchUniversities
+        return Effect.task(operation: {
+            do {
+                let content: [Protobuf.University] = try await environment.apiClient.send(request)
+                return UniversityListAction.show(
+                    content.map {
+                        return UniversityModel(
+                            id: $0.id,
+                            name: $0.name,
+                            photos: $0.photos.map({ photo in
+                                return URL(string: photo)!
+                            }),
+                            tags: $0.tags,
+                            applyLink: $0.applyLink,
+                            studentsCount: Int($0.studentsCount),
+                            gpa: Int($0.gpa),
+                            exams: $0.exams,
+                            requirementsDescription: $0.requirementsDescription,
+                            facties: $0.facties,
+                            latitude: $0.latitude,
+                            longitude: $0.longitude,
+                            phone: $0.phone,
+                            address: $0.address,
+                            type: "no",
+                            ambassadors: ["no"],
+                            facilities: "no",
+                            programList: "no",
+                            content: ["no"],
+                            link: "no",
+                            price: "no")
+                    }
+                )
+            } catch {
+                return UniversityListAction.showError(error.localizedDescription)
+            }
+        })
+
+        
     case .show(let content):
         state.content = content
     case .showError(let error):
