@@ -12,7 +12,7 @@ import CoreUI
 
 struct ButtonsView: View {
     
-    let category: String
+    let category: LocalizedStringKey
     let likes: Int
     let isLiked: Bool
 
@@ -36,8 +36,9 @@ struct ButtonsView: View {
             }
             
             Spacer()
-            
-            BadgeView(title: "#\(category)")
+
+            (Text("#") + Text(category))
+                .modifier(BadgeViewModifier())
         }
     }
 }

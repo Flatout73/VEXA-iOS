@@ -52,6 +52,7 @@ var package = Package(
         .target(
             name: "SharedModels",
             dependencies: [
+                "Protobuf"
             ]
         ),
         .target(

@@ -84,7 +84,7 @@ public struct MainView: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {
-                            ForEach(ContentCategory.allCases) { category in
+                            ForEach(ContentCategoryModel.allCases) { category in
                                 Button(action: {
                                     viewStore.send(.search(viewStore.state.searchText, category: category))
                                 }, label: {

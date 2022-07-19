@@ -13,7 +13,7 @@ import SharedModels
 extension APIConstants {
     enum Content: ApiClient.Request {
         case discovery
-        case search(String?, category: ContentCategory?)
+        case search(String?, category: ContentCategoryModel?)
 
         var method: HTTPMethod {
             switch self {

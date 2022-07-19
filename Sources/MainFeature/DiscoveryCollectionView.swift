@@ -23,7 +23,7 @@ struct DiscoveryCollectionView: View {
                 Text(discovery.videoName)
                     .font(.subheadline)
                     .fontWeight(.bold)
-                Text(discovery.category)
+                Text(discovery.category.title)
                     .font(.subheadline)
                     .fontWeight(.none)
             }

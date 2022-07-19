@@ -32,7 +32,7 @@ public struct MainState: Equatable {
 
     public var searchText: String?
 
-    public var category: ContentCategory?
+    public var category: ContentCategoryModel?
 
     public init() {
 
@@ -45,7 +45,7 @@ public enum MainAction: Equatable {
     case show([Protobuf.Content])
     case showError(String)
 
-    case search(String?, category: ContentCategory?)
+    case search(String?, category: ContentCategoryModel?)
 
     case details(ContentDetailsAction)
     case setNavigation(MainRoute?)
@@ -119,7 +119,7 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                                   ambassador: ambassador,
                                   universityName: $0.ambassador.university.name,
                                   videoName: $0.title,
-                                  category: $0.category,
+                                  category: $0.category.model,
                                   desctription: $0.description_p,
                                   likesCount: Int($0.likesCount),
                                   isLiked: $0.isLikedByMe,

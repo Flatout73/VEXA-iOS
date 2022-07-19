@@ -35,7 +35,7 @@ public struct ContentDetailsView: View {
                             .bold()
                         
                         
-                        ButtonsView(category: viewStore.state.discovery.category,
+                        ButtonsView(category: viewStore.state.discovery.category.title,
                                     likes: viewStore.state.discovery.likesCount,
                                     isLiked: viewStore.state.discovery.isLiked) {
                             viewStore.send(.like)
@@ -47,7 +47,7 @@ public struct ContentDetailsView: View {
                             
                         }
 
-                        DescriptionView(description: viewStore.state.discovery.desctription)
+                        LongTextView(viewStore.state.discovery.desctription)
                     }
                     .padding()
                 }

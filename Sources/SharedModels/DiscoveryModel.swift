@@ -24,7 +24,8 @@ public struct DiscoveryModel: Identifiable, Hashable {
     
     public let id: String
     public let ambassador: Ambassador
-    public let universityName, videoName, category: String
+    public let universityName, videoName: String
+    public let category: ContentCategoryModel
     public let desctription: String
     public let videoURL: URL?
     public let image: URL?
@@ -32,7 +33,7 @@ public struct DiscoveryModel: Identifiable, Hashable {
     public var isLiked: Bool
 
     public init(id: String, ambassador: Ambassador, universityName: String, videoName: String,
-                category: String,
+                category: ContentCategoryModel,
                 desctription: String,
                 likesCount: Int,
                 isLiked: Bool = false,
