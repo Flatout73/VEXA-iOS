@@ -24,6 +24,8 @@ public enum ContentDetailsAction: Equatable {
     case alert(AlertAction)
     case showError(String)
 
+    case like
+
     public enum AlertAction: Hashable {
         case dismiss
         case go(String)
@@ -47,6 +49,10 @@ public let contentDetailsReducerCore = Reducer<ContentDetailsState, ContentDetai
     case .showError(let error):
         state.isLoading = false
         printLog(error)
+    case .like:
+        // TODO: Send like to server
+        //state.discovery.isLiked = !state.discovery.isLiked
+        break
     }
 
     return .none

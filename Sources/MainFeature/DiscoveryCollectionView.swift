@@ -61,7 +61,7 @@ struct DiscoveryCollectionView: View {
             HStack(spacing: 10) {
                 VStack {
                     HStack {
-                        Text(discovery.ambassador)
+                        Text(discovery.ambassador.name)
                             .font(.subheadline)
                             .foregroundColor(VEXAColors.mainGreen)
                             .fontWeight(.bold)

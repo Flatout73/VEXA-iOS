@@ -35,15 +35,21 @@ public struct ContentDetailsView: View {
                             .bold()
                         
                         
-                        ButtonsView(discovery: viewStore.state.discovery)
+                        ButtonsView(category: viewStore.state.discovery.category,
+                                    likes: viewStore.state.discovery.likesCount,
+                                    isLiked: viewStore.state.discovery.isLiked) {
+                            viewStore.send(.like)
+                        }
                         
-                        AmassadorView(discovery: viewStore.state.discovery)
+                        AmassadorView(ambassador: viewStore.state.discovery.ambassador) {
 
+                        } universityAction: {
+                            
+                        }
+
+                        DescriptionView(description: viewStore.state.discovery.desctription)
                     }
                     .padding()
-                    
-                    DescriptionView(discovery: viewStore.state.discovery)
-                    
                 }
             }
             .toolbar {
@@ -54,7 +60,7 @@ public struct ContentDetailsView: View {
                 })
             }
             .sheet(isPresented: $isShareSheetShown) {
-                return ShareSheet(activityItems: [URL(string: "vexa://discovery/\(viewStore.state.discovery.id)")])
+                ShareSheet(activityItems: [URL(string: "vexa://discovery/\(viewStore.state.discovery.id)")])
             }
         }
         .background(VEXAColors.background)

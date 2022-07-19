@@ -16,12 +16,17 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 
 """
 
+    static var ambassador: [DiscoveryModel.Ambassador] = [
+        DiscoveryModel.Ambassador(id: "1", name: "Mark Codly", imageURL: nil, universityName: "University of Central Florida"),
+        DiscoveryModel.Ambassador(id: "2", name: "Pert First", imageURL: nil, universityName: "University of Tampa")
+    ]
+
     static var discovery: [DiscoveryModel] {
         [
-            DiscoveryModel(id: "0", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: "Test desc", image: URL(string: "https://i.stack.imgur.com/Xkh8T.png")),
-            DiscoveryModel(id: "1", ambassador: "Pert First", universityName: "University of Tampa", videoName: "Dormatory", category: "Accomodation", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
-            DiscoveryModel(id: "2", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "dining", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
-            DiscoveryModel(id: "3", ambassador: "Mark Codly", universityName: "University of Central Florida", videoName: "Video Name", category: "other", desctription: longDesc, image: URL(string: "https://i.stack.imgur.com/e54hT.png")),
+            DiscoveryModel(id: "0", ambassador: ambassador[0], universityName: "University of Central Florida", videoName: "Video Name", category: "General Content", desctription: "Test desc", likesCount: 0, image: URL(string: "https://i.stack.imgur.com/Xkh8T.png")),
+            DiscoveryModel(id: "1", ambassador: ambassador[1], universityName: "University of Tampa", videoName: "Dormatory", category: "Accomodation", desctription: longDesc, likesCount: 2, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
+            DiscoveryModel(id: "2", ambassador: ambassador[0], universityName: "University of Central Florida", videoName: "Video Name", category: "dining", desctription: longDesc, likesCount: 5, image: URL(string: "https://i.stack.imgur.com/EatSX.png")),
+            DiscoveryModel(id: "3", ambassador: ambassador[0], universityName: "University of Central Florida", videoName: "Video Name", category: "other", desctription: longDesc, likesCount: 8, image: URL(string: "https://i.stack.imgur.com/e54hT.png")),
         ]
     }
 }

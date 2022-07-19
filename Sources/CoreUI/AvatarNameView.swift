@@ -21,7 +21,6 @@ public struct AvatarNameView: View {
 
     public var body: some View {
         HStack {
-            // MARK: - Need to rewrite the image in AsyncImage
             AsyncImage(url: imageURL) { image in
                 image
                     .resizable()
