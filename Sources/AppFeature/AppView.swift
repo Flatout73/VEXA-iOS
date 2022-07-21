@@ -206,7 +206,8 @@ public struct AppView: View {
                     }
                 }
 
-            ChatView(store: store.scope(state: \.chatState, action: AppAction.chat))
+//            ChatView(store: store.scope(state: \.chatState, action: AppAction.chat))
+            StreamChatView()
                 .tag(AppState.Screen.chat)
                 .tabItem {
                     VStack {

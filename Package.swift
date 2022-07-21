@@ -39,7 +39,8 @@ var package = Package(
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
         .package(url: "https://github.com/kean/Pulse", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/auth0/JWTDecode.swift.git", from: "2.6.0")
+        .package(url: "https://github.com/auth0/JWTDecode.swift.git", from: "2.6.0"),
+        .package(url: "https://github.com/getstream/stream-chat-swiftui.git", from: "4.19.0")
     ],
     targets: [
         .target(
@@ -174,7 +175,8 @@ var package = Package(
                     "CoreUI",
                     "ApiClient",
                     "Services",
-                    .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                    .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                    .product(name: "StreamChatSwiftUI", package: "stream-chat-swiftui")
                 ]
         ),
     ]

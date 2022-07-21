@@ -9,6 +9,7 @@ public struct AppEnvironment {
     public var apiClient: APIClient
     public let tokenManager: TokenManager
     public let socketClient: SocketClient
+    public let streamChatService: StreamChatService
     public let userService: UserService
     public var applicationClient: UIApplicationClient
     public var backgroundQueue: AnySchedulerOf<DispatchQueue>
@@ -21,6 +22,7 @@ public struct AppEnvironment {
         apiClient: APIClient,
         tokenManager: TokenManager,
         socketClient: SocketClient,
+        streamChatService: StreamChatService,
         userService: UserService,
         applicationClient: UIApplicationClient,
         backgroundQueue: AnySchedulerOf<DispatchQueue>,
@@ -32,6 +34,7 @@ public struct AppEnvironment {
         self.apiClient = apiClient
         self.tokenManager = tokenManager
         self.socketClient = socketClient
+        self.streamChatService = streamChatService
         self.userService = userService
         self.applicationClient = applicationClient
         self.backgroundQueue = backgroundQueue

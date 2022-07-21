@@ -107,6 +107,7 @@ extension AppEnvironment {
             apiClient: apiClient,
             tokenManager: tokenManager,
             socketClient: socketClient,
+            streamChatService: StreamChatService(),
             userService: UserService(apiClient: apiClient),
             applicationClient: .live,
             backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
