@@ -16,36 +16,51 @@ import UniversityProfile
 
 public struct UniversityListView: View {
     let store: Store<UniversityListState, UniversityListAction>
+    let viewStore: ViewStore<UniversityListState, UniversityListAction>
     
     public init(store: Store<UniversityListState, UniversityListAction>) {
         self.store = store
+        self.viewStore = ViewStore(store)
+    }
+    
+    @ViewBuilder
+    func backgroundNavigation(for cell: UniversityModel, viewStore: ViewStore<UniversityListState, UniversityListAction>) -> some View {
+        NavigationLink(
+            destination: IfLetStore(
+                self.store.scope(
+                    state: (\UniversityListState.route).appending(path: /UniversityListRoute.details).extract(from:),
+                    action: UniversityListAction.details
+                ), then: { UniProfileView(university: $0) }),
+            tag: UniversityListRoute.details(UniversityState(content: cell)),
+            selection: viewStore.binding(
+                get: \.route,
+                send: UniversityListAction.setNavigation
+            )) {
+                EmptyView()
+            }
     }
     
     @ViewBuilder
     public var mainContent: some View {
-        WithViewStore(self.store) { viewStore in
-            GeometryReader { proxy in
-                List {
-                    ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
-                        let size = CGSize(width: proxy.size.width - 30, height: 100)
-                        UniversityPageView(university: cell, size: size)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
-                            .listRowBackground(Color.clear)
-                            .cornerRadius(20)
-                            .padding(10)
-                            .background(
-                                NavigationLink("") {
-                                    UniProfileView(university: cell)
-                                }
-                                    .opacity(0)
-                            )
-                    }
+        GeometryReader { proxy in
+            List {
+                ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
+                    let size = CGSize(width: proxy.size.width - 30, height: 100)
+                    UniversityPageView(university: cell, size: size)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+                        .listRowBackground(Color.clear)
+                        .cornerRadius(20)
+                        .padding(10)
+                        .background(backgroundNavigation(for: cell, viewStore: viewStore))
                 }
-                .listStyle(PlainListStyle())
             }
-            .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
+            .listStyle(PlainListStyle())
+            .refreshable {
+                await viewStore.send(.fetchContent, while: \.isLoading)
+            }
         }
+        .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -70,6 +85,13 @@ public struct UniversityListView: View {
                     // just sample
                     //VEXAAnalytics.shared.log(event: "main_screen_appeared")
                     VEXALogger.shared.debug("main screen")
+                }
+                .onOpenURL { url in
+                    guard url.host == "universities" else { return }
+                    let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                    if let id = urlComponents?.path, let content = viewStore.state.content.first(where: { "/\($0.id)" == id }) {
+                        viewStore.send(.setNavigation(.details(UniversityState(content: content))))
+                    }
                 }
         }
     

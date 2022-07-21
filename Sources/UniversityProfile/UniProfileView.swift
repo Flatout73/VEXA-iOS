@@ -6,93 +6,97 @@
 //
 
 import SwiftUI
-import Resources
+import ComposableArchitecture
+import CoreUI
 import SharedModels
-
+import Resources
+import AVKit
 
 public struct UniProfileView: View {
     
-    public init(university: UniversityModel) {
+    public init(university: Store<UniversityState, UniversityAction>) {
         self.university = university
     }
     
+    let university: Store<UniversityState, UniversityAction>
     
-    let university: UniversityModel
-
     @ViewBuilder
     public var main: some View {
-        ScrollView (.vertical) {
-            VStack() {
-                TopView(university: university)
-                ButtonView(university: university)
-                
-                Divider()
-                VStack(alignment: .leading) {
-                    HStack(spacing: 5) {
-                        
-                        NavigationLink(destination: AmbassadorListView(university: university)) {
+        WithViewStore(self.university) { viewStore in
+            
+            ScrollView (.vertical) {
+                VStack() {
+                    TopView(university: viewStore.state.content)
+                    ButtonView(university: viewStore.state.content)
+                    
+                    Divider()
+                    VStack(alignment: .leading) {
+                        HStack(spacing: 5) {
                             
-                            Text("Ambassadors")
+                            NavigationLink(destination: AmbassadorListView(university: viewStore.state.content)) {
+                                
+                                Text("Ambassadors")
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundColor(VEXAColors.mainGreen)
+                                    .frame(alignment: .leading)
+                            }
+                            Text("15")
                                 .font(.subheadline)
+                                .foregroundColor(.gray)
                                 .bold()
-                                .foregroundColor(VEXAColors.mainGreen)
                                 .frame(alignment: .leading)
                         }
-                        Text("15")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                    }
-                    AmbassadorsView(university: university)
-                    Divider()
-                    
-                    HStack(spacing: 5) {
-                        Button(action: {
-                            print("Videos screen proceed")
-                        }) {
-                            Text("Videos")
+                        AmbassadorsView(university: viewStore.state.content)
+                        Divider()
+                        
+                        HStack(spacing: 5) {
+                            Button(action: {
+                                print("Videos screen proceed")
+                            }) {
+                                Text("Videos")
+                                    .font(.subheadline)
+                                    .bold()
+                                    .foregroundColor(VEXAColors.mainGreen)
+                                    .frame(alignment: .leading)
+                            }
+                            Text("15")
                                 .font(.subheadline)
+                                .foregroundColor(.gray)
                                 .bold()
-                                .foregroundColor(VEXAColors.mainGreen)
                                 .frame(alignment: .leading)
                         }
-                        Text("15")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .bold()
-                            .frame(alignment: .leading)
-                    }
-                    VideosView(university: university)
-                    
-                    Divider()
-                    
-                    UniversitySizeView(university: university)
-                        
-                    Divider()
-                    
-                    RequirementsView(university: university)
-                    
-                    
-                    Group {
-                        Divider()
-                        
-                        FacilitiesView(university: university)
+                        VideosView(university: viewStore.state.content)
                         
                         Divider()
                         
-                        PriceView(university: university)
-
-                        Divider()
-                        
-                        MapView()
-                            .frame(height: 110)
+                        UniversitySizeView(university: viewStore.state.content)
                         
                         Divider()
                         
-                        ContactView(university: university)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        RequirementsView(university: viewStore.state.content)
+                        
+                        
+                        Group {
+                            Divider()
+                            
+                            FacilitiesView(university: viewStore.state.content)
+                            
+                            Divider()
+                            
+                            PriceView(university: viewStore.state.content)
+                            
+                            Divider()
+                            
+                            MapView()
+                                .frame(height: 110)
+                            
+                            Divider()
+                            
+                            ContactView(university: viewStore.state.content)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
                     }
                 }
             }
@@ -102,13 +106,14 @@ public struct UniProfileView: View {
     }
     
     public var body: some View {
-            main
-                .toolbar {
-                    
-                }
-                .navigationTitle(university.name)
-                .navigationBarTitleDisplayMode(.inline)
-        }
+        
+        main
+            .toolbar {
+                
+            }
+            .navigationTitle("university.name")
+            .navigationBarTitleDisplayMode(.inline)
+    }
 }
 
 

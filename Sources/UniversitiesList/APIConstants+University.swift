@@ -12,10 +12,11 @@ import Alamofire
 extension APIConstants {
     enum Universities: ApiClient.Request {
         case fetchUniversities
+        case search(String?)
 
         var method: HTTPMethod {
             switch self {
-            case .fetchUniversities:
+            case .fetchUniversities, .search:
                 return .get
             }
         }
@@ -24,6 +25,17 @@ extension APIConstants {
             switch self {
             case .fetchUniversities:
                 return "/universities"
+            case .search:
+                return "/universities/search"
+            }
+        }
+        
+        var encoding: ParameterEncoding {
+            switch self {
+            case .search:
+                return URLEncoding()
+            default:
+                return JSONEncoding()
             }
         }
     }

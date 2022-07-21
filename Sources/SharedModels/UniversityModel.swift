@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct UniversityModel: Identifiable, Equatable {
+public struct UniversityModel: Identifiable, Equatable, Hashable {
     
     public let id: String
     public var name: String

@@ -17,6 +17,11 @@ import Core
 import Protobuf
 import ContentDetails
 import CasePaths
+import UniversityProfile
+
+public enum UniversityListRoute: Hashable {
+    case details(UniversityState)
+}
 
 public struct UniversityListState: Equatable {
     
@@ -27,6 +32,8 @@ public struct UniversityListState: Equatable {
     public var searchText = ""
     
     public var isLoading = false
+    
+    public var route: UniversityListRoute?
 
     public init() {
 
@@ -36,9 +43,12 @@ public struct UniversityListState: Equatable {
 public enum UniversityListAction: Equatable {
     
     case fetchContent
-    case show([UniversityModel])
+    case show([Protobuf.University])
     case showError(String)
     case search(String)
+    
+    case details(UniversityAction)
+    case setNavigation(UniversityListRoute?)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -70,33 +80,8 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
             do {
                 let content: [Protobuf.University] = try await environment.apiClient.send(request)
                 return UniversityListAction.show(
-                    content.map {
-                        return UniversityModel(
-                            id: $0.id,
-                            name: $0.name,
-                            photos: $0.photos.map({ photo in
-                                return URL(string: photo)!
-                            }),
-                            tags: $0.tags,
-                            applyLink: $0.applyLink,
-                            studentsCount: Int($0.studentsCount),
-                            gpa: Int($0.gpa),
-                            exams: $0.exams,
-                            requirementsDescription: $0.requirementsDescription,
-                            facties: $0.facties,
-                            latitude: $0.latitude,
-                            longitude: $0.longitude,
-                            phone: $0.phone,
-                            address: $0.address,
-                            type: "no",
-                            ambassadors: ["no"],
-                            facilities: "no",
-                            programList: "no",
-                            content: ["no"],
-                            link: "no",
-                            price: "no")
-                    }
-                )
+                     content
+                     )
             } catch {
                 return UniversityListAction.showError(error.localizedDescription)
             }
@@ -104,7 +89,32 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
 
         
     case .show(let content):
-        state.content = content
+        state.content = content.map {
+            return UniversityModel(
+                id: $0.id,
+                name: $0.name,
+                photos: $0.photos.compactMap({ photo in
+                    return URL(string: photo)
+                }),
+                tags: $0.tags,
+                applyLink: $0.applyLink,
+                studentsCount: Int($0.studentsCount),
+                gpa: Int($0.gpa),
+                exams: $0.exams,
+                requirementsDescription: $0.requirementsDescription,
+                facties: $0.facties,
+                latitude: $0.latitude,
+                longitude: $0.longitude,
+                phone: $0.phone,
+                address: $0.address,
+                type: "no",
+                ambassadors: ["no"],
+                facilities: "no",
+                programList: "no",
+                content: ["no"],
+                link: "no",
+                price: "no")
+        }
     case .showError(let error):
         state.isLoading = false
     case .search(let text):
@@ -114,6 +124,21 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
         } else {
             state.filteredContent = nil
         }
+        
+        let request = APIConstants.Universities.search(text)
+        return Effect.task(operation: {
+            do {
+                let content: [Protobuf.University] = try await environment.apiClient.send(request)
+                return UniversityListAction.show(content)
+            } catch {
+                return UniversityListAction.show([])
+            }
+        })
+        
+    case .setNavigation(let tag):
+        state.route = tag
+    case .details(_):
+        return .none
     }
 
     return .none
