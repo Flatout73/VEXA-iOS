@@ -6,6 +6,7 @@ import Services
 import ApiClient
 import Core
 import Protobuf
+import AuthenticationServices
 
 public struct AuthorizationState: Equatable {
     public var alert: AlertState<AuthorizationAction.AlertAction>?
@@ -29,6 +30,8 @@ public enum AuthorizationAction: Equatable {
     case changePassword(String)
     case login
     case updateCachedToken(AuthorizationToken)
+
+    case handleSIWALogin(ASAuthorization)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -79,6 +82,24 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
     case .updateCachedToken(let token):
         environment.tokenManager.authorizationToken = token
         state.token = token
+
+    case .handleSIWALogin(let authorization):
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+
+            // Create an account in your system.
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+
+            // For the purpose of this demo app, store the `userIdentifier` in the keychain.
+            //self.saveUserInKeychain(userIdentifier)
+
+            // For the purpose of this demo app, show the Apple ID credential information in the `ResultViewController`.
+           // self.showResultViewController(userIdentifier: userIdentifier, fullName: fullName, email: email)
+        default:
+            break
+        }
     }
 
     return .none

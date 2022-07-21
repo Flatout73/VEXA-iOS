@@ -3,6 +3,7 @@ import ComposableArchitecture
 import CoreUI
 import SharedModels
 import Resources
+import AuthenticationServices
 
 public struct AuthorizationView: View {
     let store: Store<AuthorizationState, AuthorizationAction>
@@ -32,6 +33,19 @@ public struct AuthorizationView: View {
                         viewStore.send(.login)
                     }
                     .buttonStyle(VEXAButtonStyle())
+
+                    Text("or")
+
+                    SignInWithAppleButton(.signIn) { request in
+                        request.requestedScopes = [.fullName, .email]
+                    } onCompletion: { result in
+                        switch result {
+                        case .success(let authResults):
+                            viewStore.send(.handleSIWALogin(authResults))
+                        case .failure(let error):
+                            viewStore.send(.showError(error.localizedDescription))
+                        }
+                    }
                 }
                 .padding()
             }
