@@ -32,15 +32,15 @@ var package = Package(
     dependencies: [
         .package(name: "iPhoneNumberField",
                  url: "https://github.com/MojtabaHs/iPhoneNumberField.git",
-                 from: "0.6.1"),
+                 .upToNextMajor(from: "0.6.1")),
         .package(name: "KeychainAccess",
                  url: "https://github.com/kishikawakatsumi/KeychainAccess.git",
-                 from: "3.0.0"),
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
+                .upToNextMajor(from: "3.0.0")),
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.2")),
         .package(url: "https://github.com/kean/Pulse", .upToNextMajor(from: "1.1.0")),
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/auth0/JWTDecode.swift.git", from: "2.6.0"),
-        .package(url: "https://github.com/getstream/stream-chat-swiftui.git", from: "4.19.0")
+        .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMajor(from: "1.19.0")),
+        .package(url: "https://github.com/auth0/JWTDecode.swift.git", .upToNextMajor(from: "3.0.0")),
+        .package(url: "https://github.com/getstream/stream-chat-swiftui.git", .upToNextMajor(from: "4.19.0"))
     ],
     targets: [
         .target(
@@ -183,7 +183,7 @@ var package = Package(
 )
 
 package.dependencies.append(contentsOf: [
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.28.0")
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "0.38.3"))
 ])
 package.products.append(contentsOf: [
     .library(name: "ApiClient", targets: ["ApiClient"]),
