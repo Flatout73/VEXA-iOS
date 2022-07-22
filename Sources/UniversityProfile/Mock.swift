@@ -40,7 +40,7 @@ public extension Mock {
             programList: "https://www.harpercollege.edu/index.php",
             content: ["Harper College", "Harper College", "HarperLifeStyle"],
             link: "https://www.harpercollege.edu/index.php",
-            price: "$20,000 per year for undergraduate studies, $30,000 for graduate studies"
+            price: 12000
         )
     }
 }

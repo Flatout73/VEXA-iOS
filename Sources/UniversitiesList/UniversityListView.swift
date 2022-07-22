@@ -42,11 +42,10 @@ public struct UniversityListView: View {
     
     @ViewBuilder
     public var mainContent: some View {
-        GeometryReader { proxy in
             List {
                 ForEach(viewStore.state.filteredContent ?? viewStore.state.content) { cell in
-                    let size = CGSize(width: proxy.size.width - 30, height: 100)
-                    UniversityPageView(university: cell, size: size)
+//                    let size = CGSize(width: proxy.size.width - 30, height: 100)
+                    UniversityPageView(university: cell)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                         .listRowBackground(Color.clear)
@@ -59,7 +58,6 @@ public struct UniversityListView: View {
             .refreshable {
                 await viewStore.send(.fetchContent, while: \.isLoading)
             }
-        }
         .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
@@ -84,7 +82,6 @@ public struct UniversityListView: View {
                 .onAppear {
                     // just sample
                     //VEXAAnalytics.shared.log(event: "main_screen_appeared")
-                    VEXALogger.shared.debug("main screen")
                 }
                 .onOpenURL { url in
                     guard url.host == "universities" else { return }

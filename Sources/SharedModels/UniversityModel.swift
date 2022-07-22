@@ -30,7 +30,7 @@ public struct UniversityModel: Identifiable, Equatable, Hashable {
     public var facilities: String
     public var programList: String
     public var content: [String]
-    public var price: String
+    public var price: Int
  
     public init(id: String,
                 name: String,
@@ -53,7 +53,7 @@ public struct UniversityModel: Identifiable, Equatable, Hashable {
                 programList: String,
                 content: [String],
                 link: String,
-                price: String) {
+                price: Int) {
         
         self.id = id
         self.name = name

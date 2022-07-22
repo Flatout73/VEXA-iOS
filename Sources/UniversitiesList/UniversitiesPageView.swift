@@ -11,13 +11,12 @@ import SharedModels
 
 public struct UniversityPageView: View {
     
-    public init(university: UniversityModel, size: CGSize) {
+    public init(university: UniversityModel) {
         self.university = university
-        self.size = size
     }
     
     let university: UniversityModel
-    let size: CGSize
+//    let size: CGSize
     
     @ViewBuilder
     public var body: some View {

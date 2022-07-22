@@ -113,7 +113,8 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
                 programList: "no",
                 content: ["no"],
                 link: "no",
-                price: "no")
+                price: $0.price
+            )
         }
     case .showError(let error):
         state.isLoading = false
