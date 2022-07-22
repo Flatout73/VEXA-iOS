@@ -24,7 +24,7 @@ public struct UniversityListView: View {
     }
     
     @ViewBuilder
-    func backgroundNavigation(for cell: UniversityModel, viewStore: ViewStore<UniversityListState, UniversityListAction>) -> some View {
+    func backgroundNavigationForUni(for cell: UniversityModel, viewStore: ViewStore<UniversityListState, UniversityListAction>) -> some View {
         NavigationLink(
             destination: IfLetStore(
                 self.store.scope(
@@ -51,14 +51,20 @@ public struct UniversityListView: View {
                         .listRowBackground(Color.clear)
                         .cornerRadius(20)
                         .padding(10)
-                        .background(backgroundNavigation(for: cell, viewStore: viewStore))
+                        .background(backgroundNavigationForUni(for: cell, viewStore: viewStore))
                 }
             }
             .listStyle(PlainListStyle())
             .refreshable {
                 await viewStore.send(.fetchContent, while: \.isLoading)
             }
-        .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
+//        .searchable(text: viewStore.binding(get: \.searchText, send: UniversityListAction.search), prompt: "search")
+            .searchable(text: Binding(get: {
+                viewStore.state.searchText ?? ""
+            }, set: {
+                viewStore.send(UniversityListAction.search($0))
+            }), prompt: "search")
+        
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -76,9 +82,8 @@ public struct UniversityListView: View {
     public var body: some View {
         NavigationView {
             mainContent
-                //.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .navigationViewStyle(StackNavigationViewStyle())
-            //.zIndex(0)
+            .zIndex(0)
                 .onAppear {
                     // just sample
                     //VEXAAnalytics.shared.log(event: "main_screen_appeared")

@@ -89,6 +89,7 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
 
         
     case .show(let content):
+        state.isLoading = false
         state.content = content.map {
             return UniversityModel(
                 id: $0.id,
@@ -112,8 +113,7 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
                 facilities: "no",
                 programList: "no",
                 content: ["no"],
-                link: "no",
-                price: $0.price
+                price: 0
             )
         }
     case .showError(let error):

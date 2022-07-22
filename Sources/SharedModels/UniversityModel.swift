@@ -52,7 +52,6 @@ public struct UniversityModel: Identifiable, Equatable, Hashable {
                 facilities: String,
                 programList: String,
                 content: [String],
-                link: String,
                 price: Int) {
         
         self.id = id

@@ -16,7 +16,6 @@ public struct UniversityPageView: View {
     }
     
     let university: UniversityModel
-//    let size: CGSize
     
     @ViewBuilder
     public var body: some View {

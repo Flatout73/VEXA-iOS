@@ -16,7 +16,7 @@ public extension Mock {
                 name: "Harper College",
                 photos: [],
                 tags: ["#2 year", "#public", "#harper", "#community"],
-                applyLink: "",
+                applyLink: "https://www.harpercollege.edu/index.php",
                 studentsCount: 3600,
                 gpa: 3,
                 exams: "IELTs",
@@ -38,16 +38,15 @@ public extension Mock {
                             """,
                 programList: "https://www.harpercollege.edu/index.php",
                 content: ["Harper College", "Harper College", "HarperLifeStyle"],
-                link: "https://www.harpercollege.edu/index.php",
                 price: 15000
             ),
             
             UniversityModel(
-                id: "0",
+                id: "1",
                 name: "Harper College",
                 photos: [],
                 tags: ["#2 year", "#public", "#harper", "#community"],
-                applyLink: "",
+                applyLink: "https://www.harpercollege.edu/index.php",
                 studentsCount: 3600,
                 gpa: 3,
                 exams: "IELTs",
@@ -69,7 +68,6 @@ public extension Mock {
                             """,
                 programList: "https://www.harpercollege.edu/index.php",
                 content: ["Harper College", "Harper College", "HarperLifeStyle"],
-                link: "https://www.harpercollege.edu/index.php",
                 price: 15000
             )
         ]

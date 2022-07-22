@@ -31,7 +31,7 @@ public struct UniversityState: Hashable {
 
 public enum UniversityAction: Equatable {
     
-    case show(UniversityModel)
+//    case show(UniversityModel)
     case alert(AlertAction)
     case showError(String)
 
@@ -55,8 +55,8 @@ public let uniReducer = Reducer<UniversityState, UniversityAction, UniversityEnv
 
 public let universityReducer = Reducer<UniversityState, UniversityAction, UniversityEnvironment> { state, action, environment in
     switch action {
-    case .show(let content):
-        state.content = content
+//    case .show(let content):
+//        state.content = content
     case .showError(let error):
         state.isLoading = false
     case .alert(.dismiss):
