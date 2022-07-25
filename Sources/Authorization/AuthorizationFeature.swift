@@ -42,10 +42,12 @@ public enum AuthorizationAction: Equatable {
 public struct AuthorizationEnvironment {
     let apiClient: APIClient
     let tokenManager: TokenManager
+    let userService: UserService
 
-    public init(apiClient: APIClient, tokenManager: TokenManager) {
+    public init(apiClient: APIClient, tokenManager: TokenManager, userService: UserService) {
         self.apiClient = apiClient
         self.tokenManager = tokenManager
+        self.userService = userService
     }
 }
 
@@ -92,11 +94,21 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
 
-            // For the purpose of this demo app, store the `userIdentifier` in the keychain.
-            //self.saveUserInKeychain(userIdentifier)
-
-            // For the purpose of this demo app, show the Apple ID credential information in the `ResultViewController`.
-           // self.showResultViewController(userIdentifier: userIdentifier, fullName: fullName, email: email)
+            return Effect.task(operation: {
+                do {
+                    let request = AuthorizationRequest.siwa(appleToken: userIdentifier,
+                                                            firstName: fullName?.givenName,
+                                                            lastName: fullName?.familyName,
+                                                            email: email ?? environment.userService.user?.email,
+                                                            imageURL: nil)
+                    let response: LoginResponse = try await environment.apiClient.send(request)
+                    let token = AuthorizationToken(accessToken: response.accessToken,
+                                                   refreshToken: response.refreshToken)
+                    return AuthorizationAction.updateCachedToken(token)
+                } catch {
+                    return AuthorizationAction.showError(error.localizedDescription)
+                }
+            })
         default:
             break
         }
