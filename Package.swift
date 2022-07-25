@@ -28,6 +28,7 @@ var package = Package(
         .library(name: "UniversityProfile", targets: ["UniversityProfile"]),
         .library(name: "UniversitiesList", targets: ["UniversitiesList"]),
         .library(name: "Chat", targets: ["Chat"]),
+        .library(name: "VEXAStreamChat", targets: ["VEXAStreamChat"]),
     ],
     dependencies: [
         .package(name: "iPhoneNumberField",
@@ -65,6 +66,7 @@ var package = Package(
                 "AddContent",
                 "Profile",
                 "Chat",
+                "VEXAStreamChat",
                 "UIApplicationClient",
                 "CoreUI",
                 "Services",
@@ -158,6 +160,7 @@ var package = Package(
             "SharedModels",
             "CoreUI",
             "Log",
+            "ApiClient",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),
@@ -170,6 +173,15 @@ var package = Package(
         ]
        ),
         .target(name: "Chat",
+                dependencies: [
+                    "SharedModels",
+                    "CoreUI",
+                    "ApiClient",
+                    "Services",
+                    .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                ]
+        ),
+        .target(name: "VEXAStreamChat",
                 dependencies: [
                     "SharedModels",
                     "CoreUI",

@@ -20,7 +20,7 @@ struct TopView: View {
             
             VStack() {
                 HStack (spacing: 10) {
-                    ForEach(university.universityLogos, id: \.self) { content in
+                    ForEach(university.photos, id: \.self) { content in
                         AsyncImage(url: content) { image in
                             image
                                 .resizable()
@@ -180,7 +180,7 @@ struct UniversitySizeView: View {
                         .font(.title2)
                         .foregroundColor(.black)
                         .bold()
-                    Text(university.size)
+                    Text("\(university.studentsCount)")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -214,7 +214,7 @@ struct RequirementsView: View {
             HStack() {
                 Text("GPA: ")
                     .bold()
-                Text("\(university.admissionRequirements[0])")
+                Text("\(university.gpa)")
             }
             .font(.subheadline)
             .foregroundColor(.gray)
@@ -223,7 +223,7 @@ struct RequirementsView: View {
             HStack() {
                 Text("Exams: ")
                     .bold()
-                Text("\(university.admissionRequirements[1])")
+                Text("\(university.exams)")
             }
             .font(.subheadline)
             .foregroundColor(.gray)
@@ -232,7 +232,7 @@ struct RequirementsView: View {
             HStack() {
                 Text("Other: ")
                     .bold()
-                Text("\(university.admissionRequirements[2])")
+                Text("\(university.requirementsDescription)")
             }
             .font(.subheadline)
             .foregroundColor(.gray)
@@ -317,7 +317,7 @@ struct ContactView: View {
                         .font(.title2)
                         .foregroundColor(.black)
                         .bold()
-                    Text("\(university.contactInformation)")
+                    Text("\(university.address)")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

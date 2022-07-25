@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-public struct StudentModel: Identifiable, Equatable {
+public struct StudentModel: Identifiable, Equatable, UserProtocol {
     public enum Status: String, Codable {
         case emailVerified
         case emailNotVerified

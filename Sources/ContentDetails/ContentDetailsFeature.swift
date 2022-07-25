@@ -25,6 +25,8 @@ public enum ContentDetailsAction: Equatable {
     case showError(String)
 
     case like
+    case openChat(ambassadorID: String)
+    case openDeeplink(URL)
 
     public enum AlertAction: Hashable {
         case dismiss
@@ -34,9 +36,11 @@ public enum ContentDetailsAction: Equatable {
 
 public struct ContentDetailsEnvironment {
     let apiClient: APIClient
+    let streamChatService: StreamChatService
 
-    public init(apiClient: APIClient) {
+    public init(apiClient: APIClient, streamChatService: StreamChatService) {
         self.apiClient = apiClient
+        self.streamChatService = streamChatService
     }
 }
 
@@ -51,7 +55,20 @@ public let contentDetailsReducerCore = Reducer<ContentDetailsState, ContentDetai
         printLog(error)
     case .like:
         // TODO: Send like to server
-        //state.discovery.isLiked = !state.discovery.isLiked
+        state.discovery.isLiked = !state.discovery.isLiked
+    case .openChat(let ambassadorID):
+        return Effect.task(operation:  { () -> ContentDetailsAction in
+            do {
+                guard let cid = try await environment.streamChatService.createChannel(for: ambassadorID) else {
+                    return ContentDetailsAction.showError("No cid")
+                }
+                let deeplink = URL(string: "vexa://chat/messaging:\(cid)")!
+                return ContentDetailsAction.openDeeplink(deeplink)
+            } catch {
+                return ContentDetailsAction.showError(error.localizedDescription)
+            }
+        })
+    case .openDeeplink(_):
         break
     }
 

@@ -9,6 +9,7 @@ import Foundation
 import StreamChat
 import StreamChatSwiftUI
 import Core
+import SharedModels
 
 public class StreamChatService: ObservableObject {
 
@@ -24,27 +25,62 @@ public class StreamChatService: ObservableObject {
 
     lazy var streamChat: StreamChat = StreamChat(chatClient: chatClient)
 
+    let nameFormatter = PersonNameComponentsFormatter()
+
+    var userID: String?
+
     public init() {
         _ = streamChat
-        connectUser()
     }
 
-    func connectUser() {
-            // This is a hardcoded token valid on Stream's tutorial environment.
-            let token = try! Token(rawValue: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.F2kBYIOUAPAr5aNDEOLw7kogenxLFQb6NjTcp9sth38")
-
-            // Call `connectUser` on our SDK to get started.
-            chatClient.connectUser(
-                    userInfo: .init(id: "123",
-                                    name: "Leo",
-                                    imageURL: URL(string: "https://vignette.wikia.nocookie.net/starwars/images/2/20/LukeTLJ.jpg")!),
-                    token: token
+    public func connectUser(_ user: UserProtocol) {
+        let nameComponents = PersonNameComponents(givenName: user.firstName, familyName: user.secondName)
+        self.userID = user.id
+        chatClient
+            .connectUser(
+                userInfo: .init(id: user.id,
+                                name: nameFormatter.string(from: nameComponents),
+                                imageURL: user.imageURL),
+                token: Token.development(userId: user.id)
             ) { error in
                 if let error = error {
                     // Some very basic error handling only logging the error.
                     log.error("connecting the user failed \(error)")
                     return
                 }
+        }
+    }
+
+    public func createChannel(for ambassadorID: String) async throws -> String? {
+        let set = Set([userID, ambassadorID].compactMap { $0 })
+        return try await withCheckedThrowingContinuation { continuiation in
+            do {
+                let channel = try chatClient.channelController(createDirectMessageChannelWith: set,
+                                                               extraData: [:])
+
+                channel
+                    .synchronize { error in
+                        if let error = error {
+                            continuiation.resume(throwing: error)
+                        } else {
+                            continuiation.resume(returning: channel.cid?.id)
+                        }
+                    }
+            } catch {
+                continuiation.resume(throwing: error)
             }
         }
+    }
+
+    public func channelInfo(by id: String) -> ChannelSelectionInfo? {
+        if let channelId = try? ChannelId(cid: id) {
+            let chatController = chatClient.channelController(
+                for: channelId,
+                messageOrdering: .topToBottom
+            )
+            return chatController.channel?.channelSelectionInfo
+        }
+
+        return nil
+    }
 }

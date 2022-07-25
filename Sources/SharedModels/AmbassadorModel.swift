@@ -7,6 +7,11 @@
 
 import Foundation
 
-struct AmbassadorModel {
+public struct AmbassadorModel: UserProtocol {
+    public let id: String
+    public let firstName: String
+    public let secondName: String
+    public let imageURL: URL?
+
     public let universities: [UniversityModel]
 }
