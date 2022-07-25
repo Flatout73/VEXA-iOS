@@ -65,7 +65,7 @@ extension AppEnvironment {
     }
     
     var universityList: UniversityListEnvironment {
-        UniversityListEnvironment()
+        UniversityListEnvironment(apiClient: apiClient)
     }
 
     var chat: ChatEnvironment {

@@ -38,7 +38,7 @@ struct UniversitiesView: View {
                 HStack(spacing: 10) {
                     ForEach(universities) { uni in
                         VStack {
-                            AsyncImage(url: uni.universityLogos.first) { image in
+                            AsyncImage(url: uni.photos.first) { image in
                                 image
                                     .resizable()
                                     .scaledToFill()
