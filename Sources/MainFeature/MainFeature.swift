@@ -18,9 +18,6 @@ import Protobuf
 import ContentDetails
 import CasePaths
 
-public enum MainRoute: Hashable {
-    case details(ContentDetailsState)
-}
 
 public struct MainState: Equatable {
 	public var alert: AlertState<MainAction.AlertAction>?
@@ -28,7 +25,7 @@ public struct MainState: Equatable {
 
     public var isLoading = false
 
-    public var route: MainRoute?
+    var selection: Identified<DiscoveryModel.ID, ContentDetailsState?>?
 
     public var searchText: String?
 
@@ -48,7 +45,7 @@ public enum MainAction: Equatable {
     case search(String?, category: ContentCategoryModel?)
 
     case details(ContentDetailsAction)
-    case setNavigation(MainRoute?)
+    case setNavigation(selection: String?)
 
 	public enum AlertAction: Equatable {
 		case dismiss
@@ -76,8 +73,12 @@ public struct MainEnvironment {
 
 public let mainReducer = Reducer<MainState, MainAction, MainEnvironment>.combine(
 	mainReducerCore,
-    contentDetailsReducerCore._pullback(
-        state: (\MainState.route).appending(path: /MainRoute.details),
+    contentDetailsReducerCore
+        .optional()
+        .pullback(state: \Identified.value, action: .self, environment: { $0 })
+        .optional()
+        .pullback(
+        state: \MainState.selection,
         action: /MainAction.details,
         environment: \.contentDetails)
 )
@@ -132,8 +133,16 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
         UIApplication.shared.open(url)
     case .details:
         return .none
-    case .setNavigation(let tag):
-        state.route = tag
+    case let .setNavigation(selection: .some(id)):
+        if let content = state.content.first(where: { $0.id == id }) {
+            state.selection = Identified(ContentDetailsState(discovery: content), id: id)
+        }
+    case let .setNavigation(selection: .none):
+//      if let selection = state.selection, let count = selection.value?.count {
+//        state.rows[id: selection.id]?.count = count
+//      }
+      state.selection = nil
+      return .cancel(id: CancelId.self)
     case .search(let text, let category):
         state.searchText = text
         state.category = category

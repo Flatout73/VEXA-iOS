@@ -55,8 +55,7 @@ public let contentDetailsReducerCore = Reducer<ContentDetailsState, ContentDetai
         printLog(error)
     case .like:
         // TODO: Send like to server
-        //state.discovery.isLiked = !state.discovery.isLiked
-        break
+        state.discovery.isLiked = !state.discovery.isLiked
     case .openChat(let ambassadorID):
         return Effect.task(operation:  { () -> ContentDetailsAction in
             do {

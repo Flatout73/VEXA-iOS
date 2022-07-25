@@ -22,12 +22,12 @@ public struct MainView: View {
         NavigationLink(
             destination: IfLetStore(
                 self.store.scope(
-                    state: (\MainState.route).appending(path: /MainRoute.details).extract(from:),
+                    state: \.selection?.value,
                     action: MainAction.details
                 ), then: { ContentDetailsView(store: $0) }),
-            tag: MainRoute.details(ContentDetailsState(discovery: cell)),
+            tag: cell.id,
             selection: viewStore.binding(
-                get: \.route,
+                get: \.selection?.id,
                 send: MainAction.setNavigation
             )) {
                 EmptyView()
@@ -78,7 +78,7 @@ public struct MainView: View {
                     guard url.host == "discovery" else { return }
                     let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
                     if let id = urlComponents?.path, let content = viewStore.state.content.first(where: { "/\($0.id)" == id }) {
-                        viewStore.send(.setNavigation(.details(ContentDetailsState(discovery: content))))
+                        viewStore.send(.setNavigation(selection: content.id))
                     }
                 }
                 .toolbar {
