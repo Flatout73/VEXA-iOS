@@ -42,7 +42,9 @@ public struct StreamChatView: View {
                 guard url.host == "chat" else { return }
                 let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
                 if let id = urlComponents?.path.replacingOccurrences(of: "/", with: "") {
-                    viewStore.send(.showChannel(id: id))
+                    DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .milliseconds(300))) {
+                        viewStore.send(.showChannel(id: id))
+                    }
                 }
             }
     }

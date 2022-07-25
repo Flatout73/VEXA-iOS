@@ -68,7 +68,9 @@ public let streamChatReducerCore = Reducer<StreamChatState, StreamChatAction, St
             return Effect(value: StreamChatAction.showError("No user"))
         }
     case .showChannel(let id):
-        state.chatViewModel.deeplinkChannel = environment.streamChatService.channelInfo(by: id)
+        let info = environment.streamChatService.channelInfo(by: id)
+        //state.chatViewModel.selectedChannel = info
+        state.chatViewModel.deeplinkChannel = info
     case .clearChannel:
         state.chatViewModel.deeplinkChannel = nil
     }
@@ -78,6 +80,6 @@ public let streamChatReducerCore = Reducer<StreamChatState, StreamChatAction, St
 
 extension ChatChannelListViewModel: Equatable {
     public static func == (lhs: ChatChannelListViewModel, rhs: ChatChannelListViewModel) -> Bool {
-        return lhs.deeplinkChannel == rhs.deeplinkChannel
+        return lhs.deeplinkChannel == rhs.deeplinkChannel && lhs.selectedChannel == rhs.selectedChannel
     }
 }
