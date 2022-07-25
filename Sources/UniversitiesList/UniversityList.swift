@@ -15,7 +15,6 @@ import AVKit
 import ApiClient
 import Core
 import Protobuf
-import ContentDetails
 import CasePaths
 import UniversityProfile
 

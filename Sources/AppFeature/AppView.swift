@@ -7,7 +7,7 @@ import Services
 import Log
 import UniversitiesList
 import AddContent
-import Chat
+import VEXAStreamChat
 import Authorization
 
 public struct AppState: Equatable {
@@ -21,7 +21,7 @@ public struct AppState: Equatable {
     }
     var mainState: MainState
     var profileState: ProfileState
-    var chatState: ChatState
+    var chatState: StreamChatState
     var universityListState: UniversityListState
 
     var authorizationState: AuthorizationState
@@ -32,7 +32,7 @@ public struct AppState: Equatable {
     
     public init(mainState: MainState = MainState(),
                 profileState: ProfileState = ProfileState(user: nil),
-                chatState: ChatState = ChatState(),
+                chatState: StreamChatState = StreamChatState(),
                 universityListState: UniversityListState = UniversityListState(),
                 authorizationState: AuthorizationState = AuthorizationState()
     ) {
@@ -49,7 +49,7 @@ public enum AppAction: Equatable {
     case main(MainAction)
     case profile(ProfileAction)
     case universityList(UniversityListAction)
-    case chat(ChatAction)
+    case chat(StreamChatAction)
     case authorization(AuthorizationAction)
     
     case changeScreen(AppState.Screen)
@@ -68,8 +68,8 @@ extension AppEnvironment {
         UniversityListEnvironment(apiClient: apiClient)
     }
 
-    var chat: ChatEnvironment {
-        ChatEnvironment(apiClient: apiClient, socketClient: socketClient)
+    var chat: StreamChatEnvironment {
+        StreamChatEnvironment(apiClient: apiClient, userService: userService, streamChatService: streamChatService)
     }
 
     var authorization: AuthorizationEnvironment {
@@ -88,7 +88,7 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         action: /AppAction.profile,
         environment: \.profile),
 
-    chatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
+    streamChatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
                              environment: \.chat),
 
     authorizationReducerCore.pullback(state: \.authorizationState, action: /AppAction.authorization,
@@ -207,7 +207,7 @@ public struct AppView: View {
                 }
 
 //            ChatView(store: store.scope(state: \.chatState, action: AppAction.chat))
-            StreamChatView()
+            StreamChatView(store: store.scope(state: \.chatState, action: AppAction.chat))
                 .tag(AppState.Screen.chat)
                 .tabItem {
                     VStack {

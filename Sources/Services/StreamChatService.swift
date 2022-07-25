@@ -9,6 +9,7 @@ import Foundation
 import StreamChat
 import StreamChatSwiftUI
 import Core
+import SharedModels
 
 public class StreamChatService: ObservableObject {
 
@@ -24,27 +25,27 @@ public class StreamChatService: ObservableObject {
 
     lazy var streamChat: StreamChat = StreamChat(chatClient: chatClient)
 
+    let nameFormatter = PersonNameComponentsFormatter()
+
     public init() {
         _ = streamChat
-        connectUser()
     }
 
-    func connectUser() {
-            // This is a hardcoded token valid on Stream's tutorial environment.
-            let token = try! Token(rawValue: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.F2kBYIOUAPAr5aNDEOLw7kogenxLFQb6NjTcp9sth38")
+    public func connectUser(_ user: UserProtocol) {
+        let nameComponents = PersonNameComponents(givenName: user.firstName, familyName: user.secondName)
 
-            // Call `connectUser` on our SDK to get started.
-            chatClient.connectUser(
-                    userInfo: .init(id: "123",
-                                    name: "Leo",
-                                    imageURL: URL(string: "https://vignette.wikia.nocookie.net/starwars/images/2/20/LukeTLJ.jpg")!),
-                    token: token
+        chatClient
+            .connectUser(
+                userInfo: .init(id: user.id,
+                                name: nameFormatter.string(from: nameComponents),
+                                imageURL: user.imageURL),
+                token: Token.development(userId: user.id)
             ) { error in
                 if let error = error {
                     // Some very basic error handling only logging the error.
                     log.error("connecting the user failed \(error)")
                     return
                 }
-            }
         }
+    }
 }
