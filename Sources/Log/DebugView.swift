@@ -36,7 +36,6 @@ public struct DebugView: View {
                 MainView(store: VEXALogger.shared.loggerStore)
             }
             .navigationBarTitle("Нарния", displayMode: .inline)
-            .padding()
         }
     }
 }

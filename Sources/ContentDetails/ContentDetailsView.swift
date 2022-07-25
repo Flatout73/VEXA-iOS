@@ -42,7 +42,7 @@ public struct ContentDetailsView: View {
                         }
                         
                         AmassadorView(ambassador: viewStore.state.discovery.ambassador) {
-
+                            viewStore.send(.openChat(ambassadorID: viewStore.state.discovery.ambassador.id))
                         } universityAction: {
                             
                         }

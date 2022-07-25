@@ -58,16 +58,18 @@ public enum MainAction: Equatable {
 
 extension MainEnvironment {
     var contentDetails: ContentDetailsEnvironment {
-        ContentDetailsEnvironment(apiClient: self.apiClient)
+        ContentDetailsEnvironment(apiClient: self.apiClient, streamChatService: streamChatService)
     }
 }
 
 public struct MainEnvironment {
 	let feedbackGenerator: UIImpactFeedbackGenerator
     let apiClient: APIClient
+    let streamChatService: StreamChatService
 
-	public init(apiClient: APIClient, feedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)) {
+	public init(apiClient: APIClient, streamChatService: StreamChatService, feedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)) {
         self.apiClient = apiClient
+        self.streamChatService = streamChatService
 		self.feedbackGenerator = feedbackGenerator
 	}
 }
@@ -126,6 +128,8 @@ let mainReducerCore = Reducer<MainState, MainAction, MainEnvironment> { state, a
                                   videoURL: URL(string: $0.videoURL),
                                   image: URL(string: $0.imageURL))
         }
+    case .details(.openDeeplink(let url)):
+        UIApplication.shared.open(url)
     case .details:
         return .none
     case .setNavigation(let tag):

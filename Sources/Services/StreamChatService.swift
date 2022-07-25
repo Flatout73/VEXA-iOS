@@ -27,13 +27,15 @@ public class StreamChatService: ObservableObject {
 
     let nameFormatter = PersonNameComponentsFormatter()
 
+    var userID: String?
+
     public init() {
         _ = streamChat
     }
 
     public func connectUser(_ user: UserProtocol) {
         let nameComponents = PersonNameComponents(givenName: user.firstName, familyName: user.secondName)
-
+        self.userID = user.id
         chatClient
             .connectUser(
                 userInfo: .init(id: user.id,
@@ -47,5 +49,38 @@ public class StreamChatService: ObservableObject {
                     return
                 }
         }
+    }
+
+    public func createChannel(for ambassadorID: String) async throws -> String? {
+        let set = Set([userID, ambassadorID].compactMap { $0 })
+        return try await withCheckedThrowingContinuation { continuiation in
+            do {
+                let channel = try chatClient.channelController(createDirectMessageChannelWith: set,
+                                                               extraData: [:])
+
+                channel
+                    .synchronize { error in
+                        if let error = error {
+                            continuiation.resume(throwing: error)
+                        } else {
+                            continuiation.resume(returning: channel.cid?.id)
+                        }
+                    }
+            } catch {
+                continuiation.resume(throwing: error)
+            }
+        }
+    }
+
+    public func channelInfo(by id: String) -> ChannelSelectionInfo? {
+        if let channelId = try? ChannelId(cid: id) {
+            let chatController = chatClient.channelController(
+                for: channelId,
+                messageOrdering: .topToBottom
+            )
+            return chatController.channel?.channelSelectionInfo
+        }
+
+        return nil
     }
 }

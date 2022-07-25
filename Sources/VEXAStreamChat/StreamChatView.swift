@@ -14,9 +14,6 @@ public struct StreamChatView: View {
     let store: Store<StreamChatState, StreamChatAction>
     let viewStore: ViewStore<StreamChatState, StreamChatAction>
 
-    @State
-    private var chatView = ChatChannelListView(viewFactory: StreamCharViewFactory.shared)
-
     public init(store: Store<StreamChatState, StreamChatAction>) {
         self.store = store
         self.viewStore = ViewStore(store)
@@ -25,7 +22,9 @@ public struct StreamChatView: View {
     @ViewBuilder
     public var main: some View {
         if viewStore.hasUser {
-            chatView
+            ChatChannelListView(viewFactory: StreamCharViewFactory.shared,
+                                viewModel: viewStore.chatViewModel,
+                                title: "Chat")
         } else {
             Text("No user")
         }
@@ -35,6 +34,16 @@ public struct StreamChatView: View {
         main
             .onAppear {
                 viewStore.send(.onAppear)
+            }
+            .onDisappear {
+                viewStore.send(.clearChannel)
+            }
+            .onOpenURL { url in
+                guard url.host == "chat" else { return }
+                let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                if let id = urlComponents?.path.replacingOccurrences(of: "/", with: "") {
+                    viewStore.send(.showChannel(id: id))
+                }
             }
     }
 }

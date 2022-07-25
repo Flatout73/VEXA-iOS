@@ -6,6 +6,7 @@ import Services
 import ApiClient
 import Core
 import Protobuf
+import StreamChatSwiftUI
 
 public struct StreamChatState: Equatable {
     public var alert: AlertState<StreamChatAction.AlertAction>?
@@ -13,6 +14,9 @@ public struct StreamChatState: Equatable {
     public var isLoading = false
 
     public var hasUser = false
+
+    public let chatViewModel = ChatChannelListViewModel(channelListController: nil,
+                                                        selectedChannelId: nil)
 
     public init() {
 
@@ -24,6 +28,8 @@ public enum StreamChatAction: Equatable {
     case showError(String)
 
     case onAppear
+    case showChannel(id: String)
+    case clearChannel
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -61,7 +67,17 @@ public let streamChatReducerCore = Reducer<StreamChatState, StreamChatAction, St
         } else {
             return Effect(value: StreamChatAction.showError("No user"))
         }
+    case .showChannel(let id):
+        state.chatViewModel.deeplinkChannel = environment.streamChatService.channelInfo(by: id)
+    case .clearChannel:
+        state.chatViewModel.deeplinkChannel = nil
     }
 
     return .none
+}
+
+extension ChatChannelListViewModel: Equatable {
+    public static func == (lhs: ChatChannelListViewModel, rhs: ChatChannelListViewModel) -> Bool {
+        return lhs.deeplinkChannel == rhs.deeplinkChannel
+    }
 }

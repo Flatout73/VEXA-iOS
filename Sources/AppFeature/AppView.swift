@@ -58,7 +58,7 @@ public enum AppAction: Equatable {
 
 extension AppEnvironment {
     var main: MainEnvironment {
-        MainEnvironment(apiClient: apiClient)
+        MainEnvironment(apiClient: apiClient, streamChatService: streamChatService)
     }
     var profile: ProfileEnvironment {
         ProfileEnvironment(userService: userService)

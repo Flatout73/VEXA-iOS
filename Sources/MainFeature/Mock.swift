@@ -17,8 +17,8 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 """
 
     static var ambassador: [DiscoveryModel.Ambassador] = [
-        DiscoveryModel.Ambassador(id: "1", name: "Mark Codly", imageURL: nil, universityName: "University of Central Florida"),
-        DiscoveryModel.Ambassador(id: "2", name: "Pert First", imageURL: nil, universityName: "University of Tampa")
+        DiscoveryModel.Ambassador(id: "123", name: "Mark Codly", imageURL: nil, universityName: "University of Central Florida"),
+        DiscoveryModel.Ambassador(id: "flatout73", name: "Pert First", imageURL: nil, universityName: "University of Tampa")
     ]
 
     static var discovery: [DiscoveryModel] {
