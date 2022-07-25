@@ -66,10 +66,6 @@ public struct UniversityListEnvironment {
     }
 }
 
-public let uniListReducer = Reducer<UniversityListState, UniversityListAction, UniversityListEnvironment>.combine(
-    universityListReducer
-)
-
 public let universityListReducer = Reducer<UniversityListState, UniversityListAction, UniversityListEnvironment> { state, action, environment in
     switch action {
     case .fetchContent:

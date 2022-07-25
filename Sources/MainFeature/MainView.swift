@@ -18,7 +18,7 @@ public struct MainView: View {
 	}
 
     @ViewBuilder
-    func backgroundNavigation(for cell: DiscoveryModel, viewStore: ViewStore<MainState, MainAction>) -> some View {
+    func backgroundNavigation(for cell: DiscoveryModel) -> some View {
         NavigationLink(
             destination: IfLetStore(
                 self.store.scope(
@@ -45,7 +45,7 @@ public struct MainView: View {
                         .listRowInsets(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
                         .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
-                        .background(backgroundNavigation(for: cell, viewStore: viewStore))
+                        .background(backgroundNavigation(for: cell))
                 }
                 //}
                 .padding(.bottom, 60)

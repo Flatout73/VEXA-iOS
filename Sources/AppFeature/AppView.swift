@@ -88,6 +88,10 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         action: /AppAction.profile,
         environment: \.profile),
 
+    universityListReducer.pullback(state: \.universityListState,
+                                   action: /AppAction.universityList,
+                                   environment: \.universityList),
+
     streamChatReducerCore.pullback(state: \.chatState, action: /AppAction.chat,
                              environment: \.chat),
 

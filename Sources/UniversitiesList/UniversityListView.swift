@@ -24,7 +24,7 @@ public struct UniversityListView: View {
     }
     
     @ViewBuilder
-    func backgroundNavigationForUni(for cell: UniversityModel, viewStore: ViewStore<UniversityListState, UniversityListAction>) -> some View {
+    func backgroundNavigationForUni(for cell: UniversityModel) -> some View {
         NavigationLink(
             destination: IfLetStore(
                 self.store.scope(
@@ -51,7 +51,7 @@ public struct UniversityListView: View {
                         .listRowBackground(Color.clear)
                         .cornerRadius(20)
                         .padding(10)
-                        .background(backgroundNavigationForUni(for: cell, viewStore: viewStore))
+                        .background(backgroundNavigationForUni(for: cell))
                 }
             }
             .listStyle(PlainListStyle())
