@@ -7,17 +7,21 @@
 
 import Foundation
 import Alamofire
+import SwiftProtobuf
+
+public enum RequestParams {
+    case alamofire(Alamofire.Parameters, encoding: ParameterEncoding = JSONEncoding())
+    case protobuf(SwiftProtobuf.Message)
+}
 
 public protocol Request {
     var method: HTTPMethod { get }
     var path: String { get }
-    var paramaters: Alamofire.Parameters? { get }
+    var paramaters: RequestParams? { get }
     var headers: HTTPHeaders? { get }
-    var encoding: ParameterEncoding { get }
 }
 
 public extension Request {
     var headers: HTTPHeaders? { nil }
-    var encoding: ParameterEncoding { JSONEncoding() }
-    var paramaters: Alamofire.Parameters? { nil }
+    var paramaters: RequestParams? { nil }
 }

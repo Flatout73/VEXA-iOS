@@ -6,6 +6,7 @@ import Services
 import ApiClient
 import Core
 import Protobuf
+import AuthenticationServices
 
 public struct AuthorizationState: Equatable {
     public var alert: AlertState<AuthorizationAction.AlertAction>?
@@ -30,6 +31,8 @@ public enum AuthorizationAction: Equatable {
     case login
     case updateCachedToken(AuthorizationToken)
 
+    case handleSIWALogin(ASAuthorization)
+
     public enum AlertAction: Equatable {
         case dismiss
         case go(String)
@@ -39,10 +42,12 @@ public enum AuthorizationAction: Equatable {
 public struct AuthorizationEnvironment {
     let apiClient: APIClient
     let tokenManager: TokenManager
+    let userService: UserService
 
-    public init(apiClient: APIClient, tokenManager: TokenManager) {
+    public init(apiClient: APIClient, tokenManager: TokenManager, userService: UserService) {
         self.apiClient = apiClient
         self.tokenManager = tokenManager
+        self.userService = userService
     }
 }
 
@@ -79,6 +84,34 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
     case .updateCachedToken(let token):
         environment.tokenManager.authorizationToken = token
         state.token = token
+
+    case .handleSIWALogin(let authorization):
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+
+            // Create an account in your system.
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+
+            return Effect.task(operation: {
+                do {
+                    let request = AuthorizationRequest.siwa(appleToken: userIdentifier,
+                                                            firstName: fullName?.givenName,
+                                                            lastName: fullName?.familyName,
+                                                            email: email ?? environment.userService.user?.email,
+                                                            imageURL: nil)
+                    let response: LoginResponse = try await environment.apiClient.send(request)
+                    let token = AuthorizationToken(accessToken: response.accessToken,
+                                                   refreshToken: response.refreshToken)
+                    return AuthorizationAction.updateCachedToken(token)
+                } catch {
+                    return AuthorizationAction.showError(error.localizedDescription)
+                }
+            })
+        default:
+            break
+        }
     }
 
     return .none

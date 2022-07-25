@@ -15,7 +15,7 @@ import SharedModels
 extension APIClient {
 
     public func send<R: Request, T: SwiftProtobuf.Message>(_ request: R) async throws -> T {
-        let response = await send(request, session: session).serializingString().response
+        let response = try await send(request, session: session).serializingString().response
         if let request = response.request {
             VEXALogger.shared.loggerStore.storeRequest(request,
                                                        response: response.response,
@@ -41,7 +41,7 @@ extension APIClient {
     }
 
     public func send<R: Request, T: SwiftProtobuf.Message>(_ request: R) async throws -> [T] {
-        let response = await send(request, session: session).serializingString().response
+        let response = try await send(request, session: session).serializingString().response
         if let request = response.request {
             VEXALogger.shared.loggerStore.storeRequest(request,
                                                        response: response.response,
@@ -152,15 +152,34 @@ extension APIClient {
 //        return session.request(request).validate()
 //    }
 
-    private func send<R: Request>(_ request: R, session: Session) -> DataRequest {
+    private func send<R: Request>(_ request: R, session: Session) throws -> DataRequest {
         var headers = request.headers ?? [:]
         headers.add(.accept("application/json"))
         headers.add(.contentType("application/json"))
-        return session.request(APIConstants.baseURL.appendingPathComponent(request.path),
-                               method: request.method,
-                               parameters: request.paramaters,
-                               encoding: request.encoding,
-                               headers: headers)
-            .validate()
+
+        let url = APIConstants.baseURL.appendingPathComponent(request.path)
+        let request: DataRequest = try {
+            switch request.paramaters {
+            case .alamofire(let params, let encoding):
+                return session.request(url,
+                                       method: request.method,
+                                       parameters: params,
+                                       encoding: encoding,
+                                       headers: headers)
+            case .protobuf(let message):
+                var request = try URLRequest(url: url, method: request.method)
+                request.httpBody = try message.jsonUTF8Data()
+                request.headers = headers
+                return session.request(request)
+            case .none:
+                return session.request(url,
+                                       method: request.method,
+                                       parameters: nil,
+                                       encoding: JSONEncoding(),
+                                       headers: headers)
+            }
+        }()
+
+        return request.validate()
     }
 }
