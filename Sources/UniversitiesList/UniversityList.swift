@@ -102,7 +102,7 @@ public let universityListReducer = Reducer<UniversityListState, UniversityListAc
                 gpa: Int($0.gpa),
                 exams: $0.exams,
                 requirementsDescription: $0.requirementsDescription,
-                facties: $0.facties,
+                facties: $0.facts,
                 latitude: $0.latitude,
                 longitude: $0.longitude,
                 phone: $0.phone,
