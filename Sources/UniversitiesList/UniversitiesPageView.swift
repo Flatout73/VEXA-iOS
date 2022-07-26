@@ -49,8 +49,6 @@ public struct UniversityPageView: View {
         .frame(maxWidth: .infinity)
         .background(VEXAColors.formBackground)
     }
-    
-    
 }
 
 
