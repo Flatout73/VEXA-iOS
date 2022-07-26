@@ -13,10 +13,14 @@ import CoreUI
 import SharedModels
 import Resources
 import UniversityProfile
+import AVKit
 
 public struct UniversityListView: View {
     let store: Store<UniversityListState, UniversityListAction>
     let viewStore: ViewStore<UniversityListState, UniversityListAction>
+    
+    @State
+    private var showMap = false
     
     public init(store: Store<UniversityListState, UniversityListAction>) {
         self.store = store
@@ -67,15 +71,20 @@ public struct UniversityListView: View {
         
         .background(VEXAColors.background)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showMap) {
+            MapView()
+        }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {
+                    showMap = true
                     print("proceed to map with universities")
                 }) {
                     Image("uniMap", bundle: .module)
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
     
 
