@@ -32,6 +32,7 @@ public enum AuthorizationAction: Equatable {
     case updateCachedToken(AuthorizationToken)
 
     case handleSIWALogin(ASAuthorization)
+    case handleGoogleLogin(UIViewController?)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -43,11 +44,16 @@ public struct AuthorizationEnvironment {
     let apiClient: APIClient
     let tokenManager: TokenManager
     let userService: UserService
+    let siwaService: SIWAService
+    let gidService: GIDService
 
-    public init(apiClient: APIClient, tokenManager: TokenManager, userService: UserService) {
+    public init(apiClient: APIClient, tokenManager: TokenManager, userService: UserService,
+                siwaService: SIWAService, gidService: GIDService) {
         self.apiClient = apiClient
         self.tokenManager = tokenManager
         self.userService = userService
+        self.siwaService = siwaService
+        self.gidService = gidService
     }
 }
 
@@ -86,32 +92,43 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
         state.token = token
 
     case .handleSIWALogin(let authorization):
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+        guard let appleIDCredential = environment.siwaService.handleLogin(for: authorization) else { break }
 
-            // Create an account in your system.
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
+        // Create an account in your system.
+        let userIdentifier = appleIDCredential.user
+        let fullName = appleIDCredential.fullName
+        let email = appleIDCredential.email
 
-            return Effect.task(operation: {
-                do {
-                    let request = AuthorizationRequest.siwa(appleToken: userIdentifier,
-                                                            firstName: fullName?.givenName,
-                                                            lastName: fullName?.familyName,
-                                                            email: email ?? environment.userService.user?.email,
-                                                            imageURL: nil)
-                    let response: LoginResponse = try await environment.apiClient.send(request)
-                    let token = AuthorizationToken(accessToken: response.accessToken,
-                                                   refreshToken: response.refreshToken)
-                    return AuthorizationAction.updateCachedToken(token)
-                } catch {
-                    return AuthorizationAction.showError(error.localizedDescription)
-                }
-            })
-        default:
-            break
-        }
+        return Effect.task(operation: {
+            do {
+                let request = AuthorizationRequest.siwa(appleToken: userIdentifier,
+                                                        firstName: fullName?.givenName,
+                                                        lastName: fullName?.familyName,
+                                                        email: email ?? environment.userService.user?.email,
+                                                        imageURL: nil)
+                let response: LoginResponse = try await environment.apiClient.send(request)
+                let token = AuthorizationToken(accessToken: response.accessToken,
+                                               refreshToken: response.refreshToken)
+                return AuthorizationAction.updateCachedToken(token)
+            } catch {
+                return AuthorizationAction.showError(error.localizedDescription)
+            }
+        })
+
+    case .handleGoogleLogin(let vc):
+        return Effect.task(operation: {
+            do {
+                let loginRequest = try await environment.gidService.handleSignInButton(presentingViewController: vc)
+                let request = AuthorizationRequest.google(loginRequest)
+                let response: LoginResponse = try await environment.apiClient.send(request)
+                let token = AuthorizationToken(accessToken: response.accessToken,
+                                               refreshToken: response.refreshToken)
+                return AuthorizationAction.updateCachedToken(token)
+            } catch {
+                return AuthorizationAction.showError(error.localizedDescription)
+            }
+        })
+
     }
 
     return .none

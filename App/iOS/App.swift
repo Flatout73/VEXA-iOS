@@ -109,6 +109,8 @@ extension AppEnvironment {
             socketClient: socketClient,
             streamChatService: StreamChatService(),
             userService: UserService(apiClient: apiClient),
+            siwaService: SIWAService(),
+            gidService: GIDService(),
             applicationClient: .live,
             backgroundQueue: DispatchQueue(label: "background-queue").eraseToAnyScheduler(),
             mainQueue: .main,

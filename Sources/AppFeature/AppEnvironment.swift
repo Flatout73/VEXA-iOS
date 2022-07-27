@@ -11,6 +11,8 @@ public struct AppEnvironment {
     public let socketClient: SocketClient
     public let streamChatService: StreamChatService
     public let userService: UserService
+    public let siwaService: SIWAService
+    public let gidService: GIDService
     public var applicationClient: UIApplicationClient
     public var backgroundQueue: AnySchedulerOf<DispatchQueue>
     public var mainQueue: AnySchedulerOf<DispatchQueue>
@@ -24,6 +26,8 @@ public struct AppEnvironment {
         socketClient: SocketClient,
         streamChatService: StreamChatService,
         userService: UserService,
+        siwaService: SIWAService,
+        gidService: GIDService,
         applicationClient: UIApplicationClient,
         backgroundQueue: AnySchedulerOf<DispatchQueue>,
         mainQueue: AnySchedulerOf<DispatchQueue>,
@@ -36,6 +40,8 @@ public struct AppEnvironment {
         self.socketClient = socketClient
         self.streamChatService = streamChatService
         self.userService = userService
+        self.gidService = gidService
+        self.siwaService = siwaService
         self.applicationClient = applicationClient
         self.backgroundQueue = backgroundQueue
         self.mainQueue = mainQueue

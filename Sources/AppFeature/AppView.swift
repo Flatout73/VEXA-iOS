@@ -73,7 +73,8 @@ extension AppEnvironment {
     }
 
     var authorization: AuthorizationEnvironment {
-        AuthorizationEnvironment(apiClient: apiClient, tokenManager: tokenManager, userService: userService)
+        AuthorizationEnvironment(apiClient: apiClient, tokenManager: tokenManager, userService: userService,
+                                 siwaService: siwaService, gidService: gidService)
     }
 }
 

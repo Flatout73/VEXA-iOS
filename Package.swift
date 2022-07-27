@@ -41,7 +41,8 @@ var package = Package(
         .package(url: "https://github.com/kean/Pulse", .upToNextMajor(from: "1.1.0")),
         .package(url: "https://github.com/apple/swift-protobuf.git", .upToNextMajor(from: "1.19.0")),
         .package(url: "https://github.com/auth0/JWTDecode.swift.git", .upToNextMajor(from: "3.0.0")),
-        .package(url: "https://github.com/getstream/stream-chat-swiftui.git", .upToNextMajor(from: "4.19.0"))
+        .package(url: "https://github.com/getstream/stream-chat-swiftui.git", .upToNextMajor(from: "4.19.0")),
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", .upToNextMajor(from: "6.0.2"))
     ],
     targets: [
         .target(
@@ -82,7 +83,9 @@ var package = Package(
                 "CoreUI",
                 "Services",
                 "ApiClient",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS"),
+                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS")
             ]
         ),
         .target(
@@ -151,7 +154,8 @@ var package = Package(
             "Core",
             "SharedModels",
             "Protobuf",
-            "ApiClient"
+            "ApiClient",
+            .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS")
         ]),
         .target(name: "Protobuf", dependencies: [
             .product(name: "SwiftProtobuf", package: "swift-protobuf")
@@ -169,6 +173,7 @@ var package = Package(
             "CoreUI",
             "Log",
             "UniversityProfile",
+            "Services",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),

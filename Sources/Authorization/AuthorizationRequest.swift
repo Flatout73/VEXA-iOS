@@ -13,10 +13,11 @@ import Foundation
 enum AuthorizationRequest: ApiClient.Request {
     case login(email: String, password: String)
     case siwa(appleToken: String, firstName: String?, lastName: String?, email: String?, imageURL: URL?)
+    case google(LoginRequest)
 
     var method: HTTPMethod {
         switch self {
-        case .login, .siwa:
+        case .login, .siwa, .google:
             return .post
         }
     }
@@ -26,7 +27,9 @@ enum AuthorizationRequest: ApiClient.Request {
         case .login:
             return "/auth/login"
         case .siwa:
-            return "/apple"
+            return "/oauth/apple"
+        case .google:
+            return "/oauth/google"
         }
     }
 
@@ -41,10 +44,14 @@ enum AuthorizationRequest: ApiClient.Request {
             var siwaRequest = SIWARequest()
             siwaRequest.firstName = firstName ?? ""
             siwaRequest.lastName = lastName ?? ""
-            siwaRequest.email = email ?? ""
             siwaRequest.appleIdentityToken = appleToken
             siwaRequest.imageURL = imageURL?.path ?? ""
-            return .protobuf(siwaRequest)
+            var loginRequest = LoginRequest()
+            loginRequest.email = email ?? ""
+            loginRequest.siwa = siwaRequest
+            return .protobuf(loginRequest)
+        case .google(let loginRequest):
+            return .protobuf(loginRequest)
         }
 
     }

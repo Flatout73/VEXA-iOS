@@ -4,12 +4,17 @@ import CoreUI
 import SharedModels
 import Resources
 import AuthenticationServices
+import GoogleSignInSwift
 
 public struct AuthorizationView: View {
     let store: Store<AuthorizationState, AuthorizationAction>
 
     @Environment(\.dismiss)
     var dismiss
+
+    var presentingViewController: UIViewController? {
+        return (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController
+    }
 
     public init(store: Store<AuthorizationState, AuthorizationAction>) {
         self.store = store
@@ -45,6 +50,10 @@ public struct AuthorizationView: View {
                         case .failure(let error):
                             viewStore.send(.showError(error.localizedDescription))
                         }
+                    }
+                    
+                    GoogleSignInButton {
+                        viewStore.send(.handleGoogleLogin(presentingViewController))
                     }
                 }
                 .padding()

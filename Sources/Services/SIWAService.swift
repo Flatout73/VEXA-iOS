@@ -8,7 +8,20 @@
 import Foundation
 import AuthenticationServices
 
-class SIWAService {
+public class SIWAService {
 
+    public init() {
+        
+    }
 
+    public func handleLogin(for authorization: ASAuthorization) -> ASAuthorizationAppleIDCredential? {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            return appleIDCredential
+        default:
+            break
+        }
+
+        return nil
+    }
 }
