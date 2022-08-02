@@ -155,7 +155,8 @@ var package = Package(
             "SharedModels",
             "Protobuf",
             "ApiClient",
-            .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS")
+            .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+            .product(name: "StreamChatSwiftUI", package: "stream-chat-swiftui")
         ]),
         .target(name: "Protobuf", dependencies: [
             .product(name: "SwiftProtobuf", package: "swift-protobuf")
