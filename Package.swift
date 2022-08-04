@@ -166,6 +166,15 @@ var package = Package(
             "CoreUI",
             "Log",
             "ApiClient",
+            "EditProfileInfo",
+            .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+        ]
+       ),
+        .target(name: "EditProfileInfo", dependencies: [
+            "SharedModels",
+            "CoreUI",
+            "Log",
+            "ApiClient",
             .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
         ]
        ),

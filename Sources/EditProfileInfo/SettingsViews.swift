@@ -8,6 +8,7 @@
 import SwiftUI
 import SharedModels
 import Resources
+import ComposableArchitecture
 
 struct TopView: View {
     
@@ -15,12 +16,12 @@ struct TopView: View {
     
     var body: some View {
         VStack {
-            Image("Jane", bundle: .module)
-                .resizable()
-                .clipShape(Circle())
-                .shadow(radius: 10)
-                .overlay(Circle().stroke(Color.white, lineWidth: 5))
-                .frame(width: 100, height: 100)
+//            Image("Jane", bundle: .module)
+//                .resizable()
+//                .clipShape(Circle())
+//                .shadow(radius: 10)
+//                .overlay(Circle().stroke(Color.white, lineWidth: 5))
+//                .frame(width: 100, height: 100)
             
             Text("Tap to change photo")
                 .foregroundColor(.white)
@@ -35,14 +36,9 @@ struct TopView: View {
 
 
 struct GeneralInfoView: View {
-    
-    let user: StudentModel
-    
-    @State private var userFirstName: String = ""
-    @State private var userSecondName: String = ""
-    @State private var email: String = ""
-    @State private var dateOfBirthhday: String = ""
-    @State private var nativeLanguage: String = ""
+
+    @ObservedObject
+    var viewStore: ViewStore<EditProfileInfoState, EditProfileInfoAction>
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -51,28 +47,28 @@ struct GeneralInfoView: View {
                     .foregroundColor(.gray)
                     .font(.subheadline)
                     .fontWeight(.bold)
-            
-                TextField("User Name", text: $userFirstName)
+
+                TextField("User Name", text: self.viewStore.binding(\.$userFirstName))
                     .underlineTextField()
-            Divider()
-            
+                Divider()
+
                 Text("Second Name")
                     .foregroundColor(.gray)
                     .font(.subheadline)
                     .fontWeight(.bold)
-            
-                TextField("Second Name", text: $userSecondName)
+
+                TextField("Second Name", text: viewStore.binding(\.$userSecondName))
                     .underlineTextField()
-            Divider()
-            
-            Text("Email")
-                .foregroundColor(.gray)
-                .font(.subheadline)
-                .fontWeight(.bold)
-        
-            TextField("Email", text: $email)
-                .underlineTextField()
-            Divider()
+                Divider()
+
+                Text("Email")
+                    .foregroundColor(.gray)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+
+                TextField("Email", text: viewStore.binding(\.$email))
+                    .underlineTextField()
+                Divider()
                 
             }
             
@@ -80,8 +76,8 @@ struct GeneralInfoView: View {
                 .foregroundColor(.gray)
                 .font(.subheadline)
                 .fontWeight(.bold)
-        
-            TextField("Date of Birthday", text: $dateOfBirthhday)
+
+            TextField("Date of Birthday", text: viewStore.binding(\.$dateOfBirthhday))
                 .underlineTextField()
             Divider()
             
@@ -89,8 +85,8 @@ struct GeneralInfoView: View {
                 .foregroundColor(.gray)
                 .font(.subheadline)
                 .fontWeight(.bold)
-        
-            TextField("Native Language", text: $nativeLanguage)
+
+            TextField("Native Language", text: viewStore.binding(\.$nativeLanguage))
                 .underlineTextField()
             Divider()
             
@@ -107,13 +103,11 @@ struct GeneralInfoView: View {
                     .padding()
                     .background(VEXAColors.mainGreen)
                     .cornerRadius(10)
-                    
+
                 
             }
         }
     }
-    
-    
 }
 
 

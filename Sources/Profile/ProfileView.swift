@@ -12,7 +12,7 @@ import Resources
 import SharedModels
 import UniversityProfile
 import UniversitiesList
-
+import EditProfileInfo
 
 public struct ProfileView: View {
 	let store: Store<ProfileState, ProfileAction>
@@ -51,7 +51,11 @@ public struct ProfileView: View {
         }
         .background(VEXAColors.background)
         .sheet(isPresented: $showSettings) {
-            UserSettingsView(user: user)
+            IfLetStore(store.scope(state: \.editProfileInfoState,
+                                   action: ProfileAction.editProfile)) { store in
+                EditProfileInfoView(store: store)
+            }
+
         }
         .toolbar {
             Button(action: {

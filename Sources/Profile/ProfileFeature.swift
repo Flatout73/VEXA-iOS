@@ -10,12 +10,21 @@ import SwiftUI
 import ComposableArchitecture
 import SharedModels
 import Services
+import EditProfileInfo
 
 public struct ProfileState: Equatable {
     
     public var user: StudentModel?
     
     public var isLoading = false
+
+    public var editProfileInfoState: EditProfileInfoState?  {
+        if let user = user {
+            return EditProfileInfoState(user: user)
+        }
+
+        return nil
+    }
 
     public init(user: StudentModel?) {
         self.user = user
@@ -30,6 +39,8 @@ public enum ProfileAction: Equatable {
     case logout
 
     case onAppear
+
+    case editProfile(EditProfileInfoAction)
 
     public enum AlertAction: Equatable {
         case dismiss
@@ -71,6 +82,8 @@ public let profileReducer = Reducer<ProfileState, ProfileAction, ProfileEnvironm
     case .logout:
         environment.userService.user = nil
         state.user = nil
+    case .editProfile:
+        break
     }
 
 	return .none
