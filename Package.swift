@@ -193,6 +193,7 @@ var package = Package(
                     "CoreUI",
                     "ApiClient",
                     "Services",
+                    "Log",
                     .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                     .product(name: "StreamChatSwiftUI", package: "stream-chat-swiftui")
                 ]

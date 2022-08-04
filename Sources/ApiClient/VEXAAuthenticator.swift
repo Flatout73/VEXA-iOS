@@ -44,7 +44,9 @@ class VEXAAuthenticator: Authenticator {
             switch result {
             case .success(let authResponseString):
                 let authResponse = try LoginResponse(jsonString: authResponseString)
-                let token = AuthorizationToken(accessToken: authResponse.accessToken, refreshToken: authResponse.refreshToken)
+                let token = AuthorizationToken(accessToken: authResponse.accessToken,
+                                               refreshToken: authResponse.refreshToken,
+                                               streamToken: authResponse.streamToken)
                 credential.authorizationToken = token
 
                 VEXALogger.shared.loggerStore.storeRequest(request,
@@ -76,7 +78,11 @@ class VEXAAuthenticator: Authenticator {
     }
 
     func isRequest(_ urlRequest: URLRequest, authenticatedWith credential: Credential) -> Bool {
-        return urlRequest.headers["Authorization"] == credential.authorizationToken?.accessToken
+        if let token = credential.authorizationToken?.accessToken {
+            return urlRequest.headers.value(for: "Authorization") == HTTPHeader.authorization(bearerToken: token).value
+        } else {
+            return false
+        }
     }
 
     private func refreshRequest(for token: AuthorizationToken) throws -> URLRequest {

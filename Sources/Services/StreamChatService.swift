@@ -16,9 +16,8 @@ public class StreamChatService: ObservableObject {
      lazy var chatClient: ChatClient = {
          //For the tutorial we use a hard coded api key and application group identifier
          var config = ChatClientConfig(apiKey: .init("66ayzsddmmdz"))
-         //config.applicationGroupIdentifier = Constants.group
+         config.applicationGroupIdentifier = Constants.group
 
-        
          let client = ChatClient(config: config)
          return client
      }()
@@ -33,7 +32,7 @@ public class StreamChatService: ObservableObject {
         _ = streamChat
     }
 
-    public func connectUser(_ user: UserProtocol) {
+    public func connectUser(_ user: UserProtocol, streamToken: String) {
         let nameComponents = PersonNameComponents(givenName: user.firstName, familyName: user.secondName)
         self.userID = user.id
         chatClient
@@ -41,7 +40,7 @@ public class StreamChatService: ObservableObject {
                 userInfo: .init(id: user.id,
                                 name: nameFormatter.string(from: nameComponents),
                                 imageURL: user.imageURL),
-                token: Token.development(userId: user.id)
+                token: try! Token(rawValue: streamToken)
             ) { error in
                 if let error = error {
                     // Some very basic error handling only logging the error.

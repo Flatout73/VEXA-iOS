@@ -79,7 +79,8 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
                     AuthorizationRequest.login(email: login, password: password)
                 )
                 let token = AuthorizationToken(accessToken: response.accessToken,
-                                               refreshToken: response.refreshToken)
+                                               refreshToken: response.refreshToken,
+                                               streamToken: response.streamToken)
                 return AuthorizationAction.updateCachedToken(token)
             } catch {
                 return AuthorizationAction.showError(error.localizedDescription)
@@ -108,7 +109,8 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
                                                         imageURL: nil)
                 let response: LoginResponse = try await environment.apiClient.send(request)
                 let token = AuthorizationToken(accessToken: response.accessToken,
-                                               refreshToken: response.refreshToken)
+                                               refreshToken: response.refreshToken,
+                                               streamToken: response.streamToken)
                 return AuthorizationAction.updateCachedToken(token)
             } catch {
                 return AuthorizationAction.showError(error.localizedDescription)
@@ -122,7 +124,8 @@ public let authorizationReducerCore = Reducer<AuthorizationState, AuthorizationA
                 let request = AuthorizationRequest.google(loginRequest)
                 let response: LoginResponse = try await environment.apiClient.send(request)
                 let token = AuthorizationToken(accessToken: response.accessToken,
-                                               refreshToken: response.refreshToken)
+                                               refreshToken: response.refreshToken,
+                                               streamToken: response.streamToken)
                 return AuthorizationAction.updateCachedToken(token)
             } catch {
                 return AuthorizationAction.showError(error.localizedDescription)

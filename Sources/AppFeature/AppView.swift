@@ -69,7 +69,10 @@ extension AppEnvironment {
     }
 
     var chat: StreamChatEnvironment {
-        StreamChatEnvironment(apiClient: apiClient, userService: userService, streamChatService: streamChatService)
+        StreamChatEnvironment(apiClient: apiClient,
+                              userService: userService,
+                              tokenManager: tokenManager,
+                              streamChatService: streamChatService)
     }
 
     var authorization: AuthorizationEnvironment {

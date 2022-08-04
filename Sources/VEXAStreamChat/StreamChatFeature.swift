@@ -7,6 +7,7 @@ import ApiClient
 import Core
 import Protobuf
 import StreamChatSwiftUI
+import Log
 
 public struct StreamChatState: Equatable {
     public var alert: AlertState<StreamChatAction.AlertAction>?
@@ -40,11 +41,13 @@ public enum StreamChatAction: Equatable {
 public struct StreamChatEnvironment {
     let apiClient: APIClient
     let userService: UserService
+    let tokenManager: TokenManager
     let streamChatService: StreamChatService
 
-    public init(apiClient: APIClient, userService: UserService, streamChatService: StreamChatService) {
+    public init(apiClient: APIClient, userService: UserService, tokenManager: TokenManager, streamChatService: StreamChatService) {
         self.apiClient = apiClient
         self.userService = userService
+        self.tokenManager = tokenManager
         self.streamChatService = streamChatService
     }
 }
@@ -63,7 +66,11 @@ public let streamChatReducerCore = Reducer<StreamChatState, StreamChatAction, St
         
         if let user = environment.userService.user {
             state.hasUser = true
-            environment.streamChatService.connectUser(user)
+            if let streamToken = environment.tokenManager.authorizationToken?.streamToken {
+                environment.streamChatService.connectUser(user, streamToken: streamToken)
+            } else {
+                VEXALogger.shared.debug("No stream token")
+            }
         } else {
             return Effect(value: StreamChatAction.showError("No user"))
         }
